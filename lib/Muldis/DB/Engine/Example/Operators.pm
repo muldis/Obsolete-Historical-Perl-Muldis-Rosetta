@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::DB::Engine::Example::Operators; # module
-    our $VERSION = 0.002000;
+    our $VERSION = 0.003000;
 
     use bigint; # this is experimental
 
@@ -152,7 +152,7 @@ Implementations of all core Muldis D system-defined operators
 =head1 VERSION
 
 This document describes Muldis::DB::Engine::Example::Operators version
-0.2.0 for Perl 5.
+0.3.0 for Perl 5.
 
 =head1 DESCRIPTION
 
@@ -161,7 +161,7 @@ intended to be used directly in user code.
 
 It provides implementations of all core Muldis D system-defined operators,
 and their API is designed to exactly match the operator definitions in
-L<Muldis::DB::Language>.
+L<Language::MuldisD>.
 
 Specifically, this file implements the core system-defined operators that
 all Muldis D implementations must have, which is the selectors for and

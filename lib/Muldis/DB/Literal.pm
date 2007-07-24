@@ -31,7 +31,7 @@ my $SCA_TYPE_PINT = Muldis::DB::Literal::TypeInvo->new({
 ###########################################################################
 
 { package Muldis::DB::Literal; # module
-    our $VERSION = 0.002000;
+    our $VERSION = 0.003000;
     # Note: This given version applies to all of this file's packages.
 
     use base 'Exporter';
@@ -2115,7 +2115,7 @@ Abstract syntax tree for the Muldis D language
 
 =head1 VERSION
 
-This document describes Muldis::DB::Literal version 0.2.0 for Perl 5.
+This document describes Muldis::DB::Literal version 0.3.0 for Perl 5.
 
 It also describes the same-number versions for Perl 5 of [...].
 
@@ -2137,7 +2137,7 @@ I<This documentation is pending.>
 
 The native command language of a L<Muldis::DB> DBMS (database management
 system) / virtual machine is called B<Muldis D>; see
-L<Muldis::DB::Language> for the language's human readable authoritative
+L<Language::MuldisD> for the language's human readable authoritative
 design document.
 
 This library, Muldis::DB::Literal ("AST"), provides a few dozen container
