@@ -20,7 +20,7 @@ WriteMakefile(
     'VERSION' => '0.3.1',
     'ABSTRACT' => 'Full-featured truly relational DBMS in Perl',
     'AUTHOR' => 'Darren Duncan <perl@DarrenDuncan.net>',
-#    'LICENSE' => 'gpl',
+    'LICENSE' => 'lgpl',
     'PREREQ_PM' => {
     },
 );
