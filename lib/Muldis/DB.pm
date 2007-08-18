@@ -1,3 +1,23 @@
+use 5.008001;
+use utf8;
+use strict;
+use warnings FATAL => 'all';
+
+###########################################################################
+###########################################################################
+
+{ package Muldis::DB; # package
+    our $VERSION = 0.003001;
+    # Note that Perl code only exists at all in this file in order to help
+    # the CPAN indexer handle the distribution properly.
+} # package Muldis::DB
+
+###########################################################################
+###########################################################################
+
+1; # Magic true value required at end of a reusable file's code.
+__END__
+
 =pod
 
 =encoding utf8
@@ -9,7 +29,7 @@ Full-featured truly relational DBMS in Perl
 
 =head1 VERSION
 
-This document is Muldis::DB version 0.3.0.
+This document is Muldis::DB version 0.3.1.
 
 =head1 PREFACE
 
