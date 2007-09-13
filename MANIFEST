@@ -3,7 +3,6 @@ archives/OSCON2006SessionProposal.txt
 Changes
 INSTALL
 lib/Muldis/DB.pm
-lib/Muldis/DB/Copying.pod
 lib/Muldis/DB/Engine/Example.pm
 lib/Muldis/DB/Engine/Example/Operators.pm
 lib/Muldis/DB/Engine/Example/PhysType.pm
