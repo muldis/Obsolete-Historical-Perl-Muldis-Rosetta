@@ -3,8 +3,6 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::DB::Literal;
-
 ###########################################################################
 ###########################################################################
 
@@ -589,9 +587,6 @@ I<This documentation is pending.>
 =head1 DEPENDENCIES
 
 This file requires any version of Perl 5.x.y that is at least 5.8.1.
-
-It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::DB::Literal-(0.3.0)|Muldis::DB::Literal>.
 
 =head1 INCOMPATIBILITIES
 

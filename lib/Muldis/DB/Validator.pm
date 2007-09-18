@@ -13,8 +13,6 @@ use Muldis::DB::Interface;
 
     use Test::More;
 
-    use Muldis::DB::Literal qw(newQuasiSet);
-
 ###########################################################################
 
 sub main {
@@ -422,7 +420,7 @@ I<This documentation is pending.>
 This file requires any version of Perl 5.x.y that is at least 5.8.1.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::DB::Literal-(0.3.0)|Muldis::DB::Literal>, L<Muldis::DB::Interface-0.3.0|Muldis::DB::Interface>.
+L<Muldis::DB::Interface-0.3.0|Muldis::DB::Interface>.
 
 =head1 INCOMPATIBILITIES
 

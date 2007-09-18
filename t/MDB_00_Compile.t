@@ -5,15 +5,11 @@ use warnings FATAL => 'all';
 
 use Test::More;
 
-plan( 'tests' => 14 );
+plan( 'tests' => 12 );
 
 use_ok( 'Muldis::DB' );
 is( $Muldis::DB::VERSION, 0.003002,
     'Muldis::DB is the correct version' );
-
-use_ok( 'Muldis::DB::Literal' );
-is( $Muldis::DB::Literal::VERSION, 0.003000,
-    'Muldis::DB::Literal is the correct version' );
 
 use_ok( 'Muldis::DB::Interface' );
 is( $Muldis::DB::Interface::VERSION, 0.003000,
