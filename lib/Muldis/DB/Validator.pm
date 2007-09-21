@@ -25,7 +25,7 @@ sub main {
     print
         "#### Muldis::DB::Validator starting test of $engine_name ####\n";
 
-    # Instantiate a Muldis::DB DBMS / virtual machine.
+    # Instantiate a Muldis DB DBMS / virtual machine.
     my $dbms = Muldis::DB::Interface::new_dbms({
         'engine_name' => $engine_name, 'dbms_config' => $dbms_config });
     isa_ok( $dbms, 'Muldis::DB::Interface::DBMS' );
@@ -43,7 +43,7 @@ sub main {
 sub _scenario_foods_suppliers_shipments {
     my ($dbms) = @_;
 
-    # Declare our example executable code as Muldis::DB ASTs.
+    # Declare our example executable code as Muldis DB ASTs.
 
     my $tynm_Text = Muldis::DB::Literal::EntityName->new({ 'text' => 'sys.type.Text' });
     my $tynm_UInt = Muldis::DB::Literal::EntityName->new({ 'text' => 'sys.type.UInt' });
@@ -195,7 +195,7 @@ sub _scenario_foods_suppliers_shipments {
         ],
     });
 
-    # Declare our example literal source data sets as Muldis::DB ASTs.
+    # Declare our example literal source data sets as Muldis DB ASTs.
 
     my $rel_def_suppliers = Muldis::DB::Literal::Relation->new({
         'heading' => $heading_suppliers,
@@ -355,9 +355,9 @@ Muldis::DB Engine distribution:
 
     # Run the test suite.
     Muldis::DB::Validator::main({
-            'engine_name' => 'Muldis::DB::Engine::Example',
-            'dbms_config' => {},
-        });
+        'engine_name' => 'Muldis::DB::Engine::Example',
+        'dbms_config' => {},
+    });
 
     1;
 
@@ -371,15 +371,15 @@ and pass the components to Test::More itself.>
 =head1 DESCRIPTION
 
 The Muldis::DB::Validator Perl 5 module is a common comprehensive test
-suite to run against all Muldis::DB Engines.  You run it against a
-Muldis::DB Engine module to ensure that the Engine and/or the database
-behind it implements the parts of the Muldis::DB API that your application
+suite to run against all Muldis DB Engines.  You run it against a
+Muldis DB Engine module to ensure that the Engine and/or the database
+behind it implements the parts of the Muldis DB API that your application
 needs, and that the API is implemented correctly.  Muldis::DB::Validator is
 intended to guarantee a measure of quality assurance (QA) for Muldis::DB,
 so your application can use the database access framework with confidence
 of safety.
 
-Alternately, if you are writing a Muldis::DB Engine module yourself,
+Alternately, if you are writing a Muldis DB Engine module yourself,
 Muldis::DB::Validator saves you the work of having to write your own test
 suite for it.  You can also be assured that if your module passes
 Muldis::DB::Validator's approval, then your module can be easily swapped in
@@ -442,9 +442,9 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 =head1 LICENSE AND COPYRIGHT
 
-This file is part of the Muldis::DB framework.
+This file is part of the Muldis DB framework.
 
-Muldis::DB is Copyright © 2002-2007, Darren Duncan.
+Muldis DB is Copyright © 2002-2007, Darren Duncan.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::DB> for details.
 

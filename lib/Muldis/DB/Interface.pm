@@ -498,9 +498,9 @@ Muldis::DB::Engine::Role::HostGateRtn.
 
     # Instantiate a Muldis::DB DBMS / virtual machine.
     my $dbms = Muldis::DB::Interface::new_dbms({
-            'engine_name' => 'Muldis::DB::Engine::Example',
-            'dbms_config' => {},
-        });
+        'engine_name' => 'Muldis::DB::Engine::Example',
+        'dbms_config' => {},
+    });
 
     # TODO: Create or connect to a repository and work with it.
 
@@ -600,13 +600,13 @@ references.
 
 =head1 BUGS AND LIMITATIONS
 
-The Muldis::DB framework for Perl 5 is built according to certain
+The Muldis DB framework for Perl 5 is built according to certain
 old-school or traditional Perl-5-land design principles, including that
 there are no explicit attempts in code to enforce privacy of the
 framework's internals, besides not documenting them as part of the public
-API.  (The Muldis::DB framework for Perl 6 is different.)  That said, you
+API.  (The Muldis DB framework for Perl 6 is different.)  That said, you
 should still respect that privacy and just use the public API that
-Muldis::DB provides.  If you bypass the public API anyway, as Perl 5
+Muldis DB provides.  If you bypass the public API anyway, as Perl 5
 allows, you do so at your own peril.
 
 I<This documentation is pending.>
@@ -617,9 +617,9 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 =head1 LICENSE AND COPYRIGHT
 
-This file is part of the Muldis::DB framework.
+This file is part of the Muldis DB framework.
 
-Muldis::DB is Copyright © 2002-2007, Darren Duncan.
+Muldis DB is Copyright © 2002-2007, Darren Duncan.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::DB> for details.
 
