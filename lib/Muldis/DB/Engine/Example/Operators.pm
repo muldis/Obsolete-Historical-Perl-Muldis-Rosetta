@@ -22,27 +22,21 @@ use warnings FATAL => 'all';
 
 ###########################################################################
 
-## sys.type.Bool ##
+## sys.Core.Universal.Universal ##
 
-
-## sys.type.Order ##
-
-
-## sys.type.Int ##
-
-'sys.rtn.Int.equal' => sub {
+'sys.Core.Universal.is_equal' => sub {
     my ($dbms, $ro_args) = @_;
     my ($v1, $v2) = @{$ro_args}{'v1', 'v2'};
     return ptBool({ 'v' => $v1->equal( $v2 ) });
 },
 
-'sys.rtn.Int.not_equal' => sub {
+'sys.Core.Universal.is_not_equal' => sub {
     my ($dbms, $ro_args) = @_;
     my ($v1, $v2) = @{$ro_args}{'v1', 'v2'};
     return ptBool({ 'v' => !$v1->equal( $v2 ) });
 },
 
-'sys.rtn.Int.assign' => sub {
+'sys.Core.Universal.assign' => sub {
     my ($dbms, $upd_args, $ro_args) = @_;
     my ($target) = @{$upd_args}{'target'};
     my ($v) = @{$ro_args}{'v'};
@@ -50,7 +44,15 @@ use warnings FATAL => 'all';
     return;
 },
 
-'sys.rtn.Int.sum' => sub {
+## sys.Core.Bool.Bool ##
+
+
+## sys.Core.Order.Order ##
+
+
+## sys.Core.Int.Int ##
+
+'sys.Core.Int.sum' => sub {
     my ($dbms, $ro_args) = @_;
     my ($addends) = @{$ro_args}{'addends'};
     my $sum = 0;
@@ -60,13 +62,13 @@ use warnings FATAL => 'all';
     return ptInt({ 'v' => $sum });
 },
 
-'sys.rtn.Int.difference' => sub {
+'sys.Core.Int.difference' => sub {
     my ($dbms, $ro_args) = @_;
     my ($minuend, $subtrahend) = @{$ro_args}{'minuend', 'subtrahend'};
     return ptInt({ 'v' => $minuend->v() - $subtrahend->v() });
 },
 
-'sys.rtn.Int.product' => sub {
+'sys.Core.Int.product' => sub {
     my ($dbms, $ro_args) = @_;
     my ($factors) = @{$ro_args}{'factors'};
     my $product = 1;
@@ -76,11 +78,11 @@ use warnings FATAL => 'all';
     return ptInt({ 'v' => $product });
 },
 
-'sys.rtn.Int.quotient' => sub {
+'sys.Core.Int.quotient' => sub {
     my ($dbms, $ro_args) = @_;
     my ($dividend, $divisor) = @{$ro_args}{'dividend', 'divisor'};
     my $divisor_v = $divisor->v();
-    confess q{sys.rtn.Int.quotient(): Arg :$divisor is zero.}
+    confess q{sys.Core.Int.quotient(): Arg :$divisor is zero.}
         if $divisor_v == 0;
     my $p5_num = $dividend->v() / $divisor_v;
     my $p5_int
@@ -91,37 +93,40 @@ use warnings FATAL => 'all';
     return ptInt({ 'v' => $p5_int });
 },
 
-'sys.rtn.Int.remainder' => sub {
+'sys.Core.Int.remainder' => sub {
     my ($dbms, $ro_args) = @_;
     my ($dividend, $divisor) = @{$ro_args}{'dividend', 'divisor'};
     my $divisor_v = $divisor->v();
-    confess q{sys.rtn.Int.remainder(): Arg :$divisor is zero.}
+    confess q{sys.Core.Int.remainder(): Arg :$divisor is zero.}
         if $divisor_v == 0;
     return ptInt({ 'v' => $dividend->v() % $divisor_v });
 },
 
-'sys.rtn.Int.abs' => sub {
+'sys.Core.Int.abs' => sub {
     my ($dbms, $ro_args) = @_;
     my ($v) = @{$ro_args}{'v'};
     return ptInt({ 'v' => abs $v->v() });
 },
 
-'sys.rtn.Int.power' => sub {
+'sys.Core.Int.power' => sub {
     my ($dbms, $ro_args) = @_;
     my ($radix, $exponent) = @{$ro_args}{'radix', 'exponent'};
     return ptInt({ 'v' => $radix->v() ** $exponent->v() });
 },
 
-## sys.type.Blob ##
+## sys.Core.Num.Num ##
 
 
-## sys.type.Text ##
+## sys.Core.Blob.Blob ##
 
 
-## sys.type.Tuple ##
+## sys.Core.Text.Text ##
 
 
-## sys.type.Relation ##
+## sys.Core.Tuple.Tuple ##
+
+
+## sys.Core.Relation.Relation ##
 
 
 ###########################################################################
@@ -166,7 +171,7 @@ L<Language::MuldisD>.
 Specifically, this file implements the core system-defined operators that
 all Muldis D implementations must have, which is the selectors for and
 general purpose functions and update operators for these data types: Bool,
-Text, Blob, Int, Num, Tuple, Relation, and the Cat.* types.
+Order, Int, Num, Text, Blob, Tuple, Relation, and the Cat.* types.
 
 By contrast, the operators specific to the optional data types are
 implemented by other files:

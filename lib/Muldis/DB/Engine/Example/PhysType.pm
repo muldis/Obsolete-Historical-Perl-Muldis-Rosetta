@@ -266,7 +266,7 @@ sub _build {
 ###########################################################################
 
 sub root_type {
-    return 'sys.type.Bool';
+    return 'sys.Core.Bool.Bool';
 }
 
 sub which {
@@ -274,7 +274,7 @@ sub which {
     if (!defined $self->{$ATTR_WHICH}) {
         my $s = ''.$self->{$ATTR_V};
         my $len_s = length $s;
-        $self->{$ATTR_WHICH} = "13 sys.type.Bool $len_s $s";
+        $self->{$ATTR_WHICH} = "18 sys.Core.Bool.Bool $len_s $s";
     }
     return $self->{$ATTR_WHICH};
 }
@@ -283,7 +283,7 @@ sub which {
 
 sub as_ast {
     my ($self) = @_;
-    return Muldis::DB::Literal::Bool->new({ 'v' => $self->{$ATTR_V} });
+    return Muldis::DB::LOSE::Bool->new({ 'v' => $self->{$ATTR_V} });
 }
 
 ###########################################################################
@@ -327,7 +327,7 @@ sub _build {
 ###########################################################################
 
 sub root_type {
-    return 'sys.type.Order';
+    return 'sys.Core.Order.Order';
 }
 
 sub which {
@@ -335,7 +335,7 @@ sub which {
     if (!defined $self->{$ATTR_WHICH}) {
         my $s = ''.$self->{$ATTR_V};
         my $len_s = length $s;
-        $self->{$ATTR_WHICH} = "14 sys.type.Order $len_s $s";
+        $self->{$ATTR_WHICH} = "20 sys.Core.Order.Order $len_s $s";
     }
     return $self->{$ATTR_WHICH};
 }
@@ -344,7 +344,7 @@ sub which {
 
 sub as_ast {
     my ($self) = @_;
-    return Muldis::DB::Literal::Order->new({ 'v' => $self->{$ATTR_V} });
+    return Muldis::DB::LOSE::Order->new({ 'v' => $self->{$ATTR_V} });
 }
 
 ###########################################################################
@@ -390,7 +390,7 @@ sub _build {
 ###########################################################################
 
 sub root_type {
-    return 'sys.type.Int';
+    return 'sys.Core.Int.Int';
 }
 
 sub which {
@@ -398,7 +398,7 @@ sub which {
     if (!defined $self->{$ATTR_WHICH}) {
         my $s = ''.$self->{$ATTR_V};
         my $len_s = length $s;
-        $self->{$ATTR_WHICH} = "12 sys.type.Int $len_s $s";
+        $self->{$ATTR_WHICH} = "16 sys.Core.Int.Int $len_s $s";
     }
     return $self->{$ATTR_WHICH};
 }
@@ -407,7 +407,7 @@ sub which {
 
 sub as_ast {
     my ($self) = @_;
-    return Muldis::DB::Literal::Int->new({ 'v' => $self->{$ATTR_V} });
+    return Muldis::DB::LOSE::Int->new({ 'v' => $self->{$ATTR_V} });
 }
 
 ###########################################################################
@@ -451,7 +451,7 @@ sub _build {
 ###########################################################################
 
 sub root_type {
-    return 'sys.type.Blob';
+    return 'sys.Core.Blob.Blob';
 }
 
 sub which {
@@ -459,7 +459,7 @@ sub which {
     if (!defined $self->{$ATTR_WHICH}) {
         my $s = $self->{$ATTR_V};
         my $len_s = length $s;
-        $self->{$ATTR_WHICH} = "13 sys.type.Blob $len_s $s";
+        $self->{$ATTR_WHICH} = "18 sys.Core.Blob.Blob $len_s $s";
     }
     return $self->{$ATTR_WHICH};
 }
@@ -468,7 +468,7 @@ sub which {
 
 sub as_ast {
     my ($self) = @_;
-    return Muldis::DB::Literal::Blob->new({ 'v' => $self->{$ATTR_V} });
+    return Muldis::DB::LOSE::Blob->new({ 'v' => $self->{$ATTR_V} });
 }
 
 ###########################################################################
@@ -513,7 +513,7 @@ sub _build {
 ###########################################################################
 
 sub root_type {
-    return 'sys.type.Text';
+    return 'sys.Core.Text.Text';
 }
 
 sub which {
@@ -521,7 +521,7 @@ sub which {
     if (!defined $self->{$ATTR_WHICH}) {
         my $s = $self->{$ATTR_V};
         my $len_s = length $s;
-        $self->{$ATTR_WHICH} = "13 sys.type.Text $len_s $s";
+        $self->{$ATTR_WHICH} = "18 sys.Core.Text.Text $len_s $s";
     }
     return $self->{$ATTR_WHICH};
 }
@@ -530,7 +530,7 @@ sub which {
 
 sub as_ast {
     my ($self) = @_;
-    return Muldis::DB::Literal::Text->new({ 'v' => $self->{$ATTR_V} });
+    return Muldis::DB::LOSE::Text->new({ 'v' => $self->{$ATTR_V} });
 }
 
 ###########################################################################
@@ -579,14 +579,15 @@ sub _build {
 
 sub root_type {
     my ($self) = @_;
-    return 'sys.type.' . ($self->_allows_quasi() ? 'Quasi' : '') . 'Tuple';
+    my $unqltp = ($self->_allows_quasi() ? 'Quasi' : '') . 'Tuple';
+    return "sys.Core.$unqltp.$unqltp";
 }
 
 sub which {
     my ($self) = @_;
     if (!defined $self->{$ATTR_WHICH}) {
-        my $root_type = 'sys.type.'
-            . ($self->_allows_quasi() ? 'Quasi' : '') . 'Tuple';
+        my $unqltp = ($self->_allows_quasi() ? 'Quasi' : '') . 'Tuple';
+        my $root_type = "sys.Core.$unqltp.$unqltp";
         my $tpwl = (length $root_type) . q{ } . $root_type;
         my $s = 'H ' . $self->{$ATTR_HEADING}->which()
             . ' B ' . $self->{$ATTR_BODY}->which();
@@ -603,7 +604,7 @@ sub as_ast {
     my $call_args = { 'heading' => $self->{$ATTR_HEADING}->as_ast(),
         'body' => $self->{$ATTR_BODY}->as_ast() };
     return $self->_allows_quasi()
-        ? Muldis::DB::Literal::QuasiTuple->new( $call_args ) : Muldis::DB::Literal::Tuple->new( $call_args );
+        ? Muldis::DB::LOSE::QuasiTuple->new( $call_args ) : Muldis::DB::LOSE::Tuple->new( $call_args );
 }
 
 ###########################################################################
@@ -709,15 +710,15 @@ sub _build {
 
 sub root_type {
     my ($self) = @_;
-    return
-        'sys.type.' . ($self->_allows_quasi() ? 'Quasi' : '') . 'Relation';
+    my $unqltp = ($self->_allows_quasi() ? 'Quasi' : '') . 'Relation';
+    return "sys.Core.$unqltp.$unqltp";
 }
 
 sub which {
     my ($self) = @_;
     if (!defined $self->{$ATTR_WHICH}) {
-        my $root_type = 'sys.type.'
-            . ($self->_allows_quasi() ? 'Quasi' : '') . 'Relation';
+        my $unqltp = ($self->_allows_quasi() ? 'Quasi' : '') . 'Relation';
+        my $root_type = "sys.Core.$unqltp.$unqltp";
         my $tpwl = (length $root_type) . q{ } . $root_type;
         my $s = 'H ' . $self->{$ATTR_HEADING}->which()
             . ' B ' . (join ' ', sort keys %{$self->{$ATTR_KEY_OVER_ALL}});
@@ -734,7 +735,7 @@ sub as_ast {
     my $call_args = { 'heading' => $self->{$ATTR_HEADING}->as_ast(),
         'body' => [map { $_->as_ast() } @{$self->{$ATTR_BODY}}] };
     return $self->_allows_quasi()
-        ? Muldis::DB::Literal::QuasiRelation->new( $call_args ) : Muldis::DB::Literal::Relation->new( $call_args );
+        ? Muldis::DB::LOSE::QuasiRelation->new( $call_args ) : Muldis::DB::LOSE::Relation->new( $call_args );
 }
 
 ###########################################################################
@@ -851,13 +852,13 @@ sub _build {
 
 sub root_type {
     my ($self) = @_;
-    return 'sys.type._TypeInvo' . ($self->_allows_quasi() ? 'AQ' : 'NQ');
+    return 'sys.LOSE._TypeInvo' . ($self->_allows_quasi() ? 'AQ' : 'NQ');
 }
 
 sub which {
     my ($self) = @_;
     if (!defined $self->{$ATTR_WHICH}) {
-        my $tpwl = '20 sys.type._TypeInvo'
+        my $tpwl = '20 sys.LOSE._TypeInvo'
             . ($self->_allows_quasi() ? 'AQ' : 'NQ');
         my $kind = $self->{$ATTR_KIND};
         my $spec = $self->{$ATTR_SPEC};
@@ -879,10 +880,10 @@ sub as_ast {
     my $spec = $self->{$ATTR_SPEC};
     my $call_args = { 'kind' => $kind,
         'spec' => ($kind eq 'Any' ? $spec
-            : $kind eq 'Scalar' ? Muldis::DB::Literal::EntityName->new({ 'text' => $spec })
+            : $kind eq 'Scalar' ? Muldis::DB::LOSE::EntityName->new({ 'text' => $spec })
             : $spec->as_ast()) };
     return $self->_allows_quasi()
-        ? Muldis::DB::Literal::QuasiTypeInvo->new( $call_args ) : Muldis::DB::Literal::TypeInvo->new( $call_args );
+        ? Muldis::DB::LOSE::QuasiTypeInvo->new( $call_args ) : Muldis::DB::LOSE::TypeInvo->new( $call_args );
 }
 
 ###########################################################################
@@ -959,13 +960,13 @@ sub _build {
 
 sub root_type {
     my ($self) = @_;
-    return 'sys.type._TypeDict' . ($self->_allows_quasi() ? 'AQ' : 'NQ');
+    return 'sys.LOSE._TypeDict' . ($self->_allows_quasi() ? 'AQ' : 'NQ');
 }
 
 sub which {
     my ($self) = @_;
     if (!defined $self->{$ATTR_WHICH}) {
-        my $tpwl = '20 sys.type._TypeDict'
+        my $tpwl = '20 sys.LOSE._TypeDict'
             . ($self->_allows_quasi() ? 'AQ' : 'NQ');
         my $map = $self->{$ATTR_MAP};
         my $s = join q{ }, map {
@@ -985,10 +986,10 @@ sub as_ast {
     my ($self) = @_;
     my $map = $self->{$ATTR_MAP};
     my $call_args = { 'map' => [map {
-            [Muldis::DB::Literal::EntityName->new({ 'text' => $_ }), $map->{$_}->as_ast()],
+            [Muldis::DB::LOSE::EntityName->new({ 'text' => $_ }), $map->{$_}->as_ast()],
         } keys %{$map}] };
     return $self->_allows_quasi()
-        ? Muldis::DB::Literal::QuasiTypeDict->new( $call_args ) : Muldis::DB::Literal::TypeDict->new( $call_args );
+        ? Muldis::DB::LOSE::QuasiTypeDict->new( $call_args ) : Muldis::DB::LOSE::TypeDict->new( $call_args );
 }
 
 ###########################################################################
@@ -1080,13 +1081,13 @@ sub _build {
 
 sub root_type {
     my ($self) = @_;
-    return 'sys.type._ValueDict' . ($self->_allows_quasi() ? 'AQ' : 'NQ');
+    return 'sys.LOSE._ValueDict' . ($self->_allows_quasi() ? 'AQ' : 'NQ');
 }
 
 sub which {
     my ($self) = @_;
     if (!defined $self->{$ATTR_WHICH}) {
-        my $tpwl = '20 sys.type._ValueDict'
+        my $tpwl = '20 sys.LOSE._ValueDict'
             . ($self->_allows_quasi() ? 'AQ' : 'NQ');
         my $map = $self->{$ATTR_MAP};
         my $s = join q{ }, map {
@@ -1105,8 +1106,8 @@ sub which {
 sub as_ast {
     my ($self) = @_;
     my $map = $self->{$ATTR_MAP};
-    return Muldis::DB::Literal::_ExprDict->new({ 'map' => [map {
-            [Muldis::DB::Literal::EntityName->new({ 'text' => $_ }), $map->{$_}->as_ast()],
+    return Muldis::DB::LOSE::_ExprDict->new({ 'map' => [map {
+            [Muldis::DB::LOSE::EntityName->new({ 'text' => $_ }), $map->{$_}->as_ast()],
         } keys %{$map}] });
 }
 
@@ -1206,8 +1207,8 @@ match the API that the language itself specifies as possible
 representations for system-defined data types.
 
 Specifically, this file represents the core system-defined data types that
-all Muldis D implementations must have, namely: Bool, Text, Blob, Int, Num,
-Tuple, Relation, and the Cat.* types.
+all Muldis D implementations must have, namely: Bool, Order, Int, Num,
+Text, Blob, Tuple, Relation, and the Cat.* types.
 
 By contrast, the optional data types are given physical representations by
 other files: L<Muldis::DB::Engine::Example::PhysType::Temporal>,
