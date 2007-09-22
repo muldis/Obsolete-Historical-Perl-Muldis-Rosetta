@@ -10,52 +10,24 @@ use warnings FATAL => 'all';
     our $VERSION = 0.003000;
     # Note: This given version applies to all of this file's packages.
 
+    use Carp;
+    use Encode qw(is_utf8);
+    use Scalar::Util qw(blessed);
+
 ###########################################################################
 
 sub new_dbms {
     my ($args) = @_;
     my ($engine_name, $dbms_config)
         = @{$args}{'engine_name', 'dbms_config'};
-    return Muldis::DB::Interface::DBMS->new({
-        'engine_name' => $engine_name, 'dbms_config' => $dbms_config });
-}
 
-###########################################################################
-
-} # module Muldis::DB::Interface
-
-###########################################################################
-###########################################################################
-
-{ package Muldis::DB::Interface::DBMS; # class
-
-    use Carp;
-    use Encode qw(is_utf8);
-    use Scalar::Util qw(blessed);
-
-    my $ATTR_DBMS_ENG = 'dbms_eng';
-
-###########################################################################
-
-sub new {
-    my ($class, $args) = @_;
-    my $self = bless {}, $class;
-    $self->_build( $args );
-    return $self;
-}
-
-sub _build {
-    my ($self, $args) = @_;
-    my ($engine_name, $dbms_config)
-        = @{$args}{'engine_name', 'dbms_config'};
-
-    confess q{new(): Bad :$engine_name arg; Perl 5 does not consider}
+    confess q{new_dbms(): Bad :$engine_name arg; Perl 5 does not consider}
             . q{ it to be a character string, or it is the empty string.}
         if !defined $engine_name or $engine_name eq q{}
             or (!is_utf8 $engine_name
                 and $engine_name =~ m/[^\x00-\x7F]/xs);
 
-    # A class may be loaded due to it being embedded in a non-excl file.
+    # A module may be loaded due to it being embedded in a non-excl file.
     if (!do {
             no strict 'refs';
             defined %{$engine_name . '::'};
@@ -65,352 +37,44 @@ sub _build {
         # will munge the module name into file system paths.
         eval "require $engine_name;";
         if (my $err = $@) {
-            confess q{new(): Could not load Muldis::DB Engine class}
+            confess q{new_dbms(): Could not load Muldis DB Engine module}
                 . qq{ '$engine_name': $err};
         }
-        confess qq{new(): Could not load Muldis::DB Engine class}
+        confess qq{new_dbms(): Could not load Muldis DB Engine module}
                 . qq{ '$engine_name': while that file did compile without}
-                . q{ errors, it did not declare the same-named class.}
+                . q{ errors, it did not declare the same-named module.}
             if !do {
                 no strict 'refs';
                 defined %{$engine_name . '::'};
             };
     }
-    confess qq{new(): The Muldis::DB root Engine class '$engine_name' is}
-            . q{ not a Muldis::DB::Engine::Role-doing class.}
-        if !$engine_name->isa( 'Muldis::DB::Engine::Role' );
-    my $dbms_eng = eval {
-        $engine_name->new_dbms({ 'dbms_config' => $dbms_config });
+    confess qq{new_dbms(): The Muldis DB Engine module '$engine_name' does}
+            . q{ not provide the new_dbms() constructor function.}
+        if !$engine_name->can( 'new_dbms' );
+    my $dbms = eval {
+        &{$engine_name->can( 'new_dbms' )}({
+            'dbms_config' => $dbms_config });
     };
     if (my $err = $@) {
-        confess qq{new(): The Muldis::DB Engine class '$engine_name' threw}
-            . qq{ an exception during its new_dbms() execution: $err};
+        confess qq{new_dbms(): The Muldis DB Engine module '$engine_name'}
+            . qq{ threw an exception during its new_dbms() exec: $err};
     }
-    confess q{new(): The new_dbms() constructor submeth of the Muldis::DB}
-            . qq{ root Engine class '$engine_name' did not return an}
-            . q{ object of a Muldis::DB::Engine::Role::DBMS-doing class.}
-        if !blessed $dbms_eng
-            or !$dbms_eng->isa( 'Muldis::DB::Engine::Role::DBMS' );
-
-    $self->{$ATTR_DBMS_ENG} = $dbms_eng;
-
-    return;
-}
-
-###########################################################################
-
-sub new_var {
-    my ($self, $args) = @_;
-    my ($decl_type) = @{$args}{'decl_type'};
-    return Muldis::DB::Interface::HostGateVar->new({
-        'dbms' => $self, 'decl_type' => $decl_type });
-}
-
-sub prepare {
-    my ($self, $args) = @_;
-    my ($rtn_ast) = @{$args}{'rtn_ast'};
-    return Muldis::DB::Interface::HostGateRtn->new({
-        'dbms' => $self, 'rtn_ast' => $rtn_ast });
-}
-
-###########################################################################
-
-} # class Muldis::DB::Interface::DBMS
-
-###########################################################################
-###########################################################################
-
-{ package Muldis::DB::Interface::HostGateVar; # class
-
-    use Carp;
-    use Scalar::Util qw(blessed);
-
-    my $ATTR_DBMS    = 'dbms';
-    my $ATTR_VAR_ENG = 'var_eng';
-
-    my $DBMS_ATTR_DBMS_ENG = 'dbms_eng';
-
-###########################################################################
-
-sub new {
-    my ($class, $args) = @_;
-    my $self = bless {}, $class;
-    $self->_build( $args );
-    return $self;
-}
-
-sub _build {
-    my ($self, $args) = @_;
-    my ($dbms, $decl_type) = @{$args}{'dbms', 'decl_type'};
-
-    confess q{new(): Bad :$dbms arg; it is not an object of a}
-            . q{ Muldis::DB::Interface::DBMS-doing class.}
+    confess q{new_dbms(): The new_dbms() constructor function of the}
+            . qq{ Muldis DB Engine module '$engine_name' did not return an}
+            . q{ object of a Muldis::DB::Interface::DBMS-doing class.}
         if !blessed $dbms or !$dbms->isa( 'Muldis::DB::Interface::DBMS' );
-    my $dbms_eng = $dbms->{$DBMS_ATTR_DBMS_ENG};
-    my $dbms_eng_class = blessed $dbms_eng;
 
-    confess q{new(): Bad :$decl_type arg; it is not an object of a}
-            . q{ Muldis::DB::Literal::_TypeInvo-doing class.}
-        if !blessed $decl_type
-            or !$decl_type->isa( 'Muldis::DB::Literal::_TypeInvo' );
-
-    my $var_eng = eval {
-        $dbms_eng->new_var({ 'decl_type' => $decl_type });
-    };
-    if (my $err = $@) {
-        confess qq{new(): The Muldis::DB DBMS Eng class '$dbms_eng_class'}
-            . q{ threw an exception during its new_var()}
-            . qq{ execution: $err};
-    }
-    confess q{new(): The new_var() method of the Muldis::DB}
-            . qq{ DBMS class '$dbms_eng_class' did not return an object}
-            . q{ of a Muldis::DB::Engine::Role::HostGateVar-doing class.}
-        if !blessed $var_eng
-            or !$var_eng->isa( 'Muldis::DB::Engine::Role::HostGateVar' );
-
-    $self->{$ATTR_DBMS}    = $dbms;
-    $self->{$ATTR_VAR_ENG} = $var_eng;
-
-    return;
+    return $dbms;
 }
 
 ###########################################################################
 
-sub fetch_ast {
-    my ($self) = @_;
-
-    my $var_eng = $self->{$ATTR_VAR_ENG};
-    my $val_ast = eval {
-        $var_eng->fetch_ast();
-    };
-    if (my $err = $@) {
-        my $var_eng_class = blessed $var_eng;
-        confess q{fetch_ast(): The Muldis::DB HostGateVar Engine}
-            . qq{ class '$var_eng_class' threw an exception during its}
-            . qq{ fetch_ast() execution: $err};
-    }
-
-    return $val_ast;
-}
-
-###########################################################################
-
-sub store_ast {
-    my ($self, $args) = @_;
-    my ($val_ast) = @{$args}{'val_ast'};
-
-    confess q{store_ast(): Bad :$val_ast arg; it is not an object of a}
-            . q{ Muldis::DB::Literal::Node-doing class.}
-        if !blessed $val_ast or !$val_ast->isa( 'Muldis::DB::Literal::Node' );
-
-    my $var_eng = $self->{$ATTR_VAR_ENG};
-    eval {
-        $var_eng->store_ast({ 'val_ast' => $val_ast });
-    };
-    if (my $err = $@) {
-        my $var_eng_class = blessed $var_eng;
-        confess q{store_ast(): The Muldis::DB HostGateVar Engine}
-            . qq{ class '$var_eng_class' threw an exception during its}
-            . qq{ store_ast() execution: $err};
-    }
-
-    return;
-}
-
-###########################################################################
-
-} # class Muldis::DB::Interface::HostGateVar
+} # module Muldis::DB::Interface
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Interface::HostGateRtn; # class
-
-    use Carp;
-    use Scalar::Util qw(blessed);
-
-    my $ATTR_DBMS    = 'dbms';
-    my $ATTR_RTN_AST = 'rtn_ast';
-    my $ATTR_RTN_ENG = 'rtn_eng';
-
-    my $DBMS_ATTR_DBMS_ENG     = 'dbms_eng';
-    my $VAR_ATTR_VAR_ENG       = 'var_eng';
-    my $ASTHGR_ATTR_UPD_PARAMS = 'upd_params';
-    my $ASTHGR_ATTR_RO_PARAMS  = 'ro_params';
-    my $TYPEDICT_ATTR_MAP_HOA  = 'map_hoa';
-
-###########################################################################
-
-sub new {
-    my ($class, $args) = @_;
-    my $self = bless {}, $class;
-    $self->_build( $args );
-    return $self;
-}
-
-sub _build {
-    my ($self, $args) = @_;
-    my ($dbms, $rtn_ast) = @{$args}{'dbms', 'rtn_ast'};
-
-    confess q{new(): Bad :$dbms arg; it is not an object of a}
-            . q{ Muldis::DB::Interface::DBMS-doing class.}
-        if !blessed $dbms or !$dbms->isa( 'Muldis::DB::Interface::DBMS' );
-    my $dbms_eng = $dbms->{$DBMS_ATTR_DBMS_ENG};
-    my $dbms_eng_class = blessed $dbms_eng;
-
-    confess q{new(): Bad :$rtn_ast arg; it is not an object of a}
-            . q{ Muldis::DB::Literal::HostGateRtn-doing class.}
-        if !blessed $rtn_ast
-            or !$rtn_ast->isa( 'Muldis::DB::Literal::HostGateRtn' );
-
-    my $rtn_eng = eval {
-        $dbms_eng->prepare({ 'rtn_ast' => $rtn_ast });
-    };
-    if (my $err = $@) {
-        confess qq{new(): The Muldis::DB DBMS Eng class '$dbms_eng_class'}
-            . qq{ threw an exception during its prepare() execution: $err};
-    }
-    confess q{new(): The prepare() method of the Muldis::DB}
-            . qq{ DBMS class '$dbms_eng_class' did not return an object}
-            . q{ of a Muldis::DB::Engine::Role::HostGateRtn-doing class.}
-        if !blessed $rtn_eng
-            or !$rtn_eng->isa( 'Muldis::DB::Engine::Role::HostGateRtn' );
-
-    $self->{$ATTR_DBMS}    = $dbms;
-    $self->{$ATTR_RTN_AST} = $rtn_ast;
-    $self->{$ATTR_RTN_ENG} = $rtn_eng;
-
-    return;
-}
-
-###########################################################################
-
-sub bind_host_params {
-    my ($self, $args) = @_;
-    my ($upd_args, $ro_args) = @{$args}{'upd_args', 'ro_args'};
-
-    my $exp_upd_args_map_hoa = $self->{$ATTR_RTN_AST
-        }->{$ASTHGR_ATTR_UPD_PARAMS}->{$TYPEDICT_ATTR_MAP_HOA};
-    my $exp_ro_args_map_hoa = $self->{$ATTR_RTN_AST
-        }->{$ASTHGR_ATTR_RO_PARAMS}->{$TYPEDICT_ATTR_MAP_HOA};
-
-    confess q{bind_host_params(): Bad :$upd_args arg; it is not an Array.}
-        if ref $upd_args ne 'ARRAY';
-    my $seen_upd_param_names = {};
-    my $upd_arg_engs = [];
-    for my $elem (@{$upd_args}) {
-        confess q{bind_host_params(): Bad :$upd_args arg elem; it is not a}
-                . q{ 2-element Array.}
-            if ref $elem ne 'ARRAY' or @{$elem} != 2;
-        my ($param_name, $var_intf) = @{$elem};
-        confess q{bind_host_params(): Bad :$upd_args arg elem; its first}
-                . q{ element is not an object of a}
-                . q{ Muldis::DB::Literal::EntityName-doing class.}
-            if !blessed $param_name
-                or !$param_name->isa( 'Muldis::DB::Literal::EntityName' );
-        my $param_name_text = $param_name->text();
-        confess q{bind_host_params(): Bad :$upd_args arg elem; its first}
-                . q{ element does not match the name of a}
-                . q{ subject-to-update routine param.}
-            if !exists $exp_upd_args_map_hoa->{$param_name_text};
-        confess q{bind_host_params(): Bad :$vars arg elem; its first elem}
-                . q{ is not distinct between the arg elems.}
-            if exists $seen_upd_param_names->{$param_name_text};
-        $seen_upd_param_names->{$param_name_text} = 1;
-        confess q{bind_host_params(): Bad :$upd_args arg elem; its second}
-                . q{ element is not an object of a}
-                . q{ Muldis::DB::Interface::HostGateVar-doing class.}
-            if !blessed $var_intf
-                or !$var_intf->isa( 'Muldis::DB::Interface::HostGateVar' );
-        push @{$upd_arg_engs},
-            [$param_name, $var_intf->{$VAR_ATTR_VAR_ENG}];
-    }
-
-    confess q{bind_host_params(): Bad :$ro_args arg; it is not an Array.}
-        if ref $ro_args ne 'ARRAY';
-    my $seen_ro_param_names = {};
-    my $ro_arg_engs = [];
-    for my $elem (@{$ro_args}) {
-        confess q{bind_host_params(): Bad :$ro_args arg elem; it is not a}
-                . q{ 2-element Array.}
-            if ref $elem ne 'ARRAY' or @{$elem} != 2;
-        my ($param_name, $var_intf) = @{$elem};
-        confess q{bind_host_params(): Bad :$ro_args arg elem; its first}
-                . q{ element is not an object of a}
-                . q{ Muldis::DB::Literal::EntityName-doing class.}
-            if !blessed $param_name
-                or !$param_name->isa( 'Muldis::DB::Literal::EntityName' );
-        my $param_name_text = $param_name->text();
-        confess q{bind_host_params(): Bad :$ro_args arg elem; its first}
-                . q{ element does not match the name of a}
-                . q{ read-only routine param.}
-            if !exists $exp_ro_args_map_hoa->{$param_name_text};
-        confess q{bind_host_params(): Bad :$vars arg elem; its first elem}
-                . q{ is not distinct between the arg elems.}
-            if exists $seen_ro_param_names->{$param_name_text};
-        $seen_ro_param_names->{$param_name_text} = 1;
-        confess q{bind_host_params(): Bad :$ro_args arg elem; its second}
-                . q{ element is not an object of a}
-                . q{ Muldis::DB::Interface::HostGateVar-doing class.}
-            if !blessed $var_intf
-                or !$var_intf->isa( 'Muldis::DB::Interface::HostGateVar' );
-        push @{$ro_arg_engs},
-            [$param_name, $var_intf->{$VAR_ATTR_VAR_ENG}];
-    }
-
-    my $rtn_eng = $self->{$ATTR_RTN_ENG};
-    eval {
-        $rtn_eng->bind_host_params({
-            'upd_args' => $upd_arg_engs, 'ro_args' => $ro_arg_engs });
-    };
-    if (my $err = $@) {
-        my $rtn_eng_class = blessed $rtn_eng;
-        confess q{bind_host_params(): The Muldis::DB HostGateRtn Engine}
-            . qq{ class '$rtn_eng_class' threw an exception during its}
-            . qq{ bind_host_params() execution: $err};
-    }
-
-    return;
-}
-
-###########################################################################
-
-sub execute {
-    my ($self) = @_;
-    my $rtn_eng = $self->{$ATTR_RTN_ENG};
-    eval {
-        $rtn_eng->execute();
-    };
-    if (my $err = $@) {
-        my $rtn_eng_class = blessed $rtn_eng;
-        confess q{execute(): The Muldis::DB HostGateRtn Engine}
-            . qq{ class '$rtn_eng_class' threw an exception during its}
-            . qq{ execute() execution: $err};
-    }
-    return;
-}
-
-###########################################################################
-
-} # class Muldis::DB::Interface::HostGateRtn
-
-###########################################################################
-###########################################################################
-
-{ package Muldis::DB::Engine::Role; # role
-    use Carp;
-
-    sub new_dbms {
-        my ($class) = @_;
-        confess q{not implemented by subclass } . $class;
-    }
-
-} # role Muldis::DB::Engine::Role
-
-###########################################################################
-###########################################################################
-
-{ package Muldis::DB::Engine::Role::DBMS; # role
+{ package Muldis::DB::Interface::DBMS; # role
     use Carp;
     use Scalar::Util qw(blessed);
 
@@ -419,19 +83,79 @@ sub execute {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub prepare {
+    sub assoc_vars {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-} # role Muldis::DB::Engine::Role::DBMS
+    sub new_func_binding {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub assoc_func_bindings {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub new_proc_binding {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub assoc_proc_bindings {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub call_func {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub call_proc {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub trans_nest_level {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub start_trans {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub commit_trans {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub rollback_trans {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+} # role Muldis::DB::Interface::DBMS
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Role::HostGateVar; # role
+{ package Muldis::DB::Interface::Var; # role
     use Carp;
     use Scalar::Util qw(blessed);
+
+    sub assoc_dbms {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub decl_type {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
 
     sub fetch_ast {
         my ($self) = @_;
@@ -443,26 +167,105 @@ sub execute {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-} # role Muldis::DB::Engine::Role::HostGateVar
+} # role Muldis::DB::Interface::Var
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Role::HostGateRtn; # role
+{ package Muldis::DB::Interface::FuncBinding; # role
     use Carp;
     use Scalar::Util qw(blessed);
 
-    sub bind_host_params {
+    sub assoc_dbms {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub execute {
+    sub bind_func {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-} # role Muldis::DB::Engine::Role::HostGateRtn
+    sub bound_func {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bind_result {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bound_result {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bind_params {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bound_params {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub call {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+} # role Muldis::DB::Interface::FuncBinding
+
+###########################################################################
+###########################################################################
+
+{ package Muldis::DB::Interface::ProcBinding; # role
+    use Carp;
+    use Scalar::Util qw(blessed);
+
+    sub assoc_dbms {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bind_proc {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bound_proc {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bind_upd_params {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bound_upd_params {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bind_ro_params {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub bound_ro_params {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub call {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+} # role Muldis::DB::Interface::ProcBinding
 
 ###########################################################################
 ###########################################################################
@@ -477,34 +280,89 @@ __END__
 =head1 NAME
 
 Muldis::DB::Interface -
-Common public API for Muldis::DB Engines
+Common public API for Muldis DB Engines
 
 =head1 VERSION
 
 This document describes Muldis::DB::Interface version 0.3.0 for Perl 5.
 
 It also describes the same-number versions for Perl 5 of
-Muldis::DB::Interface::DBMS ("DBMS"), Muldis::DB::Interface::HostGateVar
-("HostGateVar"), and Muldis::DB::Interface::HostGateRtn ("HostGateRtn").
-
-It also describes the same-number versions for Perl 5 of
-Muldis::DB::Engine::Role, Muldis::DB::Engine::Role::DBMS,
-Muldis::DB::Engine::Role::HostGateVar, and
-Muldis::DB::Engine::Role::HostGateRtn.
+Muldis::DB::Interface::DBMS ("DBMS"), Muldis::DB::Interface::Var ("Var"),
+Muldis::DB::Interface::FuncBinding ("FuncBinding"), and
+Muldis::DB::Interface::ProcBinding ("ProcBinding").
 
 =head1 SYNOPSIS
 
+This simple example declares two Perl variables containing relation data,
+then does a (N-ary) relational join (natural inner join) on them, producing
+a third Perl variable holding the relation data of the result.
+
     use Muldis::DB::Interface;
 
-    # Instantiate a Muldis::DB DBMS / virtual machine.
     my $dbms = Muldis::DB::Interface::new_dbms({
         'engine_name' => 'Muldis::DB::Engine::Example',
         'dbms_config' => {},
     });
 
-    # TODO: Create or connect to a repository and work with it.
+    my $r1 = $dbms->new_var({
+        'decl_type' => 'sys.Core.Relation.Relation' });
+    my $r2 = $dbms->new_var({
+        'decl_type' => 'sys.Core.Relation.Relation' });
 
-I<This documentation is pending.>
+    $r1->store_ast({ 'ast' => [ 'Relation', 'sys.Core.Relation.Relation', [
+        {
+            'x' => [ 'PInt', 'perl_pint', 4 ],
+            'y' => [ 'PInt', 'perl_pint', 7 ],
+        },
+        {
+            'x' => [ 'PInt', 'perl_pint', 3 ],
+            'y' => [ 'PInt', 'perl_pint', 2 ],
+        },
+    ] ] });
+
+    $r2->store_ast({ 'ast' => [ 'Relation', 'sys.Core.Relation.Relation', [
+        {
+            'y' => [ 'PInt', 'perl_pint', 5 ],
+            'z' => [ 'PInt', 'perl_pint', 6 ],
+        },
+        {
+            'y' => [ 'PInt', 'perl_pint', 2 ],
+            'z' => [ 'PInt', 'perl_pint', 1 ],
+        },
+        {
+            'y' => [ 'PInt', 'perl_pint', 2 ],
+            'z' => [ 'PInt', 'perl_pint', 4 ],
+        },
+    ] ] });
+
+    my $r3 = $dbms->call_func(
+        'func_name' => 'sys.Core.Relation.join',
+        'args' => {
+            'topic' => [ 'QuasiSet', 'sys.Core.Spec.QuasiSetOfRelation', [
+                $r1,
+                $r2,
+            ],
+        }
+    );
+
+    my $r3_ast = $r3->fetch_ast();
+
+    # Then $r3_ast contains:
+    # [ 'Relation', 'sys.Core.Relation.Relation', [
+    #     {
+    #         'x' => [ 'PInt', 'perl_pint', 3 ],
+    #         'y' => [ 'PInt', 'perl_pint', 2 ],
+    #         'z' => [ 'PInt', 'perl_pint', 1 ],
+    #     },
+    #     {
+    #         'x' => [ 'PInt', 'perl_pint', 3 ],
+    #         'y' => [ 'PInt', 'perl_pint', 2 ],
+    #         'z' => [ 'PInt', 'perl_pint', 4 ],
+    #     },
+    # ] ]
+
+For most examples of using Muldis DB, and tutorials, please see the
+separate L<Muldis::DB::Cookbook> distribution (when that comes to exist).
 
 =head1 DESCRIPTION
 
@@ -519,62 +377,329 @@ I<This documentation is pending.>
 =head1 INTERFACE
 
 The interface of Muldis::DB::Interface is fundamentally object-oriented;
-you use it by creating objects from its member classes, usually invoking
-C<new()> on the appropriate class name, and then invoking methods on those
-objects.  All of their attributes are private, so you must use accessor
-methods.
+you use it by creating objects from its member classes (or more
+specifically, of implementing subclasses of its member roles) and then
+invoking methods on those objects.  All of their attributes are private, so
+you must use accessor methods.
 
-Muldis::DB::Interface also provides the not-exportable wrapper subroutine
-C<Muldis::DB::new_dbms> for the C<Muldis::DB::Interface::DBMS> constructor,
-which has identical parameters, and exists solely as syntactic sugar.
-Similarly, the C<DBMS> methods C<new_var> and C<prepare> exist purely as
-syntactic sugar over the C<HostGateVar> and C<HostGateRtn> constructors.
-I<TODO: Reimplement these as lexical aliases or compile-time macros
-instead, to avoid the overhead of extra routine calls.>
+To aid portability of your applications over multiple implementing Engines,
+the normal way to create Interface objects is by invoking a
+constructor-wrapping method of some other object that would provide context
+for it; since you generally don't have to directly invoke any package
+names, you don't need to change your code when the package names change due
+to switching the Engine.  You only refer to some Engine's root package name
+once, as a C<Muldis::DB::Interface::new_dbms> argument, and even that can
+be read from a config file rather than being hard-coded in your
+application.
 
 The usual way that Muldis::DB::Interface indicates a failure is to throw an
 exception; most often this is due to invalid input.  If an invoked routine
 simply returns, you can assume that it has succeeded, even if the return
 value is undefined.
 
-=head2 The Muldis::DB::Interface::DBMS Class
+=head2 The Muldis::DB::Interface Module
 
-I<This documentation is pending.>
+The C<Muldis::DB::Interface> module is the stateless root package by way of
+which you access the whole Muldis DB API.  That is, you use it to load
+engines and instantiate virtual machines, which provide the rest of the
+Muldis DB API.
 
-=head2 The Muldis::DB::Interface::HostGateVar Class
+=over
 
-I<This documentation is pending.>
+=item C<new_dbms of Muldis::DB::Interface::DBMS (Str :$engine_name!, Any
+:$dbms_config!)>
 
-=head2 The Muldis::DB::Interface::HostGateRtn Class
+This constructor function creates and returns a C<DBMS> object that is
+implemented by the Muldis DB Engine named by its named argument
+C<$engine_name>; that object is initialized using the C<$dbms_config>
+argument.  The named argument C<$engine_name> is the name of a Perl module
+that is expected to be the root package of a Muldis DB Engine, and which is
+expected to declare a C<new_dbms> subroutine with a single named argument
+C<$dbms_config>; invoking this subroutine is expected to return an object
+of some class of the same Engine which does the Muldis::DB::Interface::DBMS
+role.  This function will start by testing if the root package is already
+loaded (it may be declared by some already-loaded file of another name),
+and only if not, will it do a Perl 'require' of the C<$engine_name>.
 
-I<This documentation is pending.>
+=back
 
-=head2 The Muldis::DB::Engine::Role(|::\w+) Roles
+=head2 The Muldis::DB::Interface::DBMS Role
 
-This "Muldis::DB" file also defines a few roles that the public interface
-classes of all Engine modules must implement, and explicitly declare that
-they are doing so.
+A C<DBMS> object represents a single active Muldis DB virtual machine /
+Muldis D environment, which is the widest scope stateful context in which
+any other database activities happen.  Other activities meaning the
+compilation and execution of Muldis D code, mounting or unmounting depots,
+performing queries, data manipulation, data definition, and transactions.
+If a C<DBMS> object is ever garbage collected by Perl while it has any
+active transactions, then those will all be rolled back, and then an
+exception thrown.
 
-The initial Engine class, which users specify in the C<$engine_name>
-argument to the C<Muldis::DB::Interface::DBMS> constructor, must compose
-the C<Muldis::DB::Engine::Role>, and implement the C<new_dbms> submethod.
-The DBMS Engine object returned by C<new_dbms> must compose the
-C<Muldis::DB::Engine::Role::DBMS> role, and implement the methods
-C<new_var> and C<prepare>.  The HostGateVar Engine object returned by
-C<new_var> must compose the C<Muldis::DB::Engine::Role::HostGateVar> role,
-and implement the methods C<fetch_ast> and C<store_ast>.  The HostGateRtn
-Engine object returned by C<new_var> must compose the
-C<Muldis::DB::Engine::Role::HostGateRtn> role, and implement the methods
-C<bind_host_params> and C<execute>.
+=over
 
-The Muldis::DB Interface classes don't just validate user input on behalf
-of Engines (allowing them to be simpler), but they also validate each
-requested Engine's APIs and results, to some extent, on behalf of users (so
-an application can more gracefully handle a bad Engine); the Engine Role
-roles exist to help with the latter kind of validation, and they mainly
-just declare shims for the required (sub|)methods, which die on invocation
-if the Engine didn't declare its own versions; they don't presently contain
-any actual functionality for Engines to use.
+=item C<new_var of Muldis::DB::Interface::Var (Str :$decl_type!)>
+
+This method creates and returns a new C<Var> object that is associated with
+the invocant C<DBMS>, and whose declared Muldis D type is named by the
+C<$decl_type> argument, and whose default Muldis D value is the default
+value of its declared type.
+
+=item C<assoc_vars of Array ()>
+
+This method returns, as elements of a new (unordered) Array, all the
+currently existing C<Var> objects that are associated with the invocant
+C<DBMS>.
+
+=item C<new_func_binding of Muldis::DB::Interface::FuncBinding ()>
+
+This method creates and returns a new C<FuncBinding> object that is
+associated with the invocant C<DBMS>.
+
+=item C<assoc_func_bindings of Array ()>
+
+This method returns, as elements of a new (unordered) Array, all the
+currently existing C<FuncBinding> objects that are associated with the
+invocant C<DBMS>.
+
+=item C<new_proc_binding of Muldis::DB::Interface::ProcBinding ()>
+
+This method creates and returns a new C<ProcBinding> object that is
+associated with the invocant C<DBMS>.
+
+=item C<assoc_proc_bindings of Array ()>
+
+This method returns, as elements of a new (unordered) Array, all the
+currently existing C<ProcBinding> objects that are associated with the
+invocant C<DBMS>.
+
+=item C<call_func of Muldis::DB::Interface::Var (Str :$func_name!, Hash
+:$args!)>
+
+This method invokes the Muldis D function named by its C<$func_name>
+argument, giving it arguments from C<$args>, and then returning the result
+as a new C<Var> object.  This method is conceptually a wrapper over the
+creation of a C<FuncBinding> object, setting up its bindings, and invoking
+its C<call> method.
+
+=item C<call_proc (Str :$proc_name!, Hash :$upd_args!, Hash :$ro_args!)>
+
+This method invokes the Muldis D procedure named by its C<$proc_name>
+argument, giving it subject-to-update arguments from C<$upd_args> and
+read-only arguments from C<$ro_args>; the C<Var> objects in C<$upd_args>
+are possibly updated as a side-effect of the procedure's execution.  This
+method is conceptually a wrapper over the creation of a C<ProcBinding>
+object, setting up its bindings, and invoking its C<call> method.
+
+=item C<trans_nest_level of Int ()>
+
+This method returns the current transaction nesting level of its invocant's
+virtual machine.  If no explicit transactions were started, then the
+nesting level is zero, in which case the DBMS is conceptually
+auto-committing every successful Muldis D statement.  Each call of
+C<start_trans> will increase the nesting level by one, and each
+C<commit_trans> or C<rollback_trans> will decrease it by one (it can't be
+decreased below zero).  Note that all transactions started or ended within
+Muldis D code are attached to a particular lexical scope in the Muldis D
+code (specifically a "try/catch" context), and so they will never have any
+effect on the nest level that Perl sees (assuming that a Muldis D host
+language will never be invoked by Muldis D), regardless of whether the
+Muldis D code successfully returns or throws an exception.
+
+=item C<start_trans ()>
+
+This method starts a new child-most transaction within the invocant's
+virtual machine.
+
+=item C<commit_trans ()>
+
+This method commits the child-most transaction within the invocant's
+virtual machine; it dies if there isn't one.
+
+=item C<rollback_trans ()>
+
+This method rolls back the child-most transaction within the invocant's
+virtual machine; it dies if there isn't one.
+
+=back
+
+=head2 The Muldis::DB::Interface::Var Role
+
+A C<Var> object is a Muldis D variable that is lexically scoped to the Perl
+environment (like an ordinary Perl variable).  It is associated with a
+specific C<DBMS> object, the one whose C<new_var> method created it, but it
+is considered anonymous and non-invokable within the virtual machine.  The
+only way for Muldis D code to work with these variables is if they bound to
+Perl invocations of Muldis D routines being C<call(|\w+)> by Perl; a Muldis
+D routine parameter one is bound to is the name it is referenced by in the
+virtual machine.  C<Var> objects are the normal way to directly share or
+move data between the Muldis D and Perl environments.  A C<Var> is strongly
+typed, and the declared Muldis D type of the variable (which affects what
+values it is allowed to hold) is set when the C<Var> object is created, and
+this declared type can't be changed afterwards.
+
+=over
+
+=item C<assoc_dbms of Muldis::DB::Interface::DBMS ()>
+
+This method returns the C<DBMS> object that the invocant C<Var> is
+associated with.
+
+=item C<decl_type of Str ()>
+
+This method returns the declared Muldis D type of its invocant C<Var>.
+
+=item C<fetch_ast of Array ()>
+
+This method returns the current Muldis D value of its invocant C<Var> as a
+Perl Hosted Abstract Muldis D data structure (whose root node is a Perl
+Array).
+
+=item C<store_ast (Array :$ast!)>
+
+This method assigns a new Muldis D value to its invocant C<Var>, which is
+supplied in the C<$ast> argument; the argument is expected to be a valid
+Perl Hosted Abstract Muldis D data structure (whose root node is a Perl
+Array).
+
+=back
+
+=head2 The Muldis::DB::Interface::FuncBinding Role
+
+A C<FuncBinding> represents a single Muldis D function that may be directly
+invoked by Perl code.  It is associated with a specific C<DBMS> object, the
+one whose C<new_func_binding> method created it, and the function it
+represents lives in and has a global-public scoped name in the
+corresponding virtual machine.  This is specifically a lazy binding, so no
+validity checking of the object happens except while the FuncBinding's
+C<call> method is being executed, and a then-valid object can then become
+invalid afterwards.  A C<FuncBinding> is conceptually used behind the
+scenes to implement a C<DBMS> object's C<call_func> method, but you can use
+it directly instead, for possibly better performance.
+
+=over
+
+=item C<assoc_dbms of Muldis::DB::Interface::DBMS ()>
+
+This method returns the C<DBMS> object that the invocant C<FuncBinding> is
+associated with.
+
+=item C<bind_func (Str :$func_name!)>
+
+This method causes the invocant C<FuncBinding> to be associated with the
+Muldis D function named by the C<$func_name> argument.
+
+=item C<bound_func of Str ()>
+
+This method returns the name of the Muldis D function that the invocant
+C<FuncBinding> is currently associated with, or undef if that wasn't set.
+
+=item C<bind_result (Muldis::DB::Interface::Var :$var!)>
+
+This method binds the C<Var> object in C<$var> to the result of the Muldis
+D function associated with the invocant C<FuncBinding>; when the function
+is executed via the FuncBinding, its result will end up in C<$var>.
+
+=item C<bound_result of Muldis::DB::Interface::Var ()>
+
+This method returns the C<Var> object currently bound to the function
+result.
+
+=item C<bind_params (Hash :$args!)>
+
+This method binds the C<Var> objects that are the Hash values in C<$args>
+to the parameters of the Muldis D function such that they correspond by
+Hash key names matching parameter names; when the function is executed via
+the FuncBinding, its arguments are pulled from the C<$args>.  Note that the
+same C<Var> object may be bound to multiple parameters and/or the result at
+once.  This method alternately allows a Perl Array which is Perl Hosted
+Muldis D to be supplied instead of any given C<Var> object, in which case a
+new C<Var> object will be non-lazily created with that value, and be used
+there.
+
+=item C<bound_params of Hash ()>
+
+This method returns, as values of a new Hash, the C<Var> objects currently
+bound to the function's parameters, with the corresponding Hash keys being
+the names of the parameters they are bound to.
+
+=item C<call ()>
+
+This method performs any lazy validation on the invocant C<FuncBinding>,
+and with no failure, it then invokes the Muldis D function.  It is at this
+time that the current values of any bound C<Var> objects are taken.
+
+=back
+
+=head2 The Muldis::DB::Interface::ProcBinding Role
+
+A C<ProcBinding> represents a single Muldis D procedure that may be
+directly invoked by Perl code.  It is associated with a specific C<DBMS>
+object, the one whose C<new_proc_binding> method created it, and the
+procedure it represents lives in and has a global-public scoped name in the
+corresponding virtual machine.  This is specifically a lazy binding, so no
+validity checking of the object happens except while the ProcBinding's
+C<call> method is being executed, and a then-valid object can then become
+invalid afterwards.  A C<ProcBinding> is conceptually used behind the
+scenes to implement a C<DBMS> object's C<call_proc> method, but you can use
+it directly instead, for possibly better performance.
+
+=over
+
+=item C<assoc_dbms of Muldis::DB::Interface::DBMS ()>
+
+This method returns the C<DBMS> object that the invocant C<ProcBinding> is
+associated with.
+
+=item C<bind_proc (Str :$proc_name!)>
+
+This method causes the invocant C<ProcBinding> to be associated with the
+Muldis D procedure named by the C<$proc_name> argument.
+
+=item C<bound_proc of Str ()>
+
+This method returns the name of the Muldis D procedure that the invocant
+C<ProcBinding> is currently associated with, or undef if that wasn't set.
+
+=item C<bind_upd_params (Hash :$args!)>
+
+This method binds the C<Var> objects that are the Hash values in C<$args>
+to the subject-to-update parameters of the Muldis D procedure such that
+they correspond by Hash key names matching parameter names; when the
+procedure is executed via the ProcBinding, its subject-to-update arguments
+(if they would be used) are pulled from the C<$args>, and resulting values
+are written to them (if applicable).
+
+=item C<bound_upd_params of Hash ()>
+
+This method returns, as values of a new Hash, the C<Var> objects currently
+bound to the procedure's subject-to-update parameters, with the
+corresponding Hash keys being the names of the parameters they are bound
+to.
+
+=item C<bind_ro_params (Hash :$args!)>
+
+This method binds the C<Var> objects that are the Hash values in C<$args>
+to the read-only parameters of the Muldis D procedure such that they
+correspond by Hash key names matching parameter names; when the procedure
+is executed via the ProcBinding, its read-only arguments are pulled from
+the C<$args>.  Note that the same C<Var> object may be bound to multiple
+parameters and/or the result at once.  This method alternately allows a
+Perl Array which is Perl Hosted Muldis D to be supplied instead of any
+given C<Var> object, in which case a new C<Var> object will be non-lazily
+created with that value, and be used there.
+
+=item C<bound_ro_params of Hash ()>
+
+This method returns, as values of a new Hash, the C<Var> objects currently
+bound to the procedure's read-only parameters, with the corresponding Hash
+keys being the names of the parameters they are bound to.
+
+=item C<call ()>
+
+This method performs any lazy validation on the invocant C<ProcBinding>,
+and with no failure, it then invokes the Muldis D procedure.  It is at this
+time that the current values of any bound C<Var> objects are taken.
+
+=back
 
 =head1 DIAGNOSTICS
 
