@@ -9,34 +9,46 @@ use Muldis::DB::Engine::Example::Operators;
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example; # class
+{ package Muldis::DB::Engine::Example; # module
     our $VERSION = 0.003000;
     # Note: This given version applies to all of this file's packages.
-
-    use base 'Muldis::DB::Engine::Role';
 
 ###########################################################################
 
 sub new_dbms {
     my ($class, $args) = @_;
     my ($dbms_config) = @{$args}{'dbms_config'};
-    return Muldis::DB::Engine::Example::DBMS->new({
+    return Muldis::DB::Engine::Example::Public::DBMS->new({
         'dbms_config' => $dbms_config });
 }
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example
+} # module Muldis::DB::Engine::Example
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::DBMS; # class
-    use base 'Muldis::DB::Engine::Role::DBMS';
+{ package Muldis::DB::Engine::Example::Public::DBMS; # class
+    use base 'Muldis::DB::Interface::DBMS';
 
     use Carp;
 
+    # User-supplied config data for this DBMS object / virtual machine.
+    # For the moment, the Example Engine doesn't actually have anything
+    # that can be configured in this way, so input $dbms_config is ignored.
     my $ATTR_DBMS_CONFIG = 'dbms_config';
+
+    # Lists of user-held objects associated with parts of this DBMS.
+    # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
+    # These should be weak obj-refs, so objs disappear from here
+    my $ATTR_ASSOC_VARS          = 'assoc_vars';
+    my $ATTR_ASSOC_FUNC_BINDINGS = 'assoc_func_bindings';
+    my $ATTR_ASSOC_PROC_BINDINGS = 'assoc_proc_bindings';
+
+    # Maintain actual state of the this DBMS' virtual machine.
+    # TODO: the VM itself should be in another file, this attr with it.
+    my $ATTR_TRANS_NEST_LEVEL = 'trans_nest_level';
 
 ###########################################################################
 
@@ -50,7 +62,22 @@ sub new {
 sub _build {
     my ($self, $args) = @_;
     my ($dbms_config) = @{$args}{'dbms_config'};
+
     $self->{$ATTR_DBMS_CONFIG} = $dbms_config;
+
+    $self->{$ATTR_ASSOC_VARS}          = {};
+    $self->{$ATTR_ASSOC_FUNC_BINDINGS} = {};
+    $self->{$ATTR_ASSOC_PROC_BINDINGS} = {};
+
+    $self->{$ATTR_TRANS_NEST_LEVEL} = 0;
+
+    return;
+}
+
+sub DESTROY {
+    my ($self) = @_;
+    # TODO: check for active trans and rollback ... or member VM does it.
+    # Likewise with closing open files or whatever.
     return;
 }
 
@@ -59,32 +86,131 @@ sub _build {
 sub new_var {
     my ($self, $args) = @_;
     my ($decl_type) = @{$args}{'decl_type'};
-    return Muldis::DB::Engine::Example::HostGateVar->new({
+    return Muldis::DB::Engine::Example::Public::Var->new({
         'dbms' => $self, 'decl_type' => $decl_type });
 }
 
-sub prepare {
-    my ($self, $args) = @_;
-    my ($rtn_ast) = @{$args}{'rtn_ast'};
-    return Muldis::DB::Engine::Example::HostGateRtn->new({
-        'dbms' => $self, 'rtn_ast' => $rtn_ast });
+sub assoc_vars {
+    my ($self) = @_;
+    return [values %{$self->{$ATTR_ASSOC_VARS}}];
+}
+
+sub new_func_binding {
+    my ($self) = @_;
+    return Muldis::DB::Engine::Example::Public::FuncBinding->new({
+        'dbms' => $self });
+}
+
+sub assoc_func_bindings {
+    my ($self) = @_;
+    return [values %{$self->{$ATTR_ASSOC_FUNC_BINDINGS}}];
+}
+
+sub new_proc_binding {
+    my ($self) = @_;
+    return Muldis::DB::Engine::Example::Public::ProcBinding->new({
+        'dbms' => $self });
+}
+
+sub assoc_proc_bindings {
+    my ($self) = @_;
+    return [values %{$self->{$ATTR_ASSOC_PROC_BINDINGS}}];
 }
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::DBMS
+sub call_func {
+    my ($self, $args) = @_;
+    my ($func_name, $f_args) = @{$args}{'func_name', 'args'};
+
+    my $f = Muldis::DB::Engine::Example::Public::FuncBinding->new({
+        'dbms' => $self });
+
+    my $result = Muldis::DB::Engine::Example::Public::Var->new({
+        'dbms' => $self, 'decl_type' => 'sys.Core.Universal.Universal' });
+
+    $f->bind_func({ 'func_name' => $func_name });
+    $f->bind_result({ 'var' => $result });
+    $f->bind_params({ 'args' => $f_args });
+
+    $f->call();
+
+    return $result;
+}
+
+###########################################################################
+
+sub call_proc {
+    my ($self, $args) = @_;
+    my ($proc_name, $upd_args, $ro_args)
+        = @{$args}{'proc_name', 'upd_args', 'ro_args'};
+
+    my $p = Muldis::DB::Engine::Example::Public::FuncBinding->new({
+        'dbms' => $self });
+
+    $p->bind_proc({ 'proc_name' => $proc_name });
+    $p->bind_upd_params({ 'args' => $upd_args });
+    $p->bind_ro_params({ 'args' => $ro_args });
+
+    $p->call();
+
+    return;
+}
+
+###########################################################################
+
+sub trans_nest_level {
+    my ($self) = @_;
+    return $self->{$ATTR_TRANS_NEST_LEVEL};
+}
+
+sub start_trans {
+    my ($self) = @_;
+    # TODO: the actual work.
+    $self->{$ATTR_TRANS_NEST_LEVEL} ++;
+    return;
+}
+
+sub commit_trans {
+    my ($self) = @_;
+    confess q{commit_trans(): Could not commit a transaction;}
+            . q{ none are currently active.}
+        if $self->{$ATTR_TRANS_NEST_LEVEL} == 0;
+    # TODO: the actual work.
+    $self->{$ATTR_TRANS_NEST_LEVEL} --;
+    return;
+}
+
+sub rollback_trans {
+    my ($self) = @_;
+    confess q{rollback_trans(): Could not rollback a transaction;}
+            . q{ none are currently active.}
+        if $self->{$ATTR_TRANS_NEST_LEVEL} == 0;
+    # TODO: the actual work.
+    $self->{$ATTR_TRANS_NEST_LEVEL} --;
+    return;
+}
+
+###########################################################################
+
+} # class Muldis::DB::Engine::Example::Public::DBMS
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::HostGateVar; # class
-    use base 'Muldis::DB::Engine::Role::HostGateVar';
+{ package Muldis::DB::Engine::Example::Public::Var; # class
+    use base 'Muldis::DB::Interface::Var';
 
     use Carp;
+    use Scalar::Util qw( refaddr weaken );
 
-    my $ATTR_DBMS      = 'dbms';
-    my $ATTR_DECL_TYPE = 'decl_type';
-    my $ATTR_VAL_AST   = 'val_ast';
+    my $ATTR_DBMS = 'dbms';
+
+    my $ATTR_VAR = 'var';
+    # TODO: cache Perl-Hosted Muldis D version of $!var.
+
+    # Allow Var objs to update DBMS' "assoc" list re themselves.
+    my $DBMS_ATTR_ASSOC_VARS = 'assoc_vars';
 
 ###########################################################################
 
@@ -99,11 +225,19 @@ sub _build {
     my ($self, $args) = @_;
     my ($dbms, $decl_type) = @{$args}{'dbms', 'decl_type'};
 
-    $self->{$ATTR_DBMS}      = $dbms;
-    $self->{$ATTR_DECL_TYPE} = $decl_type;
-    $self->{$ATTR_VAL_AST}   = Muldis::DB::Literal::Bool->new({ 'v' => (1 == 0) });
-        # TODO: make default val of decl type
+    $self->{$ATTR_DBMS} = $dbms;
+    $dbms->{$DBMS_ATTR_ASSOC_VARS}->{refaddr $self} = $self;
+    weaken $dbms->{$DBMS_ATTR_ASSOC_VARS}->{refaddr $self};
 
+    $self->{$ATTR_VAR} = Muldis::DB::Engine::Example::VM::Var->new({
+        'decl_type' => $decl_type }); # TODO; or some such
+
+    return;
+}
+
+sub DESTROY {
+    my ($self) = @_;
+    delete $self->{$ATTR_DBMS}->{$DBMS_ATTR_ASSOC_VARS}->{refaddr $self};
     return;
 }
 
@@ -111,93 +245,55 @@ sub _build {
 
 sub fetch_ast {
     my ($self) = @_;
-    return $self->{$ATTR_VAL_AST};
+    return $self->{$ATTR_VAR}->as_phmd(); # TODO; or some such
 }
 
 ###########################################################################
 
 sub store_ast {
     my ($self, $args) = @_;
-    my ($val_ast) = @{$args}{'val_ast'};
-    $self->{$ATTR_VAL_AST} = $val_ast;
+    my ($ast) = @{$args}{'ast'};
+    $self->{$ATTR_VAR} = from_phmd( $ast ); # TODO; or some such
     return;
 }
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::HostGateVar
+} # class Muldis::DB::Engine::Example::Public::Var
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::HostGateRtn; # class
-    use base 'Muldis::DB::Engine::Role::HostGateRtn';
+{ package Muldis::DB::Engine::Example::Public::FuncBinding; # class
+    use base 'Muldis::DB::Interface::FuncBinding';
 
     use Carp;
-
-    my $ATTR_DBMS           = 'dbms';
-    my $ATTR_RTN_AST        = 'rtn_ast';
-    my $ATTR_PREP_RTN       = 'prep_rtn';
-    my $ATTR_BOUND_UPD_ARGS = 'bound_upd_args';
-    my $ATTR_BOUND_RO_ARGS  = 'bound_ro_args';
-
-    my $VAR_ATTR_DECL_TYPE = 'decl_type';
+    use Scalar::Util qw( refaddr weaken );
 
 ###########################################################################
 
-sub new {
-    my ($class, $args) = @_;
-    my $self = bless {}, $class;
-    $self->_build( $args );
-    return $self;
-}
-
-sub _build {
-    my ($self, $args) = @_;
-    my ($dbms, $rtn_ast) = @{$args}{'dbms', 'rtn_ast'};
-
-    my $prep_rtn = sub { 1; }; # TODO; the real thing.
-
-    $self->{$ATTR_DBMS}           = $dbms;
-    $self->{$ATTR_RTN_AST}        = $rtn_ast;
-    $self->{$ATTR_PREP_RTN}       = $prep_rtn;
-    $self->{$ATTR_BOUND_UPD_ARGS} = {};
-    $self->{$ATTR_BOUND_RO_ARGS}  = {};
-
-    return;
-}
+# TODO.
 
 ###########################################################################
 
-sub bind_host_params {
-    my ($self, $args) = @_;
-    my ($upd_args, $ro_args) = @{$args}{'upd_args', 'ro_args'};
-    my $bound_upd_args = $self->{$ATTR_BOUND_UPD_ARGS};
-    my $bound_ro_args = $self->{$ATTR_BOUND_RO_ARGS};
-    # TODO: Compare declared type of each routine param and the variable
-    # we are trying to bind to it, that they are of compatible types.
-    for my $elem (@{$upd_args}) {
-        $bound_upd_args->{$elem->[0]->text()} = $elem->[1];
-    }
-    for my $elem (@{$ro_args}) {
-        $bound_ro_args->{$elem->[0]->text()} = $elem->[1];
-    }
-    return;
-}
+} # class Muldis::DB::Engine::Example::Public::FuncBinding
+
+###########################################################################
+###########################################################################
+
+{ package Muldis::DB::Engine::Example::Public::ProcBinding; # class
+    use base 'Muldis::DB::Interface::ProcBinding';
+
+    use Carp;
+    use Scalar::Util qw( refaddr weaken );
 
 ###########################################################################
 
-sub execute {
-    my ($self) = @_;
-    # TODO: Fix this!
-#    $self->{$ATTR_PREP_RTN}->({ %{$self->{$ATTR_BOUND_UPD_ARGS}},
-#        %{$self->{$ATTR_BOUND_RO_ARGS}} });
-    return;
-}
+# TODO.
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::HostGateRtn
+} # class Muldis::DB::Engine::Example::Public::ProcBinding
 
 ###########################################################################
 ###########################################################################
@@ -212,12 +308,18 @@ __END__
 =head1 NAME
 
 Muldis::DB::Engine::Example -
-Self-contained reference implementation of a Muldis::DB Engine
+Self-contained reference implementation of a Muldis DB Engine
 
 =head1 VERSION
 
 This document describes Muldis::DB::Engine::Example version 0.3.0 for Perl
 5.
+
+It also describes the same-number versions for Perl 5 of
+Muldis::DB::Engine::Example::Public::DBMS,
+Muldis::DB::Engine::Example::Public::Var,
+Muldis::DB::Engine::Example::Public::FuncBinding, and
+Muldis::DB::Engine::Example::Public::ProcBinding.
 
 =head1 SYNOPSIS
 
@@ -238,9 +340,10 @@ in production.  (See the L<Muldis::DB::SeeAlso> file for a list of other
 Engines that are more suitable for production.)
 
 This C<Muldis::DB::Engine::Example> file is the main file of the Example
-Engine, and it is what applications quasi-directly invoke; it directly
-does/subclasses the roles/classes in L<Muldis::DB::Interface>.  The other
-C<Muldis::DB::Engine::Example::\w+> files are used internally by it,
+Engine, and it is what applications quasi-directly invoke; its
+C<Muldis::DB::Engine::Example::Public::\w+> classes directly do/subclass
+the roles/classes in L<Muldis::DB::Interface>.  The other
+C<Muldis::DB::Engine::Example::\w+> files are used internally by this file,
 comprising the rest of the Example Engine, and are not intended to be used
 directly in user code.
 
