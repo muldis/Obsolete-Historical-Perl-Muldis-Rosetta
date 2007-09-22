@@ -123,17 +123,17 @@ sub call_func {
     my ($self, $args) = @_;
     my ($func_name, $f_args) = @{$args}{'func_name', 'args'};
 
-    my $f = Muldis::DB::Engine::Example::Public::FuncBinding->new({
-        'dbms' => $self });
+#    my $f = Muldis::DB::Engine::Example::Public::FuncBinding->new({
+#        'dbms' => $self });
 
     my $result = Muldis::DB::Engine::Example::Public::Var->new({
         'dbms' => $self, 'decl_type' => 'sys.Core.Universal.Universal' });
 
-    $f->bind_func({ 'func_name' => $func_name });
-    $f->bind_result({ 'var' => $result });
-    $f->bind_params({ 'args' => $f_args });
+#    $f->bind_func({ 'func_name' => $func_name });
+#    $f->bind_result({ 'var' => $result });
+#    $f->bind_params({ 'args' => $f_args });
 
-    $f->call();
+#    $f->call();
 
     return $result;
 }
@@ -145,14 +145,14 @@ sub call_proc {
     my ($proc_name, $upd_args, $ro_args)
         = @{$args}{'proc_name', 'upd_args', 'ro_args'};
 
-    my $p = Muldis::DB::Engine::Example::Public::FuncBinding->new({
-        'dbms' => $self });
+#    my $p = Muldis::DB::Engine::Example::Public::FuncBinding->new({
+#        'dbms' => $self });
 
-    $p->bind_proc({ 'proc_name' => $proc_name });
-    $p->bind_upd_params({ 'args' => $upd_args });
-    $p->bind_ro_params({ 'args' => $ro_args });
+#    $p->bind_proc({ 'proc_name' => $proc_name });
+#    $p->bind_upd_params({ 'args' => $upd_args });
+#    $p->bind_ro_params({ 'args' => $ro_args });
 
-    $p->call();
+#    $p->call();
 
     return;
 }
@@ -229,8 +229,8 @@ sub _build {
     $dbms->{$DBMS_ATTR_ASSOC_VARS}->{refaddr $self} = $self;
     weaken $dbms->{$DBMS_ATTR_ASSOC_VARS}->{refaddr $self};
 
-    $self->{$ATTR_VAR} = Muldis::DB::Engine::Example::VM::Var->new({
-        'decl_type' => $decl_type }); # TODO; or some such
+#    $self->{$ATTR_VAR} = Muldis::DB::Engine::Example::VM::Var->new({
+#        'decl_type' => $decl_type }); # TODO; or some such
 
     return;
 }
@@ -245,7 +245,8 @@ sub DESTROY {
 
 sub fetch_ast {
     my ($self) = @_;
-    return $self->{$ATTR_VAR}->as_phmd(); # TODO; or some such
+#    return $self->{$ATTR_VAR}->as_phmd(); # TODO; or some such
+    return;
 }
 
 ###########################################################################
@@ -253,7 +254,7 @@ sub fetch_ast {
 sub store_ast {
     my ($self, $args) = @_;
     my ($ast) = @{$args}{'ast'};
-    $self->{$ATTR_VAR} = from_phmd( $ast ); # TODO; or some such
+#    $self->{$ATTR_VAR} = from_phmd( $ast ); # TODO; or some such
     return;
 }
 
