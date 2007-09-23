@@ -28,7 +28,7 @@ sub main {
     # Instantiate a Muldis DB DBMS / virtual machine.
     my $dbms = Muldis::DB::Interface::new_dbms({
         'engine_name' => $engine_name, 'dbms_config' => $dbms_config });
-    isa_ok( $dbms, 'Muldis::DB::Interface::DBMS' );
+    does_ok( $dbms, 'Muldis::DB::Interface::DBMS' );
 
     _scenario_foods_suppliers_shipments_v1( $dbms );
 
@@ -47,13 +47,13 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     my $src_suppliers
         = $dbms->new_var({ 'decl_type' => 'sys.Core.Relation.Relation' });
-    isa_ok( $src_suppliers, 'Muldis::DB::Interface::Var' );
+    does_ok( $src_suppliers, 'Muldis::DB::Interface::Var' );
     my $src_foods
         = $dbms->new_var({ 'decl_type' => 'sys.Core.Relation.Relation' });
-    isa_ok( $src_foods, 'Muldis::DB::Interface::Var' );
+    does_ok( $src_foods, 'Muldis::DB::Interface::Var' );
     my $src_shipments
         = $dbms->new_var({ 'decl_type' => 'sys.Core.Relation.Relation' });
-    isa_ok( $src_shipments, 'Muldis::DB::Interface::Var' );
+    does_ok( $src_shipments, 'Muldis::DB::Interface::Var' );
 
     # Load our example literal source data sets into said Perl-lexicals.
 
@@ -147,7 +147,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     my $desi_colour
         = $dbms->new_var({ 'decl_type' => 'sys.Core.Text.Text' });
-    isa_ok( $desi_colour, 'Muldis::DB::Interface::Var' );
+    does_ok( $desi_colour, 'Muldis::DB::Interface::Var' );
     $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
 
@@ -173,7 +173,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
         },
     });
     pass( 'no death from executing search query' );
-    isa_ok( $matched_suppl, 'Muldis::DB::Interface::Var' );
+    does_ok( $matched_suppl, 'Muldis::DB::Interface::Var' );
 
     my $matched_suppl_ast = $matched_suppl->fetch_ast();
     pass( 'no death from fetching search results from VM' );
@@ -197,6 +197,14 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     return;
 }
+
+###########################################################################
+
+# This does_ok exists for code parity with the Perl 6 Validator.pm, where
+# a does_ok is a modified clone of Test.pm's isa_ok, that tests using
+# .does rather than .isa; in Perl 5, they mean the same thing.
+
+*does_ok = \&isa_ok;
 
 ###########################################################################
 
