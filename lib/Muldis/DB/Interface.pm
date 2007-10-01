@@ -18,8 +18,8 @@ use warnings FATAL => 'all';
 
 sub new_dbms {
     my ($args) = @_;
-    my ($engine_name, $dbms_config)
-        = @{$args}{'engine_name', 'dbms_config'};
+    my ($engine_name, $exp_ast_lang, $dbms_config)
+        = @{$args}{'engine_name', 'exp_ast_lang', 'dbms_config'};
 
     confess q{new_dbms(): Bad :$engine_name arg; Perl 5 does not consider}
             . q{ it to be a character string, or it is the empty string.}
@@ -53,6 +53,7 @@ sub new_dbms {
         if !$engine_name->can( 'new_dbms' );
     my $dbms = eval {
         &{$engine_name->can( 'new_dbms' )}({
+            'exp_ast_lang' => $exp_ast_lang,
             'dbms_config' => $dbms_config });
     };
     if (my $err = $@) {
@@ -77,6 +78,16 @@ sub new_dbms {
 { package Muldis::DB::Interface::DBMS; # role
     use Carp;
     use Scalar::Util qw(blessed);
+
+    sub fetch_exp_ast_lang {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub store_exp_ast_lang {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
 
     sub new_var {
         my ($self) = @_;
@@ -301,6 +312,7 @@ a third Perl variable holding the relation data of the result.
 
     my $dbms = Muldis::DB::Interface::new_dbms({
         'engine_name' => 'Muldis::DB::Engine::Example',
+        'exp_ast_lang' => [ 'MuldisD', 'cpan:DUNCAND', '0.8.1' ],
         'dbms_config' => {},
     });
 
@@ -406,8 +418,8 @@ Muldis DB API.
 
 =over
 
-=item C<new_dbms of Muldis::DB::Interface::DBMS (Str :$engine_name!, Any
-:$dbms_config!)>
+=item C<new_dbms of Muldis::DB::Interface::DBMS (Str :$engine_name!, Array
+:$exp_ast_lang!, Any :$dbms_config!)>
 
 This constructor function creates and returns a C<DBMS> object that is
 implemented by the Muldis DB Engine named by its named argument
@@ -419,7 +431,11 @@ C<$dbms_config>; invoking this subroutine is expected to return an object
 of some class of the same Engine which does the Muldis::DB::Interface::DBMS
 role.  This function will start by testing if the root package is already
 loaded (it may be declared by some already-loaded file of another name),
-and only if not, will it do a Perl 'require' of the C<$engine_name>.
+and only if not, will it do a Perl 'require' of the C<$engine_name>.  The
+new C<DBMS> object's "expected AST language" attribute is initialized from
+the C<$exp_ast_lang> argument, which is a 3-element Array as described for
+the argument of the C<DBMS> method C<store_exp_ast_lang> (if applicable,
+the C<$dbms_config> argument is interpreted in light of C<$exp_ast_lang>).
 
 =back
 
@@ -435,6 +451,25 @@ active transactions, then those will all be rolled back, and then an
 exception thrown.
 
 =over
+
+=item C<fetch_exp_ast_lang of Array ()>
+
+This method returns, as a 3-element (ordered) Array, the long name of the
+Muldis D (or alternative) language version that its invocant C<DBMS> object
+and its associated/child objects expect their AST/code/value input to
+conform to, and that their AST/code/value output will conform to.  The 3
+elements of the array (each a Str) are, in order, the language spec base
+name (typically C<MuldisD>), the language spec authority (typically
+C<cpan:DUNCAND> when the base name is C<MuldisD>), and the language spec
+version number (looks like C<1.2.3> for C<MuldisD> plus C<cpan:DUNCAND>).
+
+=item C<store_exp_ast_lang (Array :$lang!)>
+
+This method assigns a new expected language long name to its invocant
+C<DBMS>, which is supplied in the C<$lang> argument; the argument is
+expected to be a 3-element Array as described for C<fetch_exp_ast_lang>.
+This method dies if the specified language/version isn't one that the
+invocant's Engine knows how to or desires to handle.
 
 =item C<new_var of Muldis::DB::Interface::Var (Str :$decl_type!)>
 

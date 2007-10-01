@@ -16,10 +16,11 @@ use Muldis::DB::Engine::Example::Operators;
 ###########################################################################
 
 sub new_dbms {
-    my ($class, $args) = @_;
-    my ($dbms_config) = @{$args}{'dbms_config'};
+    my ($args) = @_;
+    my ($exp_ast_lang, $dbms_config)
+        = @{$args}{'exp_ast_lang', 'dbms_config'};
     return Muldis::DB::Engine::Example::Public::DBMS->new({
-        'dbms_config' => $dbms_config });
+        'exp_ast_lang' => $exp_ast_lang, 'dbms_config' => $dbms_config });
 }
 
 ###########################################################################
@@ -37,7 +38,8 @@ sub new_dbms {
     # User-supplied config data for this DBMS object / virtual machine.
     # For the moment, the Example Engine doesn't actually have anything
     # that can be configured in this way, so input $dbms_config is ignored.
-    my $ATTR_DBMS_CONFIG = 'dbms_config';
+    my $ATTR_EXP_AST_LANG = 'exp_ast_lang';
+    my $ATTR_DBMS_CONFIG  = 'dbms_config';
 
     # Lists of user-held objects associated with parts of this DBMS.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
@@ -61,9 +63,12 @@ sub new {
 
 sub _build {
     my ($self, $args) = @_;
-    my ($dbms_config) = @{$args}{'dbms_config'};
+    my ($exp_ast_lang, $dbms_config)
+        = @{$args}{'exp_ast_lang', 'dbms_config'};
 
-    $self->{$ATTR_DBMS_CONFIG} = $dbms_config;
+    # TODO: input checks.
+    $self->{$ATTR_EXP_AST_LANG} = [@{$exp_ast_lang}];
+    $self->{$ATTR_DBMS_CONFIG}  = $dbms_config;
 
     $self->{$ATTR_ASSOC_VARS}          = {};
     $self->{$ATTR_ASSOC_FUNC_BINDINGS} = {};
@@ -78,6 +83,20 @@ sub DESTROY {
     my ($self) = @_;
     # TODO: check for active trans and rollback ... or member VM does it.
     # Likewise with closing open files or whatever.
+    return;
+}
+
+###########################################################################
+
+sub fetch_exp_ast_lang {
+    my ($self) = @_;
+    return [@{$self->{$ATTR_EXP_AST_LANG}}];
+}
+
+sub store_exp_ast_lang {
+    my ($self, $args) = @_;
+    my ($lang) = @{$args}{'lang'};
+    $self->{$ATTR_EXP_AST_LANG} = [@{$lang}];
     return;
 }
 
@@ -249,11 +268,10 @@ sub fetch_ast {
     return;
 }
 
-###########################################################################
-
 sub store_ast {
     my ($self, $args) = @_;
     my ($ast) = @{$args}{'ast'};
+    # TODO: input checks.
 #    $self->{$ATTR_VAR} = from_phmd( $ast ); # TODO; or some such
     return;
 }
