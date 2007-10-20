@@ -4,7 +4,6 @@ use strict;
 use warnings FATAL => 'all';
 
 use Muldis::DB::Interface;
-use Muldis::DB::Engine::Example::Operators;
 
 ###########################################################################
 ###########################################################################

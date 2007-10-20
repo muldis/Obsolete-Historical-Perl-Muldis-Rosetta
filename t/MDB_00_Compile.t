@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 use Test::More;
 
-plan( 'tests' => 12 );
+plan( 'tests' => 8 );
 
 use_ok( 'Muldis::DB' );
 is( $Muldis::DB::VERSION, 0.004000,
@@ -18,14 +18,6 @@ is( $Muldis::DB::Interface::VERSION, 0.004000,
 use_ok( 'Muldis::DB::Validator' );
 is( $Muldis::DB::Validator::VERSION, 0.004000,
     'Muldis::DB::Validator is the correct version' );
-
-use_ok( 'Muldis::DB::Engine::Example::PhysType' );
-is( $Muldis::DB::Engine::Example::PhysType::VERSION, 0.004000,
-    'Muldis::DB::Engine::Example::PhysType is the correct version' );
-
-use_ok( 'Muldis::DB::Engine::Example::Operators' );
-is( $Muldis::DB::Engine::Example::Operators::VERSION, 0.004000,
-    'Muldis::DB::Engine::Example::Operators is the correct version' );
 
 use_ok( 'Muldis::DB::Engine::Example' );
 is( $Muldis::DB::Engine::Example::VERSION, 0.004000,
