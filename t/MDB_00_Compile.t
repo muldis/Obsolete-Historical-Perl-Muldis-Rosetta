@@ -8,19 +8,19 @@ use Test::More;
 plan( 'tests' => 8 );
 
 use_ok( 'Muldis::DB' );
-is( $Muldis::DB::VERSION, 0.004000,
+is( $Muldis::DB::VERSION, 0.005000,
     'Muldis::DB is the correct version' );
 
 use_ok( 'Muldis::DB::Interface' );
-is( $Muldis::DB::Interface::VERSION, 0.004000,
+is( $Muldis::DB::Interface::VERSION, 0.005000,
     'Muldis::DB::Interface is the correct version' );
 
 use_ok( 'Muldis::DB::Validator' );
-is( $Muldis::DB::Validator::VERSION, 0.004000,
+is( $Muldis::DB::Validator::VERSION, 0.005000,
     'Muldis::DB::Validator is the correct version' );
 
 use_ok( 'Muldis::DB::Engine::Example' );
-is( $Muldis::DB::Engine::Example::VERSION, 0.004000,
+is( $Muldis::DB::Engine::Example::VERSION, 0.005000,
     'Muldis::DB::Engine::Example is the correct version' );
 
 1; # Magic true value required at end of a reusable file's code.

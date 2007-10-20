@@ -17,7 +17,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     'NAME' => 'Muldis::DB',
-    'VERSION' => '0.4.0',
+    'VERSION' => '0.5.0',
     'ABSTRACT' => 'Full-featured truly relational DBMS in Perl',
     'AUTHOR' => 'Darren Duncan <perl@DarrenDuncan.net>',
     'LICENSE' => 'lgpl',

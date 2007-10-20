@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::DB::Interface; # module
-    our $VERSION = 0.004000;
+    our $VERSION = 0.005000;
     # Note: This given version applies to all of this file's packages.
 
     use Carp;
@@ -295,7 +295,7 @@ Common public API for Muldis DB Engines
 
 =head1 VERSION
 
-This document describes Muldis::DB::Interface version 0.4.0 for Perl 5.
+This document describes Muldis::DB::Interface version 0.5.0 for Perl 5.
 
 It also describes the same-number versions for Perl 5 of
 Muldis::DB::Interface::DBMS ("DBMS"), Muldis::DB::Interface::Var ("Var"),
