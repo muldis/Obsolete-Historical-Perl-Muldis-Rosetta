@@ -17,8 +17,8 @@ use Muldis::DB::Interface;
 
 sub main {
     my ($args) = @_;
-    my ($engine_name, $dbms_config)
-        = @{$args}{'engine_name', 'dbms_config'};
+    my ($engine_name, $machine_config)
+        = @{$args}{'engine_name', 'machine_config'};
 
     plan( 'tests' => 12 );
 
@@ -26,14 +26,14 @@ sub main {
         "#### Muldis::DB::Validator starting test of $engine_name ####\n";
 
     # Instantiate a Muldis DB DBMS / virtual machine.
-    my $dbms = Muldis::DB::Interface::new_dbms({
+    my $machine = Muldis::DB::Interface::new_machine({
         'engine_name' => $engine_name,
         'exp_ast_lang' => [ 'MuldisD', 'cpan:DUNCAND', '0.8.1' ],
-        'dbms_config' => $dbms_config,
+        'machine_config' => $machine_config,
     });
-    does_ok( $dbms, 'Muldis::DB::Interface::DBMS' );
+    does_ok( $machine, 'Muldis::DB::Interface::Machine' );
 
-    _scenario_foods_suppliers_shipments_v1( $dbms );
+    _scenario_foods_suppliers_shipments_v1( $machine );
 
     print
         "#### Muldis::DB::Validator finished test of $engine_name ####\n";
@@ -44,18 +44,18 @@ sub main {
 ###########################################################################
 
 sub _scenario_foods_suppliers_shipments_v1 {
-    my ($dbms) = @_;
+    my ($machine) = @_;
 
     # Declare our Perl-lexical variables to use for source data.
 
-    my $src_suppliers
-        = $dbms->new_var({ 'decl_type' => 'sys.Core.Relation.Relation' });
+    my $src_suppliers = $machine->new_var({
+        'decl_type' => 'sys.Core.Relation.Relation' });
     does_ok( $src_suppliers, 'Muldis::DB::Interface::Var' );
-    my $src_foods
-        = $dbms->new_var({ 'decl_type' => 'sys.Core.Relation.Relation' });
+    my $src_foods = $machine->new_var({
+        'decl_type' => 'sys.Core.Relation.Relation' });
     does_ok( $src_foods, 'Muldis::DB::Interface::Var' );
-    my $src_shipments
-        = $dbms->new_var({ 'decl_type' => 'sys.Core.Relation.Relation' });
+    my $src_shipments = $machine->new_var({
+        'decl_type' => 'sys.Core.Relation.Relation' });
     does_ok( $src_shipments, 'Muldis::DB::Interface::Var' );
 
     # Load our example literal source data sets into said Perl-lexicals.
@@ -149,16 +149,16 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # data and see what suppliers there are for foods coloured 'orange'.
 
     my $desi_colour
-        = $dbms->new_var({ 'decl_type' => 'sys.Core.Text.Text' });
+        = $machine->new_var({ 'decl_type' => 'sys.Core.Text.Text' });
     does_ok( $desi_colour, 'Muldis::DB::Interface::Var' );
     $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
 
-    my $matched_suppl = $dbms->call_func({
+    my $matched_suppl = $machine->call_func({
         'func_name' => 'sys.Core.Relation.semijoin',
         'args' => {
             'source' => $src_suppliers,
-            'filter' => $dbms->call_func({
+            'filter' => $machine->call_func({
                 'func_name' => 'sys.Core.Relation.join',
                 'args' => {
                     'topic' => [ 'QuasiSet',
@@ -248,7 +248,7 @@ Muldis::DB Engine distribution:
     # Run the test suite.
     Muldis::DB::Validator::main({
         'engine_name' => 'Muldis::DB::Engine::Example',
-        'dbms_config' => {},
+        'machine_config' => {},
     });
 
     1;
