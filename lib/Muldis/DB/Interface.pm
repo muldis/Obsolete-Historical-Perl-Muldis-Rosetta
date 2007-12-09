@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::DB::Interface; # module
-    our $VERSION = 0.005000;
+    use version; our $VERSION = qv('0.5.0');
     # Note: This given version applies to all of this file's packages.
 
     use Carp;
@@ -748,7 +748,12 @@ I<This documentation is pending.>
 
 =head1 DEPENDENCIES
 
-This file requires any version of Perl 5.x.y that is at least 5.8.1.
+This file requires any version of Perl 5.x.y that is at least 5.8.1, and
+recommends one that is at least 5.10.0.
+
+It also requires these Perl 5 packages that are bundled with any version of
+Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
+installation by users of earlier Perl versions: L<version>.
 
 =head1 INCOMPATIBILITIES
 

@@ -9,7 +9,7 @@ use Muldis::DB::Interface;
 ###########################################################################
 
 { package Muldis::DB::Validator; # module
-    our $VERSION = 0.005000;
+    use version; our $VERSION = qv('0.5.0');
 
     use Test::More;
 
@@ -309,7 +309,12 @@ I<This documentation is pending.>
 
 =head1 DEPENDENCIES
 
-This file requires any version of Perl 5.x.y that is at least 5.8.1.
+This file requires any version of Perl 5.x.y that is at least 5.8.1, and
+recommends one that is at least 5.10.0.
+
+It also requires these Perl 5 packages that are bundled with any version of
+Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
+installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::DB::Interface-0.5.0|Muldis::DB::Interface>.
