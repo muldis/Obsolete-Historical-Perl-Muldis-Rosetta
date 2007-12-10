@@ -44,13 +44,7 @@ sub new_machine {
     # Lists of user-held objects associated with parts of this Machine.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
-    my $ATTR_ASSOC_VARS          = 'assoc_vars';
-    my $ATTR_ASSOC_FUNC_BINDINGS = 'assoc_func_bindings';
-    my $ATTR_ASSOC_PROC_BINDINGS = 'assoc_proc_bindings';
-
-    # Maintain actual state of the this DBMS' virtual machine.
-    # TODO: the VM itself should be in another file, this attr with it.
-    my $ATTR_TRANS_NEST_LEVEL = 'trans_nest_level';
+    my $ATTR_ASSOC_PROCESSES = 'assoc_processes';
 
 ###########################################################################
 
@@ -70,11 +64,7 @@ sub _build {
     $self->{$ATTR_EXP_AST_LANG}   = [@{$exp_ast_lang}];
     $self->{$ATTR_MACHINE_CONFIG} = $machine_config;
 
-    $self->{$ATTR_ASSOC_VARS}          = {};
-    $self->{$ATTR_ASSOC_FUNC_BINDINGS} = {};
-    $self->{$ATTR_ASSOC_PROC_BINDINGS} = {};
-
-    $self->{$ATTR_TRANS_NEST_LEVEL} = 0;
+    $self->{$ATTR_ASSOC_PROCESSES} = {};
 
     return;
 }
@@ -102,11 +92,86 @@ sub store_exp_ast_lang {
 
 ###########################################################################
 
+sub new_process {
+    my ($self) = @_;
+    return Muldis::DB::Engine::Example::Public::Process->new({
+        'machine' => $self });
+}
+
+sub assoc_processes {
+    my ($self) = @_;
+    return [values %{$self->{$ATTR_ASSOC_PROCESSES}}];
+}
+
+###########################################################################
+
+} # class Muldis::DB::Engine::Example::Public::Machine
+
+###########################################################################
+###########################################################################
+
+{ package Muldis::DB::Engine::Example::Public::Process; # class
+    use base 'Muldis::DB::Interface::Process';
+
+    use Carp;
+    use Scalar::Util qw( refaddr weaken );
+
+    my $ATTR_MACHINE = 'machine';
+
+    # Lists of user-held objects associated with parts of this Process.
+    # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
+    # These should be weak obj-refs, so objs disappear from here
+    my $ATTR_ASSOC_VARS          = 'assoc_vars';
+    my $ATTR_ASSOC_FUNC_BINDINGS = 'assoc_func_bindings';
+    my $ATTR_ASSOC_PROC_BINDINGS = 'assoc_proc_bindings';
+
+    # Maintain actual state of the this DBMS' virtual machine.
+    # TODO: the VM itself should be in another file, this attr with it.
+    my $ATTR_TRANS_NEST_LEVEL = 'trans_nest_level';
+
+    # Allow Process objs to update Machine's "assoc" list re themselves.
+    my $MACHINE_ATTR_ASSOC_PROCESSES = 'assoc_processes';
+
+###########################################################################
+
+sub new {
+    my ($class, $args) = @_;
+    my $self = bless {}, $class;
+    $self->_build( $args );
+    return $self;
+}
+
+sub _build {
+    my ($self, $args) = @_;
+    my ($machine) = @{$args}{'machine'};
+
+    $self->{$ATTR_MACHINE} = $machine;
+    $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self} = $self;
+    weaken $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self};
+
+    $self->{$ATTR_ASSOC_VARS}          = {};
+    $self->{$ATTR_ASSOC_FUNC_BINDINGS} = {};
+    $self->{$ATTR_ASSOC_PROC_BINDINGS} = {};
+
+    $self->{$ATTR_TRANS_NEST_LEVEL} = 0;
+
+    return;
+}
+
+sub DESTROY {
+    my ($self) = @_;
+    # TODO: check for active trans and rollback ... or member VM does it.
+    # Likewise with closing open files or whatever.
+    return;
+}
+
+###########################################################################
+
 sub new_var {
     my ($self, $args) = @_;
     my ($decl_type) = @{$args}{'decl_type'};
     return Muldis::DB::Engine::Example::Public::Var->new({
-        'machine' => $self, 'decl_type' => $decl_type });
+        'process' => $self, 'decl_type' => $decl_type });
 }
 
 sub assoc_vars {
@@ -117,7 +182,7 @@ sub assoc_vars {
 sub new_func_binding {
     my ($self) = @_;
     return Muldis::DB::Engine::Example::Public::FuncBinding->new({
-        'machine' => $self });
+        'process' => $self });
 }
 
 sub assoc_func_bindings {
@@ -128,7 +193,7 @@ sub assoc_func_bindings {
 sub new_proc_binding {
     my ($self) = @_;
     return Muldis::DB::Engine::Example::Public::ProcBinding->new({
-        'machine' => $self });
+        'process' => $self });
 }
 
 sub assoc_proc_bindings {
@@ -143,10 +208,10 @@ sub call_func {
     my ($func_name, $f_args) = @{$args}{'func_name', 'args'};
 
 #    my $f = Muldis::DB::Engine::Example::Public::FuncBinding->new({
-#        'machine' => $self });
+#        'process' => $self });
 
     my $result = Muldis::DB::Engine::Example::Public::Var->new({
-        'machine' => $self,
+        'process' => $self,
         'decl_type' => 'sys.Core.Universal.Universal' });
 
 #    $f->bind_func({ 'func_name' => $func_name });
@@ -166,7 +231,7 @@ sub call_proc {
         = @{$args}{'proc_name', 'upd_args', 'ro_args'};
 
 #    my $p = Muldis::DB::Engine::Example::Public::FuncBinding->new({
-#        'machine' => $self });
+#        'process' => $self });
 
 #    $p->bind_proc({ 'proc_name' => $proc_name });
 #    $p->bind_upd_params({ 'args' => $upd_args });
@@ -213,7 +278,7 @@ sub rollback_trans {
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::Public::Machine
+} # class Muldis::DB::Engine::Example::Public::Process
 
 ###########################################################################
 ###########################################################################
@@ -224,13 +289,13 @@ sub rollback_trans {
     use Carp;
     use Scalar::Util qw( refaddr weaken );
 
-    my $ATTR_MACHINE = 'machine';
+    my $ATTR_PROCESS = 'process';
 
     my $ATTR_VAR = 'var';
     # TODO: cache Perl-Hosted Muldis D version of $!var.
 
-    # Allow Var objs to update Machine' "assoc" list re themselves.
-    my $MACHINE_ATTR_ASSOC_VARS = 'assoc_vars';
+    # Allow Var objs to update Process' "assoc" list re themselves.
+    my $PROCESS_ATTR_ASSOC_VARS = 'assoc_vars';
 
 ###########################################################################
 
@@ -243,11 +308,11 @@ sub new {
 
 sub _build {
     my ($self, $args) = @_;
-    my ($machine, $decl_type) = @{$args}{'machine', 'decl_type'};
+    my ($process, $decl_type) = @{$args}{'process', 'decl_type'};
 
-    $self->{$ATTR_MACHINE} = $machine;
-    $machine->{$MACHINE_ATTR_ASSOC_VARS}->{refaddr $self} = $self;
-    weaken $machine->{$MACHINE_ATTR_ASSOC_VARS}->{refaddr $self};
+    $self->{$ATTR_PROCESS} = $process;
+    $process->{$PROCESS_ATTR_ASSOC_VARS}->{refaddr $self} = $self;
+    weaken $process->{$PROCESS_ATTR_ASSOC_VARS}->{refaddr $self};
 
 #    $self->{$ATTR_VAR} = Muldis::DB::Engine::Example::VM::Var->new({
 #        'decl_type' => $decl_type }); # TODO; or some such
@@ -257,8 +322,8 @@ sub _build {
 
 sub DESTROY {
     my ($self) = @_;
-    delete $self->{$ATTR_MACHINE}->{
-        $MACHINE_ATTR_ASSOC_VARS}->{refaddr $self};
+    delete $self->{$ATTR_PROCESS}->{
+        $PROCESS_ATTR_ASSOC_VARS}->{refaddr $self};
     return;
 }
 
@@ -338,6 +403,7 @@ This document describes Muldis::DB::Engine::Example version 0.5.0 for Perl
 
 It also describes the same-number versions for Perl 5 of
 Muldis::DB::Engine::Example::Public::Machine,
+Muldis::DB::Engine::Example::Public::Process,
 Muldis::DB::Engine::Example::Public::Var,
 Muldis::DB::Engine::Example::Public::FuncBinding, and
 Muldis::DB::Engine::Example::Public::ProcBinding.

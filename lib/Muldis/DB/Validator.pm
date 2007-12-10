@@ -20,7 +20,7 @@ sub main {
     my ($engine_name, $machine_config)
         = @{$args}{'engine_name', 'machine_config'};
 
-    plan( 'tests' => 12 );
+    plan( 'tests' => 13 );
 
     print
         "#### Muldis::DB::Validator starting test of $engine_name ####\n";
@@ -32,8 +32,10 @@ sub main {
         'machine_config' => $machine_config,
     });
     does_ok( $machine, 'Muldis::DB::Interface::Machine' );
+    my $process = $machine->new_process();
+    does_ok( $process, 'Muldis::DB::Interface::Process' );
 
-    _scenario_foods_suppliers_shipments_v1( $machine );
+    _scenario_foods_suppliers_shipments_v1( $process );
 
     print
         "#### Muldis::DB::Validator finished test of $engine_name ####\n";
@@ -44,17 +46,17 @@ sub main {
 ###########################################################################
 
 sub _scenario_foods_suppliers_shipments_v1 {
-    my ($machine) = @_;
+    my ($process) = @_;
 
     # Declare our Perl-lexical variables to use for source data.
 
-    my $src_suppliers = $machine->new_var({
+    my $src_suppliers = $process->new_var({
         'decl_type' => 'sys.Core.Relation.Relation' });
     does_ok( $src_suppliers, 'Muldis::DB::Interface::Var' );
-    my $src_foods = $machine->new_var({
+    my $src_foods = $process->new_var({
         'decl_type' => 'sys.Core.Relation.Relation' });
     does_ok( $src_foods, 'Muldis::DB::Interface::Var' );
-    my $src_shipments = $machine->new_var({
+    my $src_shipments = $process->new_var({
         'decl_type' => 'sys.Core.Relation.Relation' });
     does_ok( $src_shipments, 'Muldis::DB::Interface::Var' );
 
@@ -149,16 +151,16 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # data and see what suppliers there are for foods coloured 'orange'.
 
     my $desi_colour
-        = $machine->new_var({ 'decl_type' => 'sys.Core.Text.Text' });
+        = $process->new_var({ 'decl_type' => 'sys.Core.Text.Text' });
     does_ok( $desi_colour, 'Muldis::DB::Interface::Var' );
     $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
 
-    my $matched_suppl = $machine->call_func({
+    my $matched_suppl = $process->call_func({
         'func_name' => 'sys.Core.Relation.semijoin',
         'args' => {
             'source' => $src_suppliers,
-            'filter' => $machine->call_func({
+            'filter' => $process->call_func({
                 'func_name' => 'sys.Core.Relation.join',
                 'args' => {
                     'topic' => [ 'QuasiSet',
