@@ -9,9 +9,9 @@ use warnings FATAL => 'all';
 my $BOOL_FALSE = (1 == 0);
 my $BOOL_TRUE  = (1 == 1);
 
-my $ORDER_INCREASE = (1 <=> 2);
-my $ORDER_SAME     = (1 <=> 1);
-my $ORDER_DECREASE = (2 <=> 1);
+my $CAT_ORDER_INCREASE = (1 <=> 2);
+my $CAT_ORDER_SAME     = (1 <=> 1);
+my $CAT_ORDER_DECREASE = (2 <=> 1);
 
 my $EMPTY_STR = q{};
 
@@ -24,8 +24,9 @@ my $EMPTY_STR = q{};
 
     use base 'Exporter';
     our @EXPORT_OK = qw(
-        newBool newOrder newInt newRat newBlob newText
+        newBool newInt newRat newBlob newText
         newQuasiTuple newTuple newQuasiRelation newRelation
+        newCat_Order
     );
 
 ###########################################################################
@@ -34,12 +35,6 @@ sub newBool {
     my ($args) = @_;
     my ($v) = @{$args}{'v'};
     return Muldis::DB::Engine::Example::Value::Bool->new({ 'v' => $v });
-}
-
-sub newOrder {
-    my ($args) = @_;
-    my ($v) = @{$args}{'v'};
-    return Muldis::DB::Engine::Example::Value::Order->new({ 'v' => $v });
 }
 
 sub newInt {
@@ -91,6 +86,13 @@ sub newRelation {
     my ($heading, $body) = @{$args}{'heading', 'body'};
     return Muldis::DB::Engine::Example::Value::Relation->new({
         'heading' => $heading, 'body' => $body });
+}
+
+sub newCat_Order {
+    my ($args) = @_;
+    my ($v) = @{$args}{'v'};
+    return Muldis::DB::Engine::Example::Value::Cat_Order->new({
+        'v' => $v });
 }
 
 ###########################################################################
@@ -248,53 +250,6 @@ sub v {
 ###########################################################################
 
 } # class Muldis::DB::Engine::Example::Value::Bool
-
-###########################################################################
-###########################################################################
-
-{ package Muldis::DB::Engine::Example::Value::Order; # class
-    use base 'Muldis::DB::Engine::Example::Value::Scalar';
-
-    my $ATTR_V = 'v';
-        # A p5 Scalar that is_equals $ORDER_(INCREASE|SAME|DECREASE).
-
-###########################################################################
-
-sub _build {
-    my ($self, $args) = @_;
-    my ($v) = @{$args}{'v'};
-    $self->{$ATTR_V} = $v;
-    return;
-}
-
-###########################################################################
-
-sub _root_type {
-    return 'sys.Core.Order.Order';
-}
-
-sub _which {
-    my ($self) = @_;
-    return ''.$self->{$ATTR_V};
-}
-
-###########################################################################
-
-sub _is_equal {
-    my ($self, $other) = @_;
-    return $other->{$ATTR_V} eq $self->{$ATTR_V};
-}
-
-###########################################################################
-
-sub v {
-    my ($self) = @_;
-    return $self->{$ATTR_V};
-}
-
-###########################################################################
-
-} # class Muldis::DB::Engine::Example::Value::Order
 
 ###########################################################################
 ###########################################################################
@@ -671,6 +626,53 @@ sub _root_type {
 ###########################################################################
 ###########################################################################
 
+{ package Muldis::DB::Engine::Example::Value::Cat_Order; # class
+    use base 'Muldis::DB::Engine::Example::Value::Scalar';
+
+    my $ATTR_V = 'v';
+        # A p5 Scalar that is_equals $CAT_ORDER_(INCREASE|SAME|DECREASE).
+
+###########################################################################
+
+sub _build {
+    my ($self, $args) = @_;
+    my ($v) = @{$args}{'v'};
+    $self->{$ATTR_V} = $v;
+    return;
+}
+
+###########################################################################
+
+sub _root_type {
+    return 'sys.Core.Cat.Order';
+}
+
+sub _which {
+    my ($self) = @_;
+    return ''.$self->{$ATTR_V};
+}
+
+###########################################################################
+
+sub _is_equal {
+    my ($self, $other) = @_;
+    return $other->{$ATTR_V} eq $self->{$ATTR_V};
+}
+
+###########################################################################
+
+sub v {
+    my ($self) = @_;
+    return $self->{$ATTR_V};
+}
+
+###########################################################################
+
+} # class Muldis::DB::Engine::Example::Value::Cat_Order
+
+###########################################################################
+###########################################################################
+
 1; # Magic true value required at end of a reusable file's code.
 __END__
 
@@ -701,9 +703,8 @@ intended to match the API that the language itself specifies as possible
 representations for system-defined data types.
 
 Specifically, this file represents the core system-defined data types that
-all Muldis D implementations must have, namely: Bool, Order, Int, Rat,
-Blob, Text, Tuple, Relation, QuasiTuple, QuasiRelation, and the Cat.*
-types.
+all Muldis D implementations must have, namely: Bool, Int, Rat, Blob, Text,
+Tuple, Relation, QuasiTuple, QuasiRelation, and the Cat.* types.
 
 By contrast, the optional data types are given physical representations by
 other files: L<Muldis::DB::Engine::Example::Value::Temporal>,
