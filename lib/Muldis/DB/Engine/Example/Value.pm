@@ -211,7 +211,7 @@ sub is_equal {
     use base 'Muldis::DB::Engine::Example::Value::Scalar';
 
     my $ATTR_V = 'v';
-        # A p5 Scalar that is_equals $BOOL_FALSE|$BOOL_TRUE.
+        # A p5 Scalar that equals $BOOL_FALSE|$BOOL_TRUE.
 
 ###########################################################################
 
@@ -630,7 +630,7 @@ sub _root_type {
     use base 'Muldis::DB::Engine::Example::Value::Scalar';
 
     my $ATTR_V = 'v';
-        # A p5 Scalar that is_equals $CAT_ORDER_(INCREASE|SAME|DECREASE).
+        # A p5 Scalar that equals $CAT_ORDER_(INCREASE|SAME|DECREASE).
 
 ###########################################################################
 
