@@ -10,8 +10,19 @@
     incorporates all of said updates, though it may have some of them.
 
     * New file versions are: DB.pm and Interface.pm and Validator.pm and
-    Example.pm 0.7.0.  Added new file
+    Example.pm 0.7.0.  The other pre-existing versioned files have their
+    version numbers all incremented by 0.0.1.  Added new file
     lib/Muldis/DB/Engine/Example/Value.pm, which starts at version 0.0.0.
+
+    * Updated DB.pm and the README file to clarify that commercial support
+    is available from the author specifically by way of Muldis Data
+    Systems.
+
+    * Updated all .pm and .pod files to add a new TRADEMARK POLICY section
+    near the end of each; it serves for trademarks what the LICENSE AND
+    COPYRIGHT did for copyrights.  The DB.pm file had the actual text, and
+    the other files simply say to look at DB.pm.  To summarize, the word
+    MULDIS is a trademark and how you may use it has limitations.
 
     TODO: Describe the new Value.pm and other new friends.
 
@@ -337,7 +348,7 @@
         lib/Muldis/DB/Validator.pm
         LICENSE/GPL
         Makefile.PL
-        MANIFEST			This list of files
+        MANIFEST
         MANIFEST.SKIP
         META.yml
         README
@@ -468,7 +479,7 @@
         lib/Muldis/DB/SeeAlso.pod
         lib/Muldis/DB/Validator.pm
         Makefile.PL
-        MANIFEST			This list of files
+        MANIFEST
         MANIFEST.SKIP
         META.yml
         README
