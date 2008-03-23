@@ -52,7 +52,7 @@ single routine or three.  Unlike the Perl DBI, which takes commands in some
 dialect of SQL, which changes based on the implementation in use, Muldis DB
 takes commands in the B<Muldis D> language, which has just one dialect
 shared by all implementations.  See the separate all-documentation
-distribution L<Language::MuldisD> for the formal definition of the Muldis D
+distribution L<Muldis::D> for the formal definition of the Muldis D
 language which Muldis DB is based on.
 
 The minimal core of the Muldis DB framework, the one component that
@@ -95,7 +95,7 @@ satisfies I<TTM>'s definition of a "B<D>" language.  The main web site for
 I<TTM> is L<http://www.thethirdmanifesto.com/>, and its authors have also
 written several books and papers and taught classes on the subject over the
 last 35+ years, along with Codd himself (some are listed in the separately
-distributed L<Language::MuldisD::SeeAlso> documentation file).  Note that
+distributed L<Muldis::D::SeeAlso> documentation file).  Note that
 the Muldis DB documentation will be focusing mainly on how Muldis DB itself
 works, and will not spend much time in providing rationale; you can read
 I<TTM> itself and various other external documentation for much of that.
@@ -227,7 +227,7 @@ which implements this test suite.
 
 =head1 SEE ALSO
 
-The separate all-documentation distribution L<Language::MuldisD> is the
+The separate all-documentation distribution L<Muldis::D> is the
 formal definition of the Muldis D language which Muldis DB is based on.
 
 The Perl module L<Muldis::DB::Validator> is bundled with Muldis DB and can
@@ -317,7 +317,7 @@ business, product or service to provide accurate information to the public
 about yourself.
 
 4.  If you have made a language variant or extension based on the B<Muldis
-D> (L<Language::MuldisD>) language, then the fully qualified machine
+D> (L<Muldis::D>) language, then the fully qualified machine
 readable name of your work may, and in fact should, use the base name
 C<Muldis_D> as per the provisions of the VERSIONING documentation of the
 official Muldis D language spec.
@@ -340,7 +340,7 @@ the names of the components of your work or service that are involved in
 said interaction, as long as it is apparent by normal conventions that the
 word MULDIS is subservient to other parts of the name, such as your own
 main project name, and that the component is expressly a part of your work;
-for example, C<Foo::Storage::MuldisDB> or C<Bar::Interface::MuldisDB>.
+for example, C<Foo::Storage::Muldis_DB> or C<Bar::Interface::Muldis_DB>.
 
 If you would like to use the word MULDIS for any other use, please contact
 Muldis Data Systems and we'll discuss a way to make that happen.  Assuming
@@ -357,7 +357,7 @@ None yet.
 =head1 FORUMS
 
 Several public email-based forums exist whose main topic is all
-implementations of the L<Muldis D|Language::MuldisD> language, especially
+implementations of the L<Muldis D|Muldis::D> language, especially
 the L<Muldis DB|Muldis::DB> project, which they are named for.  All of
 these you can reach via L<http://mm.DarrenDuncan.net/mailman/listinfo>; go
 there to manage your subscriptions to, or view the archives of, the

@@ -20,9 +20,9 @@ well as resources that are or could be related to Muldis DB.
 
 =head1 FORMAL SPECIFICATION
 
-Please see the separately distributed L<Language::MuldisD> distribution,
+Please see the separately distributed L<Muldis::D> distribution,
 which defines the B<Muldis D> language that Muldis DB implements and uses
-as its primary API.  Likewise see also the L<Language::MuldisD::SeeAlso>
+as its primary API.  Likewise see also the L<Muldis::D::SeeAlso>
 appendix document of the Muldis D spec for links to various things
 comprising and related to I<The Third Manifesto>, which Muldis DB is a
 formal implementation of by way of Muldis D.
@@ -55,7 +55,7 @@ The Cookbook distro may also be the main repository of executing code that
 would otherwise go in the /examples directory of the Muldis DB core
 distro.
 
-=item C<Genezzo> or C<Genezzo::Muldis::DB> or
+=item C<Genezzo> or C<Genezzo::Muldis_DB> or
 C<Muldis::DB::Engine::Genezzo> etc
 
 A Muldis DB Engine built around Jeffrey Cohen's L<Genezzo> DBMS, or
@@ -94,7 +94,7 @@ itself and not output any Perl-specific details that aren't in non-Perl
 languages, so that it is suitable for interchange, at the very least
 between Perl 5 and Perl 6.
 
-=item C<Muldis::DB::PHMD::Translate::ConcreteMuldisD>
+=item C<Muldis::DB::PHMD::Translate::ConcreteMuldis_D>
 
 Utility module that parses Concrete Muldis D (character strings) into Perl
 Hosted Muldis D (tree of Perl Arrays etc), and also that generates the
@@ -107,14 +107,14 @@ Implementation of a command-line user application over the Muldis DB API
 that takes Concrete Muldis D as input, compiles it and runs it, and nicely
 formats output for user display.  This is analogous to L<DBI::Shell>.
 
-=item C<DBD::MuldisDB>
+=item C<DBD::Muldis_DB>
 
 A wrapper over the Muldis DB API that makes it work as a L<DBI> driver
 module, should that be useful.  Depending on what DBI itself permits or
 requires, this could take a variety of query definition formats, including
 either or both of Concrete Muldis D or (most likely) Perl Hosted Muldis D.
 
-=item C<Muldis::DB::PHMD::Translate::TutorialD> etc
+=item C<Muldis::DB::PHMD::Translate::Tutorial_D> etc
 
 Utility module that parses the B<Tutorial D> language into Perl Hosted
 Muldis D code, and also that generates the former from the latter.  Mainly
@@ -184,7 +184,7 @@ A Muldis DB Engine built around the Perl DBI module in a more generic
 fashion, that would work with multiple DBD modules rather than being
 specific to one SQL DBMS, could be named this.
 
-=item C<DBIx::Class::Storage::MuldisDB> etc
+=item C<DBIx::Class::Storage::Muldis_DB> etc
 
 An alternative plug-in storage engine for L<DBIx::Class> that uses Muldis
 DB rather than DBI.  Analogous extensions can be added to other DBI

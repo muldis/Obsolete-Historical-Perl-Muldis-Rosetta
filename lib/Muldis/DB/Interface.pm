@@ -407,7 +407,7 @@ separate L<Muldis::DB::Cookbook> distribution (when that comes to exist).
 
 B<Muldis::DB::Interface>, aka I<Interface>, comprises the minimal core of
 the Muldis DB framework, the one component that probably every program
-would use.  Together with the Muldis D language (see L<Language::MuldisD>),
+would use.  Together with the Muldis D language (see L<Muldis::D>),
 it defines the common API for Muldis DB implementations to do and which
 applications invoke.
 

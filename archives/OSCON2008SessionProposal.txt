@@ -88,7 +88,7 @@ Additional Notes:
 
     If actually seeing the topical projects makes a difference to your
     proposal selection process, they are at
-    http://search.cpan.org/dist/Language-MuldisD/ (language spec) and
+    http://search.cpan.org/dist/Muldis-D/ (language spec) and
     http://search.cpan.org/dist/Muldis-DB/ (Perl 5 impl) respectively.  I
     didn't know whether to put those urls in the Abstract or not, so they
     are here instead.
