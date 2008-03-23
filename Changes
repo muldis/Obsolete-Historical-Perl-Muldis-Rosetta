@@ -24,6 +24,8 @@
     the other files simply say to look at DB.pm.  To summarize, the word
     MULDIS is a trademark and how you may use it has limitations.
 
+    * Renamed the 2 t/MDB_\w+ test files to t/Muldis_DB_\w+.
+
     TODO: Describe the new Value.pm and other new friends.
 
 2008-03-10   Darren Duncan <perl@DarrenDuncan.net>
