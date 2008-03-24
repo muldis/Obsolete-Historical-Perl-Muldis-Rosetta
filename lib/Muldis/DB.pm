@@ -58,7 +58,7 @@ language which Muldis DB is based on.
 The minimal core of the Muldis DB framework, the one component that
 probably every program would use, is the L<Muldis::DB::Interface> file.  It
 defines a small set of roles/classes that comprise a common API (that
-processes I<Perl Hosted Abstract Muldis D> commands) for Muldis DB
+processes I<Perl Hosted Data Muldis D> commands) for Muldis DB
 implementations to do and which applications invoke, called the I<Muldis DB
 Native Interface> (or I<MDBNI>).  For the most part, C<Interface> just
 defines shims and it can only be used when they are subclassed by an

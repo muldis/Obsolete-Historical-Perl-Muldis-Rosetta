@@ -68,51 +68,52 @@ public APIs that work without Muldis DB being present on the system.  If
 Muldis DB is Genezzo's sole or primary interface, then simply C<Genezzo> is
 probably best for branding.
 
-=item C<Muldis::DB::PHMD::Refactor(|::\w+)>
+=item C<Muldis::DB::PHDMD::Refactor(|::\w+)>
 
-Utility modules that take Perl Hosted Muldis D code as input and derive
-other PHMD code as output, such as with the purpose of refactoring them
-into canonical representations (such that manual code debugging or
-comparisons may be made easier), or forms that are more efficient for
-particular uses but are still logically equivalent.
+Utility modules that take Perl Hosted Data Muldis D (PHDMD) code as input
+and derive other PHDMD code as output, such as with the purpose of
+refactoring them into canonical representations (such that manual code
+debugging or comparisons may be made easier), or forms that are more
+efficient for particular uses but are still logically equivalent.
 
 Presumably all of these would work using static analysis methods and not
 actually "execute" anything, so they are independent of any particular
 Engine environment.  This isn't to say that we can't separately have
-modules that help implement a specific Engine and do PHMD optimization that
-knows the specific needs of that Engine's implementation environment.
+modules that help implement a specific Engine and do PHDMD optimization
+that knows the specific needs of that Engine's implementation environment.
 
 Other words that could go in such module names are like C<Optimize> or
 C<Canon>, or whatever authors prefer.
 
-=item C<Muldis::DB::PHMD::YAML> and C<Muldis::DB::PHMD::XML> etc
+=item C<Muldis::DB::PHDMD::YAML> and C<Muldis::DB::PHDMD::XML> etc
 
-Utility modules that serialize Perl Hosted Muldis D to, or unserialize it
-from, logically equivalent YAML, XML, or other generic data interchange
-formats.  This implementation should be native to the Muldis D language
-itself and not output any Perl-specific details that aren't in non-Perl
-languages, so that it is suitable for interchange, at the very least
-between Perl 5 and Perl 6.
+Utility modules that serialize Perl Hosted Data Muldis D code to, or
+unserialize it from, logically equivalent YAML, XML, or other generic data
+interchange formats.  This implementation should be native to the Muldis D
+language itself and not output any Perl-specific details that aren't in
+non-Perl languages, so that it is suitable for interchange, at the very
+least between Perl 5 and Perl 6.
 
-=item C<Muldis::DB::PHMD::Translate::ConcreteMuldis_D>
+=item C<Muldis::DB::PHDMD::Translate::Muldis_D_PTMD_Tiny>
 
-Utility module that parses Concrete Muldis D (character strings) into Perl
-Hosted Muldis D (tree of Perl Arrays etc), and also that generates the
-former from the latter.  The 2 formats should basically have a 1:1
-correspondence.
+Utility module that parses Plain Text Tiny Muldis D code into Perl Hosted
+Data Muldis D, and also that generates the former from the latter.  The 2
+formats should basically have a 1:1 correspondence.
 
 =item C<Muldis::DB::Shell>
 
 Implementation of a command-line user application over the Muldis DB API
-that takes Concrete Muldis D as input, compiles it and runs it, and nicely
-formats output for user display.  This is analogous to L<DBI::Shell>.
+that takes Plain Text Muldis D as input, compiles it and runs it, and
+nicely formats output for user display.  This is analogous to
+L<DBI::Shell>.
 
 =item C<DBD::Muldis_DB>
 
 A wrapper over the Muldis DB API that makes it work as a L<DBI> driver
 module, should that be useful.  Depending on what DBI itself permits or
 requires, this could take a variety of query definition formats, including
-either or both of Concrete Muldis D or (most likely) Perl Hosted Muldis D.
+either or both of Plain Text Muldis D or (most likely) Perl Hosted Data
+Muldis D.
 
 =item C<Muldis::DB::PHMD::Translate::Tutorial_D> etc
 
@@ -124,10 +125,10 @@ implementations.  In addition, separate utility modules can be made which
 translate to and from other B<D> languages that don't look like B<Tutorial
 D>.
 
-=item C<Muldis::DB::PHMD::Translate::SQL::Native>
+=item C<Muldis::DB::PHDMD::Translate::SQL::Native>
 
-Utility module that parses a Muldis DB-native variant of SQL into
-Perl Hosted Muldis D, and also that generates the former from the latter.
+Utility module that parses a Muldis DB-native variant of SQL into Perl
+Hosted Data Muldis D, and also that generates the former from the latter.
 This SQL variant is essentially a cleaned up subset of the SQL:2003
 standard, with some misfeatures removed, some missing features added, and
 some alterations common in other SQL DBMSs substituted or added.  Or
@@ -142,23 +143,24 @@ deterministically, and perform faster, than ones written to some other SQL
 dialect, since there is less indirection involved between what users query
 and what actually happens to implement it.
 
-=item C<Muldis::DB::PHMD::Translate::SQL::\w+>
+=item C<Muldis::DB::PHDMD::Translate::SQL::\w+>
 
 Utility modules that parse other variants of SQL (or subsets thereof) into
-Perl Hosted Muldis D, and also that generate the former from the latter.
-Examples of these variants are the actual SQL:2003 standard, and the native
-dialects of each actual SQL DBMS.
+Perl Hosted Data Muldis D, and also that generate the former from the
+latter.  Examples of these variants are the actual SQL:2003 standard, and
+the native dialects of each actual SQL DBMS.
 
-=item C<Muldis::DB::PHMD::Translate::\w+>
+=item C<Muldis::DB::PHDMD::Translate::\w+>
 
 Utility modules that translate data (including code and declaratives)
-between representations that are Perl Hosted Muldis D and representations
-that aren't, or between 2 of the latter kind while using the former kind as
-an intermediate representation.  Besides the aforementioned possibilities
-that deal with B<D> languages or SQL, we can have utilities that translate
-to/from native Perl data structures, including native Perl routine
-definitions (L<PPI> would probably be employed in the Perl 5 version), and
-including commonly used third party class' objects.
+between representations that are Perl Hosted Data Muldis D and
+representations that aren't, or between 2 of the latter kind while using
+the former kind as an intermediate representation.  Besides the
+aforementioned possibilities that deal with B<D> languages or SQL, we can
+have utilities that translate to/from native Perl data structures,
+including native Perl routine definitions (L<PPI> would probably be
+employed in the Perl 5 version), and including commonly used third party
+class' objects.
 
 =item C<Muldis::DB::Proxy::(Server|Client|\w+)>
 

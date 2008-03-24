@@ -338,7 +338,7 @@ a third Perl variable holding the relation data of the result.
 
     my $machine = Muldis::DB::Interface::new_machine({
         'engine_name' => 'Muldis::DB::Engine::Example',
-        'exp_ast_lang' => [ 'MuldisD', 'cpan:DUNCAND', '0.8.1' ],
+        'exp_ast_lang' => [ 'Muldis_D', 'cpan:DUNCAND', '0.8.1' ],
         'machine_config' => {},
     });
     my $process = $machine->new_process();
@@ -487,9 +487,9 @@ Muldis D (or alternative) language version that its invocant C<Machine>
 object and its associated/child objects expect their AST/code/value input
 to conform to, and that their AST/code/value output will conform to.  The 3
 elements of the array (each a Str) are, in order, the language spec base
-name (typically C<MuldisD>), the language spec authority (typically
-C<cpan:DUNCAND> when the base name is C<MuldisD>), and the language spec
-version number (looks like C<1.2.3> for C<MuldisD> plus C<cpan:DUNCAND>).
+name (typically C<Muldis_D>), the language spec authority (typically
+C<cpan:DUNCAND> when the base name is C<Muldis_D>), and the language spec
+version number (looks like C<1.2.3> for C<Muldis_D> plus C<cpan:DUNCAND>).
 
 =item C<store_exp_ast_lang (Array :$lang!)>
 
@@ -640,15 +640,13 @@ This method returns the declared Muldis D type of its invocant C<Var>.
 =item C<fetch_ast of Array ()>
 
 This method returns the current Muldis D value of its invocant C<Var> as a
-Perl Hosted Abstract Muldis D data structure (whose root node is a Perl
-Array).
+Perl Hosted Data Muldis D data structure (whose root node is a Perl Array).
 
 =item C<store_ast (Array :$ast!)>
 
 This method assigns a new Muldis D value to its invocant C<Var>, which is
 supplied in the C<$ast> argument; the argument is expected to be a valid
-Perl Hosted Abstract Muldis D data structure (whose root node is a Perl
-Array).
+Perl Hosted Data Muldis D data structure (whose root node is a Perl Array).
 
 =back
 
