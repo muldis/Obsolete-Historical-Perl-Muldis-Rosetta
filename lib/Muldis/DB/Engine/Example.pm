@@ -9,7 +9,7 @@ use Muldis::DB::Interface;
 ###########################################################################
 
 { package Muldis::DB::Engine::Example; # module
-    use version; our $VERSION = qv('0.6.1');
+    use version; our $VERSION = qv('0.6.2');
     # Note: This given version applies to all of this file's packages.
 
 ###########################################################################
@@ -398,7 +398,7 @@ Self-contained reference implementation of a Muldis DB Engine
 
 =head1 VERSION
 
-This document describes Muldis::DB::Engine::Example version 0.6.1 for Perl
+This document describes Muldis::DB::Engine::Example version 0.6.2 for Perl
 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -459,7 +459,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::DB::Interface-0.6.1|Muldis::DB::Interface>.
+L<Muldis::DB::Interface-0.6.2|Muldis::DB::Interface>.
 
 =head1 INCOMPATIBILITIES
 
