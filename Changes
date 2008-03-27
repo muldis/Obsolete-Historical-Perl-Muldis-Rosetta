@@ -14,6 +14,13 @@
     unchanged.  Added new file lib/Muldis/DB/Engine/Example/Value.pm, which
     starts at version 0.0.0.
 
+    * (DB.pm)  Small updates to the TRADEMARK POLICY section.
+
+    * (Interface.pm, Validator.pm)  Update to retain compatibility with the
+    official Muldis D version 0.25.0, where the second (authority) part of
+    a fully-qualified Muldis D language name has changed from
+    'cpan:DUNCAND' to 'http://muldis.com'.
+
     TODO: Describe the new Value.pm and other new friends.
 
 2008-03-23   Darren Duncan <perl@DarrenDuncan.net>

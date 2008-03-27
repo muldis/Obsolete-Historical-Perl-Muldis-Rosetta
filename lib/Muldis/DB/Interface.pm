@@ -338,7 +338,7 @@ a third Perl variable holding the relation data of the result.
 
     my $machine = Muldis::DB::Interface::new_machine({
         'engine_name' => 'Muldis::DB::Engine::Example',
-        'exp_ast_lang' => [ 'Muldis_D', 'cpan:DUNCAND', '0.8.1' ],
+        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.25.0' ],
         'machine_config' => {},
     });
     my $process = $machine->new_process();
@@ -488,8 +488,9 @@ object and its associated/child objects expect their AST/code/value input
 to conform to, and that their AST/code/value output will conform to.  The 3
 elements of the array (each a Str) are, in order, the language spec base
 name (typically C<Muldis_D>), the language spec authority (typically
-C<cpan:DUNCAND> when the base name is C<Muldis_D>), and the language spec
-version number (looks like C<1.2.3> for C<Muldis_D> plus C<cpan:DUNCAND>).
+C<http://muldis.com> when the base name is C<Muldis_D>), and the language
+spec version number (looks like C<1.2.3> for C<Muldis_D> plus
+C<http://muldis.com>).
 
 =item C<store_exp_ast_lang (Array :$lang!)>
 

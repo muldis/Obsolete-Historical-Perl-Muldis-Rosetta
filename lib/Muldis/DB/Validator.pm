@@ -28,7 +28,7 @@ sub main {
     # Instantiate a Muldis DB DBMS / virtual machine.
     my $machine = Muldis::DB::Interface::new_machine({
         'engine_name' => $engine_name,
-        'exp_ast_lang' => [ 'Muldis_D', 'cpan:DUNCAND', '0.8.1' ],
+        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.25.0' ],
         'machine_config' => $machine_config,
     });
     does_ok( $machine, 'Muldis::DB::Interface::Machine' );

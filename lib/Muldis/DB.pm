@@ -279,10 +279,10 @@ suggesting improvements to the standard version.
 
 =head1 TRADEMARK POLICY
 
-The word MULDIS (in any letter case or font) is a Trademark (™), with
-Canadian registration pending (®), of Muldis Data Systems Inc.
-(L<http://www.muldis.com/>), which is wholly owned by Darren Duncan.  The
-trademark applies to computer database software and related services.
+MULDIS and MULDIS MULTIVERSE OF DISCOURSE are trademarks of Muldis Data
+Systems Inc. (L<http://www.muldis.com/>), which is wholly owned by Darren
+Duncan.  The trademarks apply to computer database software and related
+services.
 
 The word MULDIS was invented as a new word, through contraction of the
 quasi-meaningful phrase MULTIVERSE OF DISCOURSE, by Darren Duncan for the
