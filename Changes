@@ -1,7 +1,7 @@
                                 Muldis::DB
 ---------------------------------------------------------------------------
 
-2008-03-xx   Darren Duncan <perl@DarrenDuncan.net>
+2008-04-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis DB version 0.7.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.7.0.tar.gz.  Muldis DB version 0.7.0 for Perl 6 is not
@@ -10,11 +10,12 @@
     incorporates all of said updates, though it may have some of them.
 
     * New file versions are: DB.pm and Interface.pm and Validator.pm and
-    Example.pm 0.7.0.  The other pre-existing versioned files are
-    unchanged.  Added new file lib/Muldis/DB/Engine/Example/Value.pm, which
-    starts at version 0.0.0.
+    Example.pm 0.7.0 and SeeAlso.pod 0.4.5.  Added new file
+    lib/Muldis/DB/Engine/Example/Value.pm, which starts at version 0.0.0.
 
-    * (DB.pm)  Small updates to the TRADEMARK POLICY section.
+    * (DB.pm)  The TRADEMARK POLICY section was severely edited to excise
+    most legalese, and is now just half its previous size; the old longer
+    version was shunted off to the Muldis Data Systems' website.
 
     * (Interface.pm, Validator.pm)  Update to retain compatibility with the
     official Muldis D version 0.25.0, where the second (authority) part of
@@ -22,6 +23,11 @@
     'cpan:DUNCAND' to 'http://muldis.com'.
 
     TODO: Describe the new Value.pm and other new friends.
+
+    * (SeeAlso.pod)  A few minor updates.
+
+    * Minor update to the file archives/OSCON2008SessionProposal.txt which
+    reflects that the proposal was accepted; the talk will be given Jul 23.
 
 2008-03-23   Darren Duncan <perl@DarrenDuncan.net>
 
