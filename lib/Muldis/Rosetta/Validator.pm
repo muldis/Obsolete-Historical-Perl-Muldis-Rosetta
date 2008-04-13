@@ -22,8 +22,8 @@ sub main {
 
     plan( 'tests' => 13 );
 
-    print
-        "#### Muldis::Rosetta::Validator starting test of $engine_name ####\n";
+    print "#### Muldis::Rosetta::Validator"
+        . " starting test of $engine_name ####\n";
 
     # Instantiate a Muldis Rosetta DBMS / virtual machine.
     my $machine = Muldis::Rosetta::Interface::new_machine({
@@ -37,8 +37,8 @@ sub main {
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
-    print
-        "#### Muldis::Rosetta::Validator finished test of $engine_name ####\n";
+    print "#### Muldis::Rosetta::Validator"
+        . " finished test of $engine_name ####\n";
 
     return;
 }

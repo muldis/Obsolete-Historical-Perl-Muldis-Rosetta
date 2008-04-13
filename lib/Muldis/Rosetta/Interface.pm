@@ -40,7 +40,7 @@ sub new_machine {
             confess q{new_machine(): Could not load Muldis Rosetta Engine}
                 . qq{ module '$engine_name': $err};
         }
-        confess qq{new_machine(): Could not load Muldis Rosetta Engine module}
+        confess qq{new_machine(): Could not load Muldis Rosetta Engine mod}
                 . qq{ '$engine_name': while that file did compile without}
                 . q{ errors, it did not declare the same-named module.}
             if !do {
@@ -48,7 +48,7 @@ sub new_machine {
                 defined %{$engine_name . '::'};
             };
     }
-    confess qq{new_machine(): The Muldis Rosetta Engine module '$engine_name'}
+    confess qq{new_machine(): The Muldis Rosetta Engine mod '$engine_name'}
             . q{ does not provide the new_machine() constructor function.}
         if !$engine_name->can( 'new_machine' );
     my $machine = eval {
@@ -57,12 +57,12 @@ sub new_machine {
             'machine_config' => $machine_config });
     };
     if (my $err = $@) {
-        confess qq{new_machine(): The Muldis Rosetta Engine modu '$engine_name'}
+        confess qq{new_machine(): Th Muldis Rosetta Eng mod '$engine_name'}
             . qq{ threw an exception during its new_machine() exec: $err};
     }
     confess q{new_machine(): The new_machine() constructor function of the}
-            . qq{ Muldis Rosetta Engine module '$engine_name' did not return an}
-            . q{ object of a Muldis::Rosetta::Interface::Machine-doing class.}
+            . qq{ Muldis Rosetta Engine mod '$engine_name' did not ret an}
+            . q{ obj of a Muldis::Rosetta::Interface::Machine-doing class.}
         if !blessed $machine
             or !$machine->isa( 'Muldis::Rosetta::Interface::Machine' );
 
