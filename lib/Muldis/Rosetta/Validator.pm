@@ -3,12 +3,12 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::DB::Interface;
+use Muldis::Rosetta::Interface;
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Validator; # module
+{ package Muldis::Rosetta::Validator; # module
     use version; our $VERSION = qv('0.6.2');
 
     use Test::More;
@@ -23,22 +23,22 @@ sub main {
     plan( 'tests' => 13 );
 
     print
-        "#### Muldis::DB::Validator starting test of $engine_name ####\n";
+        "#### Muldis::Rosetta::Validator starting test of $engine_name ####\n";
 
-    # Instantiate a Muldis DB DBMS / virtual machine.
-    my $machine = Muldis::DB::Interface::new_machine({
+    # Instantiate a Muldis Rosetta DBMS / virtual machine.
+    my $machine = Muldis::Rosetta::Interface::new_machine({
         'engine_name' => $engine_name,
         'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.25.0' ],
         'machine_config' => $machine_config,
     });
-    does_ok( $machine, 'Muldis::DB::Interface::Machine' );
+    does_ok( $machine, 'Muldis::Rosetta::Interface::Machine' );
     my $process = $machine->new_process();
-    does_ok( $process, 'Muldis::DB::Interface::Process' );
+    does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
     print
-        "#### Muldis::DB::Validator finished test of $engine_name ####\n";
+        "#### Muldis::Rosetta::Validator finished test of $engine_name ####\n";
 
     return;
 }
@@ -52,13 +52,13 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     my $src_suppliers = $process->new_var({
         'decl_type' => 'sys.Core.Relation.Relation' });
-    does_ok( $src_suppliers, 'Muldis::DB::Interface::Var' );
+    does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Var' );
     my $src_foods = $process->new_var({
         'decl_type' => 'sys.Core.Relation.Relation' });
-    does_ok( $src_foods, 'Muldis::DB::Interface::Var' );
+    does_ok( $src_foods, 'Muldis::Rosetta::Interface::Var' );
     my $src_shipments = $process->new_var({
         'decl_type' => 'sys.Core.Relation.Relation' });
-    does_ok( $src_shipments, 'Muldis::DB::Interface::Var' );
+    does_ok( $src_shipments, 'Muldis::Rosetta::Interface::Var' );
 
     # Load our example literal source data sets into said Perl-lexicals.
 
@@ -152,7 +152,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     my $desi_colour
         = $process->new_var({ 'decl_type' => 'sys.Core.Text.Text' });
-    does_ok( $desi_colour, 'Muldis::DB::Interface::Var' );
+    does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Var' );
     $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
 
@@ -178,7 +178,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
         },
     });
     pass( 'no death from executing search query' );
-    does_ok( $matched_suppl, 'Muldis::DB::Interface::Var' );
+    does_ok( $matched_suppl, 'Muldis::Rosetta::Interface::Var' );
 
     my $matched_suppl_ast = $matched_suppl->fetch_ast();
     pass( 'no death from fetching search results from VM' );
@@ -213,7 +213,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
 ###########################################################################
 
-} # module Muldis::DB::Validator
+} # module Muldis::Rosetta::Validator
 
 ###########################################################################
 ###########################################################################
@@ -227,17 +227,18 @@ __END__
 
 =head1 NAME
 
-Muldis::DB::Validator -
+Muldis::Rosetta::Validator -
 A common comprehensive test suite to run against all Engines
 
 =head1 VERSION
 
-This document describes Muldis::DB::Validator version 0.6.2 for Perl 5.
+This document describes Muldis::Rosetta::Validator version 0.6.2 for Perl
+5.
 
 =head1 SYNOPSIS
 
 This can be the complete content of the main C<t/*.t> file for an example
-Muldis::DB Engine distribution:
+Muldis Rosetta Engine distribution:
 
     use 5.008001;
     use utf8;
@@ -245,50 +246,50 @@ Muldis::DB Engine distribution:
     use warnings FATAL => 'all';
 
     # Load the test suite.
-    use Muldis::DB::Validator;
+    use Muldis::Rosetta::Validator;
 
     # Run the test suite.
-    Muldis::DB::Validator::main({
-        'engine_name' => 'Muldis::DB::Engine::Example',
+    Muldis::Rosetta::Validator::main({
+        'engine_name' => 'Muldis::Rosetta::Engine::Example',
         'machine_config' => {},
     });
 
     1;
 
-The current release of Muldis::DB::Validator uses L<Test::More> internally,
-and C<main()> will invoke it to output what the standard Perl test harness
-expects.  I<It is expected that this will change in the future so that
-Validator does not use Test::More internally, and rather will simply return
-test results in a data structure that the main t/*.t then can disseminate
-and pass the components to Test::More itself.>
+The current release of Muldis::Rosetta::Validator uses L<Test::More>
+internally, and C<main()> will invoke it to output what the standard Perl
+test harness expects.  I<It is expected that this will change in the future
+so that Validator does not use Test::More internally, and rather will
+simply return test results in a data structure that the main t/*.t then can
+disseminate and pass the components to Test::More itself.>
 
 =head1 DESCRIPTION
 
-The Muldis::DB::Validator Perl 5 module is a common comprehensive test
-suite to run against all Muldis DB Engines.  You run it against a
-Muldis DB Engine module to ensure that the Engine and/or the database
-behind it implements the parts of the Muldis DB API that your application
-needs, and that the API is implemented correctly.  Muldis::DB::Validator is
-intended to guarantee a measure of quality assurance (QA) for Muldis::DB,
-so your application can use the database access framework with confidence
-of safety.
+The Muldis::Rosetta::Validator Perl 5 module is a common comprehensive test
+suite to run against all Muldis Rosetta Engines.  You run it against a
+Muldis Rosetta Engine module to ensure that the Engine and/or the database
+behind it implements the parts of the Muldis Rosetta API that your
+application needs, and that the API is implemented correctly.
+Muldis::Rosetta::Validator is intended to guarantee a measure of quality
+assurance (QA) for Muldis::Rosetta, so your application can use the
+database access framework with confidence of safety.
 
-Alternately, if you are writing a Muldis DB Engine module yourself,
-Muldis::DB::Validator saves you the work of having to write your own test
-suite for it.  You can also be assured that if your module passes
-Muldis::DB::Validator's approval, then your module can be easily swapped in
-for other Engine modules by your users, and that any changes you make
-between releases haven't broken something important.
+Alternately, if you are writing a Muldis Rosetta Engine module yourself,
+Muldis::Rosetta::Validator saves you the work of having to write your own
+test suite for it.  You can also be assured that if your module passes
+Muldis::Rosetta::Validator's approval, then your module can be easily
+swapped in for other Engine modules by your users, and that any changes you
+make between releases haven't broken something important.
 
-Muldis::DB::Validator would be used similarly to how Sun has an official
-validation suite for Java Virtual Machines to make sure they implement the
-official Java specification.
+Muldis::Rosetta::Validator would be used similarly to how Sun has an
+official validation suite for Java Virtual Machines to make sure they
+implement the official Java specification.
 
 For reference and context, please see the FEATURE SUPPORT VALIDATION
-documentation section in the core L<Muldis::DB> module.
+documentation section in the core L<Muldis::Rosetta> module.
 
-Note that, as is the nature of test suites, Muldis::DB::Validator will be
-getting regular updates and additions, so that it anticipates all of the
+Note that, as is the nature of test suites, Muldis::Rosetta::Validator will
+be getting regular updates and additions, so that it anticipates all of the
 different ways that people want to use their databases.  This task is
 unlikely to ever be finished, given the seemingly infinite size of the
 task.  You are welcome and encouraged to submit more tests to be included
@@ -319,7 +320,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::DB::Interface-0.6.2|Muldis::DB::Interface>.
+L<Muldis::Rosetta::Interface-0.6.2|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
@@ -327,9 +328,9 @@ None reported.
 
 =head1 SEE ALSO
 
-Go to L<Muldis::DB> for the majority of distribution-internal references,
-and L<Muldis::DB::SeeAlso> for the majority of distribution-external
-references.
+Go to L<Muldis::Rosetta> for the majority of distribution-internal
+references, and L<Muldis::Rosetta::SeeAlso> for the majority of
+distribution-external references.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -341,18 +342,18 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 =head1 LICENSE AND COPYRIGHT
 
-This file is part of the Muldis DB framework.
+This file is part of the Muldis Rosetta framework.
 
-Muldis DB is Copyright © 2002-2008, Darren Duncan.
+Muldis Rosetta is Copyright © 2002-2008, Darren Duncan.
 
-See the LICENSE AND COPYRIGHT of L<Muldis::DB> for details.
+See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 
 =head1 TRADEMARK POLICY
 
-The TRADEMARK POLICY in L<Muldis::DB> applies to this file too.
+The TRADEMARK POLICY in L<Muldis::Rosetta> applies to this file too.
 
 =head1 ACKNOWLEDGEMENTS
 
-The ACKNOWLEDGEMENTS in L<Muldis::DB> apply to this file too.
+The ACKNOWLEDGEMENTS in L<Muldis::Rosetta> apply to this file too.
 
 =cut

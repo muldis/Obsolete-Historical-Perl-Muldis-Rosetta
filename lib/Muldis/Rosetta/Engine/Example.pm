@@ -3,12 +3,12 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::DB::Interface;
+use Muldis::Rosetta::Interface;
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example; # module
+{ package Muldis::Rosetta::Engine::Example; # module
     use version; our $VERSION = qv('0.6.2');
     # Note: This given version applies to all of this file's packages.
 
@@ -18,20 +18,20 @@ sub new_machine {
     my ($args) = @_;
     my ($exp_ast_lang, $machine_config)
         = @{$args}{'exp_ast_lang', 'machine_config'};
-    return Muldis::DB::Engine::Example::Public::Machine->new({
+    return Muldis::Rosetta::Engine::Example::Public::Machine->new({
         'exp_ast_lang' => $exp_ast_lang,
         'machine_config' => $machine_config });
 }
 
 ###########################################################################
 
-} # module Muldis::DB::Engine::Example
+} # module Muldis::Rosetta::Engine::Example
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::Public::Machine; # class
-    use base 'Muldis::DB::Interface::Machine';
+{ package Muldis::Rosetta::Engine::Example::Public::Machine; # class
+    use base 'Muldis::Rosetta::Interface::Machine';
 
     use Carp;
 
@@ -94,7 +94,7 @@ sub store_exp_ast_lang {
 
 sub new_process {
     my ($self) = @_;
-    return Muldis::DB::Engine::Example::Public::Process->new({
+    return Muldis::Rosetta::Engine::Example::Public::Process->new({
         'machine' => $self });
 }
 
@@ -105,13 +105,13 @@ sub assoc_processes {
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::Public::Machine
+} # class Muldis::Rosetta::Engine::Example::Public::Machine
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::Public::Process; # class
-    use base 'Muldis::DB::Interface::Process';
+{ package Muldis::Rosetta::Engine::Example::Public::Process; # class
+    use base 'Muldis::Rosetta::Interface::Process';
 
     use Carp;
     use Scalar::Util qw( refaddr weaken );
@@ -170,7 +170,7 @@ sub DESTROY {
 sub new_var {
     my ($self, $args) = @_;
     my ($decl_type) = @{$args}{'decl_type'};
-    return Muldis::DB::Engine::Example::Public::Var->new({
+    return Muldis::Rosetta::Engine::Example::Public::Var->new({
         'process' => $self, 'decl_type' => $decl_type });
 }
 
@@ -181,7 +181,7 @@ sub assoc_vars {
 
 sub new_func_binding {
     my ($self) = @_;
-    return Muldis::DB::Engine::Example::Public::FuncBinding->new({
+    return Muldis::Rosetta::Engine::Example::Public::FuncBinding->new({
         'process' => $self });
 }
 
@@ -192,7 +192,7 @@ sub assoc_func_bindings {
 
 sub new_proc_binding {
     my ($self) = @_;
-    return Muldis::DB::Engine::Example::Public::ProcBinding->new({
+    return Muldis::Rosetta::Engine::Example::Public::ProcBinding->new({
         'process' => $self });
 }
 
@@ -207,10 +207,10 @@ sub call_func {
     my ($self, $args) = @_;
     my ($func_name, $f_args) = @{$args}{'func_name', 'args'};
 
-#    my $f = Muldis::DB::Engine::Example::Public::FuncBinding->new({
+#    my $f = Muldis::Rosetta::Engine::Example::Public::FuncBinding->new({
 #        'process' => $self });
 
-    my $result = Muldis::DB::Engine::Example::Public::Var->new({
+    my $result = Muldis::Rosetta::Engine::Example::Public::Var->new({
         'process' => $self,
         'decl_type' => 'sys.Core.Universal.Universal' });
 
@@ -230,7 +230,7 @@ sub call_proc {
     my ($proc_name, $upd_args, $ro_args)
         = @{$args}{'proc_name', 'upd_args', 'ro_args'};
 
-#    my $p = Muldis::DB::Engine::Example::Public::FuncBinding->new({
+#    my $p = Muldis::Rosetta::Engine::Example::Public::FuncBinding->new({
 #        'process' => $self });
 
 #    $p->bind_proc({ 'proc_name' => $proc_name });
@@ -278,13 +278,13 @@ sub rollback_trans {
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::Public::Process
+} # class Muldis::Rosetta::Engine::Example::Public::Process
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::Public::Var; # class
-    use base 'Muldis::DB::Interface::Var';
+{ package Muldis::Rosetta::Engine::Example::Public::Var; # class
+    use base 'Muldis::Rosetta::Interface::Var';
 
     use Carp;
     use Scalar::Util qw( refaddr weaken );
@@ -314,7 +314,7 @@ sub _build {
     $process->{$PROCESS_ATTR_ASSOC_VARS}->{refaddr $self} = $self;
     weaken $process->{$PROCESS_ATTR_ASSOC_VARS}->{refaddr $self};
 
-#    $self->{$ATTR_VAR} = Muldis::DB::Engine::Example::VM::Var->new({
+#    $self->{$ATTR_VAR} = Muldis::Rosetta::Engine::Example::VM::Var->new({
 #        'decl_type' => $decl_type }); # TODO; or some such
 
     return;
@@ -345,13 +345,13 @@ sub store_ast {
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::Public::Var
+} # class Muldis::Rosetta::Engine::Example::Public::Var
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::Public::FuncBinding; # class
-    use base 'Muldis::DB::Interface::FuncBinding';
+{ package Muldis::Rosetta::Engine::Example::Public::FuncBinding; # class
+    use base 'Muldis::Rosetta::Interface::FuncBinding';
 
     use Carp;
     use Scalar::Util qw( refaddr weaken );
@@ -362,13 +362,13 @@ sub store_ast {
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::Public::FuncBinding
+} # class Muldis::Rosetta::Engine::Example::Public::FuncBinding
 
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::DB::Engine::Example::Public::ProcBinding; # class
-    use base 'Muldis::DB::Interface::ProcBinding';
+{ package Muldis::Rosetta::Engine::Example::Public::ProcBinding; # class
+    use base 'Muldis::Rosetta::Interface::ProcBinding';
 
     use Carp;
     use Scalar::Util qw( refaddr weaken );
@@ -379,7 +379,7 @@ sub store_ast {
 
 ###########################################################################
 
-} # class Muldis::DB::Engine::Example::Public::ProcBinding
+} # class Muldis::Rosetta::Engine::Example::Public::ProcBinding
 
 ###########################################################################
 ###########################################################################
@@ -393,20 +393,20 @@ __END__
 
 =head1 NAME
 
-Muldis::DB::Engine::Example -
-Self-contained reference implementation of a Muldis DB Engine
+Muldis::Rosetta::Engine::Example -
+Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::DB::Engine::Example version 0.6.2 for Perl
-5.
+This document describes Muldis::Rosetta::Engine::Example version 0.6.2 for
+Perl 5.
 
 It also describes the same-number versions for Perl 5 of
-Muldis::DB::Engine::Example::Public::Machine,
-Muldis::DB::Engine::Example::Public::Process,
-Muldis::DB::Engine::Example::Public::Var,
-Muldis::DB::Engine::Example::Public::FuncBinding, and
-Muldis::DB::Engine::Example::Public::ProcBinding.
+Muldis::Rosetta::Engine::Example::Public::Machine,
+Muldis::Rosetta::Engine::Example::Public::Process,
+Muldis::Rosetta::Engine::Example::Public::Var,
+Muldis::Rosetta::Engine::Example::Public::FuncBinding, and
+Muldis::Rosetta::Engine::Example::Public::ProcBinding.
 
 =head1 SYNOPSIS
 
@@ -414,25 +414,25 @@ I<This documentation is pending.>
 
 =head1 DESCRIPTION
 
-B<Muldis::DB::Engine::Example>, aka the I<Muldis DB Example Engine>, aka
-I<Example>, is the self-contained and pure-Perl reference implementation of
-Muldis DB.  It is included in the Muldis DB core distribution to allow the
-core to be completely testable on its own.
+B<Muldis::Rosetta::Engine::Example>, aka the I<Muldis Rosetta Example
+Engine>, aka I<Example>, is the self-contained and pure-Perl reference
+implementation of Muldis Rosetta.  It is included in the Muldis Rosetta
+core distribution to allow the core to be completely testable on its own.
 
 Example is coded intentionally in a simple fashion so that it is easy to
 maintain and and easy for developers to study.  As a result, while it
 performs correctly and reliably, it also performs quite slowly; you should
 only use Example for testing, development, and study; you should not use it
-in production.  (See the L<Muldis::DB::SeeAlso> file for a list of other
-Engines that are more suitable for production.)
+in production.  (See the L<Muldis::Rosetta::SeeAlso> file for a list of
+other Engines that are more suitable for production.)
 
-This C<Muldis::DB::Engine::Example> file is the main file of the Example
-Engine, and it is what applications quasi-directly invoke; its
-C<Muldis::DB::Engine::Example::Public::\w+> classes directly do/subclass
-the roles/classes in L<Muldis::DB::Interface>.  The other
-C<Muldis::DB::Engine::Example::\w+> files are used internally by this file,
-comprising the rest of the Example Engine, and are not intended to be used
-directly in user code.
+This C<Muldis::Rosetta::Engine::Example> file is the main file of the
+Example Engine, and it is what applications quasi-directly invoke; its
+C<Muldis::Rosetta::Engine::Example::Public::\w+> classes directly
+do/subclass the roles/classes in L<Muldis::Rosetta::Interface>.  The other
+C<Muldis::Rosetta::Engine::Example::\w+> files are used internally by this
+file, comprising the rest of the Example Engine, and are not intended to be
+used directly in user code.
 
 I<This documentation is pending.>
 
@@ -459,7 +459,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::DB::Interface-0.6.2|Muldis::DB::Interface>.
+L<Muldis::Rosetta::Interface-0.6.2|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
@@ -467,9 +467,9 @@ None reported.
 
 =head1 SEE ALSO
 
-Go to L<Muldis::DB> for the majority of distribution-internal references,
-and L<Muldis::DB::SeeAlso> for the majority of distribution-external
-references.
+Go to L<Muldis::Rosetta> for the majority of distribution-internal
+references, and L<Muldis::Rosetta::SeeAlso> for the majority of
+distribution-external references.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -481,18 +481,18 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 =head1 LICENSE AND COPYRIGHT
 
-This file is part of the Muldis DB framework.
+This file is part of the Muldis Rosetta framework.
 
-Muldis DB is Copyright © 2002-2008, Darren Duncan.
+Muldis Rosetta is Copyright © 2002-2008, Darren Duncan.
 
-See the LICENSE AND COPYRIGHT of L<Muldis::DB> for details.
+See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 
 =head1 TRADEMARK POLICY
 
-The TRADEMARK POLICY in L<Muldis::DB> applies to this file too.
+The TRADEMARK POLICY in L<Muldis::Rosetta> applies to this file too.
 
 =head1 ACKNOWLEDGEMENTS
 
-The ACKNOWLEDGEMENTS in L<Muldis::DB> apply to this file too.
+The ACKNOWLEDGEMENTS in L<Muldis::Rosetta> apply to this file too.
 
 =cut

@@ -16,7 +16,7 @@ sleep 3;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    'NAME' => 'Muldis::DB',
+    'NAME' => 'Muldis::Rosetta',
     'VERSION' => '0.6.2',
     'ABSTRACT' => 'Full-featured truly relational DBMS in Perl',
     'AUTHOR' => 'Darren Duncan <perl@DarrenDuncan.net>',
