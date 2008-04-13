@@ -17,7 +17,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     'NAME' => 'Muldis::Rosetta',
-    'VERSION' => '0.6.2',
+    'VERSION' => '0.7.0',
     'ABSTRACT' => 'Full-featured truly relational DBMS in Perl',
     'AUTHOR' => 'Darren Duncan <perl@DarrenDuncan.net>',
     'LICENSE' => 'lgpl',

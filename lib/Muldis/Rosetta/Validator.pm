@@ -9,7 +9,7 @@ use Muldis::Rosetta::Interface;
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    use version; our $VERSION = qv('0.6.2');
+    use version; our $VERSION = qv('0.7.0');
 
     use Test::More;
 
@@ -232,7 +232,7 @@ A common comprehensive test suite to run against all Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Validator version 0.6.2 for Perl
+This document describes Muldis::Rosetta::Validator version 0.7.0 for Perl
 5.
 
 =head1 SYNOPSIS
@@ -320,7 +320,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-0.6.2|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-0.7.0|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
