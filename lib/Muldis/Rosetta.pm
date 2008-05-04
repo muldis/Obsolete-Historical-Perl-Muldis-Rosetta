@@ -45,16 +45,20 @@ Loosely speaking, the Muldis Rosetta framework at large is like the Perl
 DBI framework at large, so if you know how to use the Perl DBI to work with
 databases, it should be easy enough to apply that knowledge to using Muldis
 Rosetta to work with databases.  Like the Perl DBI, Muldis Rosetta has
-separately distributable core, implementation, and extension distributions.
-Like an implementation ("driver") of the Perl DBI, an implementation
-("engine") of Muldis Rosetta works according to the command design pattern;
-its API is very minimalistic and mainly serves to process arbitrary
-"commands" through a single routine or three.  Unlike the Perl DBI, which
-takes commands in some dialect of SQL, which changes based on the
-implementation in use, Muldis Rosetta takes commands in the B<Muldis D>
-language, which has just one dialect shared by all implementations.  See
-the separate all-documentation distribution L<Muldis::D> for the formal
-definition of the Muldis D language which Muldis Rosetta is based on.
+separately distributable core/API, implementation, and extension
+distributions.  Like an implementation ("driver") of the Perl DBI, an
+implementation ("engine") of Muldis Rosetta works according to the command
+design pattern; its API is very minimalistic and mainly serves to process
+arbitrary "commands" through a single routine or three.  Also like the Perl
+DBI, Muldis Rosetta does not strictly require that said commands are
+written in any particular programming language.  Unlike the Perl DBI, which
+typically takes commands in various implementation-specific dialects of SQL
+that are mutually incompatible to a large degree, Muldis Rosetta typically
+takes commands in various dialects of B<Muldis D> that are highly
+standardized across implementations and have little or no mutual
+incompatability.  See the separate all-documentation distribution
+L<Muldis::D> for the formal definition of the Muldis D language, which
+Muldis Rosetta also serves as the reference implementation of.
 
 The minimal core of the Muldis Rosetta framework, the one component that
 probably every program would use, is the L<Muldis::Rosetta::Interface>
@@ -67,10 +71,10 @@ implementation.  In the Perl DBI framework analogy, C<Interface>
 corresponds to the L<DBI> module itself.  An implementation is called a
 I<Muldis Rosetta Engine> or I<Engine>.
 
-Thanks largely to the use of Muldis D as its command language, MRNI is
-rigorously defined, such that there should be no ambiguity when trying to
-invoke or implement it, and so an application written to it should behave
-identically no matter which conforming Engine is in use.
+Thanks largely to the use of Muldis D as its primary command language, MRNI
+is rigorously defined, such that there should be no ambiguity when trying
+to invoke or implement it, and so an application written to it should
+behave identically no matter which conforming Engine is in use.
 
 The maximal core of the Muldis Rosetta framework, everything else of
 substance in the same distribution as the minimal core (and this "Rosetta"
