@@ -239,7 +239,7 @@ data or data definitions or connections to databases (list not exhaustive):
 L<DBI>, L<Tangram>, L<DBIx::Class>, L<HDB>, L<Class::DBI>, L<Pixie>,
 L<Alzabo>, L<DBIx::SQLEngine>, L<Rose::DB>, L<SPOPS>, L<Set::Object>,
 L<Set::Scalar>, L<Object::Relation>, L<Oryx>, L<DBM::Deep>,
-L<DBIx::SearchBuilder>, L<DBIx::RecordSet>, L<DBIx::Abstract>,
+L<DBIx::SearchBuilder>, L<DBIx::RecordSet>, L<DBIx::Abstract>, L<DBIx::IO>,
 L<DBIx::AnyDBD>, L<DBIx::Browse>, L<DBIx::DBH>, L<MKDoc::SQL>,
 L<Data::Transactional>, L<DBIx::ModelUpdate>, L<DBIx::ProcedureCall>,
 L<DB::Ent>, L<DBIx::Romani>, L<DBIx::DBSchema>, L<DBIx::Namespace>,
