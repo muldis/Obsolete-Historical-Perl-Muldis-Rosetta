@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2008-05-xx   Darren Duncan <perl@DarrenDuncan.net>
+2008-08-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.8.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.8.0.tar.gz.  Muldis Rosetta version 0.8.0 for Perl 6
@@ -18,6 +18,15 @@
     and Muldis Rosetta are more similar, specifically that both do not
     require the commands they process to be of any specific language, and
     also that they both typically take multiple language dialects.
+
+    * (Interface.pm, Validator.pm)  Updated any references to Muldis D type
+    names to reflect those in the current language spec version 0.43.0.
+
+    * (Interface.pm, Example.pm)  Removed the roles|classes named
+    "(Func|Proc)Binding", thereby majorly simplifying the public API of a
+    Rosetta Engine; also removed the associated attributes|accessors of the
+    "Process" role|class.  You now simply invoke a Muldis D routine
+    directly using a "Process" method.
 
     * The file archives/OSCON2008SessionProposal.txt was moved from the
     Muldis Rosetta version control / distribution to the Muldis D one; also

@@ -122,8 +122,6 @@ sub assoc_processes {
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
     my $ATTR_ASSOC_VARS          = 'assoc_vars';
-    my $ATTR_ASSOC_FUNC_BINDINGS = 'assoc_func_bindings';
-    my $ATTR_ASSOC_PROC_BINDINGS = 'assoc_proc_bindings';
 
     # Maintain actual state of the this DBMS' virtual machine.
     # TODO: the VM itself should be in another file, this attr with it.
@@ -150,8 +148,6 @@ sub _build {
     weaken $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self};
 
     $self->{$ATTR_ASSOC_VARS}          = {};
-    $self->{$ATTR_ASSOC_FUNC_BINDINGS} = {};
-    $self->{$ATTR_ASSOC_PROC_BINDINGS} = {};
 
     $self->{$ATTR_TRANS_NEST_LEVEL} = 0;
 
@@ -179,40 +175,18 @@ sub assoc_vars {
     return [values %{$self->{$ATTR_ASSOC_VARS}}];
 }
 
-sub new_func_binding {
-    my ($self) = @_;
-    return Muldis::Rosetta::Engine::Example::Public::FuncBinding->new({
-        'process' => $self });
-}
-
-sub assoc_func_bindings {
-    my ($self) = @_;
-    return [values %{$self->{$ATTR_ASSOC_FUNC_BINDINGS}}];
-}
-
-sub new_proc_binding {
-    my ($self) = @_;
-    return Muldis::Rosetta::Engine::Example::Public::ProcBinding->new({
-        'process' => $self });
-}
-
-sub assoc_proc_bindings {
-    my ($self) = @_;
-    return [values %{$self->{$ATTR_ASSOC_PROC_BINDINGS}}];
-}
-
 ###########################################################################
 
 sub call_func {
     my ($self, $args) = @_;
     my ($func_name, $f_args) = @{$args}{'func_name', 'args'};
 
-#    my $f = Muldis::Rosetta::Engine::Example::Public::FuncBinding->new({
+#    my $f = Muldis::Rosetta::Engine::Example::Public::X->new({
 #        'process' => $self });
 
     my $result = Muldis::Rosetta::Engine::Example::Public::Var->new({
         'process' => $self,
-        'decl_type' => 'sys.Core.Universal.Universal' });
+        'decl_type' => 'sys.std.Core.Type.Universal' });
 
 #    $f->bind_func({ 'func_name' => $func_name });
 #    $f->bind_result({ 'var' => $result });
@@ -230,7 +204,7 @@ sub call_proc {
     my ($proc_name, $upd_args, $ro_args)
         = @{$args}{'proc_name', 'upd_args', 'ro_args'};
 
-#    my $p = Muldis::Rosetta::Engine::Example::Public::FuncBinding->new({
+#    my $p = Muldis::Rosetta::Engine::Example::Public::X->new({
 #        'process' => $self });
 
 #    $p->bind_proc({ 'proc_name' => $proc_name });
@@ -350,40 +324,6 @@ sub store_ast {
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::Rosetta::Engine::Example::Public::FuncBinding; # class
-    use base 'Muldis::Rosetta::Interface::FuncBinding';
-
-    use Carp;
-    use Scalar::Util qw( refaddr weaken );
-
-###########################################################################
-
-# TODO.
-
-###########################################################################
-
-} # class Muldis::Rosetta::Engine::Example::Public::FuncBinding
-
-###########################################################################
-###########################################################################
-
-{ package Muldis::Rosetta::Engine::Example::Public::ProcBinding; # class
-    use base 'Muldis::Rosetta::Interface::ProcBinding';
-
-    use Carp;
-    use Scalar::Util qw( refaddr weaken );
-
-###########################################################################
-
-# TODO.
-
-###########################################################################
-
-} # class Muldis::Rosetta::Engine::Example::Public::ProcBinding
-
-###########################################################################
-###########################################################################
-
 1; # Magic true value required at end of a reusable file's code.
 __END__
 
@@ -404,9 +344,7 @@ Perl 5.
 It also describes the same-number versions for Perl 5 of
 Muldis::Rosetta::Engine::Example::Public::Machine,
 Muldis::Rosetta::Engine::Example::Public::Process,
-Muldis::Rosetta::Engine::Example::Public::Var,
-Muldis::Rosetta::Engine::Example::Public::FuncBinding, and
-Muldis::Rosetta::Engine::Example::Public::ProcBinding.
+Muldis::Rosetta::Engine::Example::Public::Var.
 
 =head1 SYNOPSIS
 

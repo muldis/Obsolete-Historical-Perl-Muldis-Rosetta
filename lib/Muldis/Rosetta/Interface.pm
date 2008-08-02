@@ -124,26 +124,6 @@ sub new_machine {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub new_func_binding {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub assoc_func_bindings {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub new_proc_binding {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub assoc_proc_bindings {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
     sub call_func {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
@@ -208,104 +188,6 @@ sub new_machine {
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::Rosetta::Interface::FuncBinding; # role
-    use Carp;
-    use Scalar::Util qw(blessed);
-
-    sub assoc_process {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bind_func {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bound_func {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bind_result {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bound_result {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bind_params {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bound_params {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub call {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-} # role Muldis::Rosetta::Interface::FuncBinding
-
-###########################################################################
-###########################################################################
-
-{ package Muldis::Rosetta::Interface::ProcBinding; # role
-    use Carp;
-    use Scalar::Util qw(blessed);
-
-    sub assoc_process {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bind_proc {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bound_proc {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bind_upd_params {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bound_upd_params {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bind_ro_params {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub bound_ro_params {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub call {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-} # role Muldis::Rosetta::Interface::ProcBinding
-
-###########################################################################
-###########################################################################
-
 1; # Magic true value required at end of a reusable file's code.
 __END__
 
@@ -326,9 +208,7 @@ This document describes Muldis::Rosetta::Interface version 0.7.0 for Perl
 It also describes the same-number versions for Perl 5 of
 Muldis::Rosetta::Interface::Machine ("Machine"),
 Muldis::Rosetta::Interface::Process ("Process"),
-Muldis::Rosetta::Interface::Var ("Var"),
-Muldis::Rosetta::Interface::FuncBinding ("FuncBinding"), and
-Muldis::Rosetta::Interface::ProcBinding ("ProcBinding").
+Muldis::Rosetta::Interface::Var ("Var").
 
 =head1 SYNOPSIS
 
@@ -340,17 +220,17 @@ a third Perl variable holding the relation data of the result.
 
     my $machine = Muldis::Rosetta::Interface::new_machine({
         'engine_name' => 'Muldis::Rosetta::Engine::Example',
-        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.25.0' ],
+        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.43.0' ],
         'machine_config' => {},
     });
     my $process = $machine->new_process();
 
     my $r1 = $process->new_var({
-        'decl_type' => 'sys.Core.Relation.Relation' });
+        'decl_type' => 'sys.std.Core.Type.Relation' });
     my $r2 = $process->new_var({
-        'decl_type' => 'sys.Core.Relation.Relation' });
+        'decl_type' => 'sys.std.Core.Type.Relation' });
 
-    $r1->store_ast({ 'ast' => [ 'Relation', 'sys.Core.Relation.Relation', [
+    $r1->store_ast({ 'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
         {
             'x' => [ 'PInt', 'perl_pint', 4 ],
             'y' => [ 'PInt', 'perl_pint', 7 ],
@@ -361,7 +241,7 @@ a third Perl variable holding the relation data of the result.
         },
     ] ] });
 
-    $r2->store_ast({ 'ast' => [ 'Relation', 'sys.Core.Relation.Relation', [
+    $r2->store_ast({ 'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
         {
             'y' => [ 'PInt', 'perl_pint', 5 ],
             'z' => [ 'PInt', 'perl_pint', 6 ],
@@ -377,9 +257,9 @@ a third Perl variable holding the relation data of the result.
     ] ] });
 
     my $r3 = $process->call_func(
-        'func_name' => 'sys.Core.Relation.join',
+        'func_name' => 'sys.std.Core.Relation.join',
         'args' => {
-            'topic' => [ 'QuasiSet', 'sys.Core.Spec.QuasiSetOfRelation', [
+            'topic' => [ 'QuasiSet', 'quasi_set_of.sys.std.Core.Type.Relation', [
                 $r1,
                 $r2,
             ],
@@ -389,7 +269,7 @@ a third Perl variable holding the relation data of the result.
     my $r3_ast = $r3->fetch_ast();
 
     # Then $r3_ast contains:
-    # [ 'Relation', 'sys.Core.Relation.Relation', [
+    # [ 'Relation', 'sys.std.Core.Type.Relation', [
     #     {
     #         'x' => [ 'PInt', 'perl_pint', 3 ],
     #         'y' => [ 'PInt', 'perl_pint', 2 ],
@@ -459,7 +339,7 @@ that is expected to be the root package of a Muldis Rosetta Engine, and
 which is expected to declare a C<new_machine> subroutine with a single
 named argument C<$machine_config>; invoking this subroutine is expected to
 return an object of some class of the same Engine which does the
-Muldis::Rosetta::Interface::Machine role.  This function will start by
+C<Muldis::Rosetta::Interface::Machine> role.  This function will start by
 testing if the root package is already loaded (it may be declared by some
 already-loaded file of another name), and only if not, will it do a Perl
 'require' of the C<$engine_name>.  The new C<Machine> object's "expected
@@ -477,7 +357,7 @@ machine / Muldis D environment, which is the widest scope stateful context
 in which any other database activities happen.  Other activities meaning
 the compilation and execution of Muldis D code, mounting or unmounting
 depots, performing queries, data manipulation, data definition, and
-transactions. If a C<Machine> object is ever garbage collected by Perl
+transactions.  If a C<Machine> object is ever garbage collected by Perl
 while it has any active transactions, then those will all be rolled back,
 and then an exception thrown.
 
@@ -543,75 +423,50 @@ This method returns, as elements of a new (unordered) Array, all the
 currently existing C<Var> objects that are associated with the invocant
 C<Process>.
 
-=item C<new_func_binding of Muldis::Rosetta::Interface::FuncBinding ()>
-
-This method creates and returns a new C<FuncBinding> object that is
-associated with the invocant C<Process>.
-
-=item C<assoc_func_bindings of Array ()>
-
-This method returns, as elements of a new (unordered) Array, all the
-currently existing C<FuncBinding> objects that are associated with the
-invocant C<Process>.
-
-=item C<new_proc_binding of Muldis::Rosetta::Interface::ProcBinding ()>
-
-This method creates and returns a new C<ProcBinding> object that is
-associated with the invocant C<Process>.
-
-=item C<assoc_proc_bindings of Array ()>
-
-This method returns, as elements of a new (unordered) Array, all the
-currently existing C<ProcBinding> objects that are associated with the
-invocant C<Process>.
-
 =item C<call_func of Muldis::Rosetta::Interface::Var (Str :$func_name!,
 Hash :$args!)>
 
 This method invokes the Muldis D function named by its C<$func_name>
 argument, giving it arguments from C<$args>, and then returning the result
-as a new C<Var> object.  This method is conceptually a wrapper over the
-creation of a C<FuncBinding> object, setting up its bindings, and invoking
-its C<call> method.
+as a new C<Var> object.
 
 =item C<call_proc (Str :$proc_name!, Hash :$upd_args!, Hash :$ro_args!)>
 
 This method invokes the Muldis D procedure named by its C<$proc_name>
 argument, giving it subject-to-update arguments from C<$upd_args> and
 read-only arguments from C<$ro_args>; the C<Var> objects in C<$upd_args>
-are possibly updated as a side-effect of the procedure's execution.  This
-method is conceptually a wrapper over the creation of a C<ProcBinding>
-object, setting up its bindings, and invoking its C<call> method.
+are possibly updated as a side-effect of the procedure's execution.
 
 =item C<trans_nest_level of Int ()>
 
 This method returns the current transaction nesting level of its invocant's
-virtual machine.  If no explicit transactions were started, then the
-nesting level is zero, in which case the Process is conceptually
+virtual machine process.  If no explicit transactions were started, then
+the nesting level is zero, in which case the process is conceptually
 auto-committing every successful Muldis D statement.  Each call of
 C<start_trans> will increase the nesting level by one, and each
 C<commit_trans> or C<rollback_trans> will decrease it by one (it can't be
 decreased below zero).  Note that all transactions started or ended within
-Muldis D code are attached to a particular lexical scope in the Muldis D
-code (specifically a "try/catch" context), and so they will never have any
-effect on the nest level that Perl sees (assuming that a Muldis D host
-language will never be invoked by Muldis D), regardless of whether the
-Muldis D code successfully returns or throws an exception.
+Muldis D code (except direct boot_call transaction management) are attached
+to a particular lexical scope in the Muldis D code (specifically a
+"try/catch" context), and so they will never have any effect on the nest
+level that Perl sees (assuming that a Muldis D host language will never be
+invoked by Muldis D), regardless of whether the Muldis D code successfully
+returns or throws an exception.
 
 =item C<start_trans ()>
 
 This method starts a new child-most transaction within the invocant's
-virtual machine.
+virtual machine process.
 
 =item C<commit_trans ()>
 
 This method commits the child-most transaction within the invocant's
-virtual machine; it dies if there isn't one.
+virtual machine process; it dies if there isn't one.
 
 =item C<rollback_trans ()>
 
 This method rolls back the child-most transaction within the invocant's
-virtual machine; it dies if there isn't one.
+virtual machine process; it dies if there isn't one.
 
 =back
 
@@ -651,145 +506,6 @@ Perl Hosted Data Muldis D data structure (whose root node is a Perl Array).
 This method assigns a new Muldis D value to its invocant C<Var>, which is
 supplied in the C<$ast> argument; the argument is expected to be a valid
 Perl Hosted Data Muldis D data structure (whose root node is a Perl Array).
-
-=back
-
-=head2 The Muldis::Rosetta::Interface::FuncBinding Role
-
-A C<FuncBinding> represents a single Muldis D function that may be directly
-invoked by Perl code.  It is associated with a specific C<Process> object,
-the one whose C<new_func_binding> method created it, and the function it
-represents lives in and has a global-public scoped name in the
-corresponding virtual machine.  This is specifically a lazy binding, so no
-validity checking of the object happens except while the FuncBinding's
-C<call> method is being executed, and a then-valid object can then become
-invalid afterwards.  A C<FuncBinding> is conceptually used behind the
-scenes to implement a C<Process> object's C<call_func> method, but you can
-use it directly instead, for possibly better performance.
-
-=over
-
-=item C<assoc_process of Muldis::Rosetta::Interface::Process ()>
-
-This method returns the C<Process> object that the invocant C<FuncBinding>
-is associated with.
-
-=item C<bind_func (Str :$func_name!)>
-
-This method causes the invocant C<FuncBinding> to be associated with the
-Muldis D function named by the C<$func_name> argument.
-
-=item C<bound_func of Str ()>
-
-This method returns the name of the Muldis D function that the invocant
-C<FuncBinding> is currently associated with, or undef if that wasn't set.
-
-=item C<bind_result (Muldis::Rosetta::Interface::Var :$var!)>
-
-This method binds the C<Var> object in C<$var> to the result of the Muldis
-D function associated with the invocant C<FuncBinding>; when the function
-is executed via the FuncBinding, its result will end up in C<$var>.
-
-=item C<bound_result of Muldis::Rosetta::Interface::Var ()>
-
-This method returns the C<Var> object currently bound to the function
-result.
-
-=item C<bind_params (Hash :$args!)>
-
-This method binds the C<Var> objects that are the Hash values in C<$args>
-to the parameters of the Muldis D function such that they correspond by
-Hash key names matching parameter names; when the function is executed via
-the FuncBinding, its arguments are pulled from the C<$args>.  Note that the
-same C<Var> object may be bound to multiple parameters and/or the result at
-once.  This method alternately allows a Perl Array which is Perl Hosted
-Muldis D to be supplied instead of any given C<Var> object, in which case a
-new C<Var> object will be non-lazily created with that value, and be used
-there.
-
-=item C<bound_params of Hash ()>
-
-This method returns, as values of a new Hash, the C<Var> objects currently
-bound to the function's parameters, with the corresponding Hash keys being
-the names of the parameters they are bound to.
-
-=item C<call ()>
-
-This method performs any lazy validation on the invocant C<FuncBinding>,
-and with no failure, it then invokes the Muldis D function.  It is at this
-time that the current values of any bound C<Var> objects are taken.
-
-=back
-
-=head2 The Muldis::Rosetta::Interface::ProcBinding Role
-
-A C<ProcBinding> represents a single Muldis D procedure that may be
-directly invoked by Perl code.  It is associated with a specific C<Process>
-object, the one whose C<new_proc_binding> method created it, and the
-procedure it represents lives in and has a global-public scoped name in the
-corresponding virtual machine.  This is specifically a lazy binding, so no
-validity checking of the object happens except while the ProcBinding's
-C<call> method is being executed, and a then-valid object can then become
-invalid afterwards.  A C<ProcBinding> is conceptually used behind the
-scenes to implement a C<Process> object's C<call_proc> method, but you can
-use it directly instead, for possibly better performance.
-
-=over
-
-=item C<assoc_process of Muldis::Rosetta::Interface::Process ()>
-
-This method returns the C<Process> object that the invocant C<ProcBinding>
-is associated with.
-
-=item C<bind_proc (Str :$proc_name!)>
-
-This method causes the invocant C<ProcBinding> to be associated with the
-Muldis D procedure named by the C<$proc_name> argument.
-
-=item C<bound_proc of Str ()>
-
-This method returns the name of the Muldis D procedure that the invocant
-C<ProcBinding> is currently associated with, or undef if that wasn't set.
-
-=item C<bind_upd_params (Hash :$args!)>
-
-This method binds the C<Var> objects that are the Hash values in C<$args>
-to the subject-to-update parameters of the Muldis D procedure such that
-they correspond by Hash key names matching parameter names; when the
-procedure is executed via the ProcBinding, its subject-to-update arguments
-(if they would be used) are pulled from the C<$args>, and resulting values
-are written to them (if applicable).
-
-=item C<bound_upd_params of Hash ()>
-
-This method returns, as values of a new Hash, the C<Var> objects currently
-bound to the procedure's subject-to-update parameters, with the
-corresponding Hash keys being the names of the parameters they are bound
-to.
-
-=item C<bind_ro_params (Hash :$args!)>
-
-This method binds the C<Var> objects that are the Hash values in C<$args>
-to the read-only parameters of the Muldis D procedure such that they
-correspond by Hash key names matching parameter names; when the procedure
-is executed via the ProcBinding, its read-only arguments are pulled from
-the C<$args>.  Note that the same C<Var> object may be bound to multiple
-parameters and/or the result at once.  This method alternately allows a
-Perl Array which is Perl Hosted Muldis D to be supplied instead of any
-given C<Var> object, in which case a new C<Var> object will be non-lazily
-created with that value, and be used there.
-
-=item C<bound_ro_params of Hash ()>
-
-This method returns, as values of a new Hash, the C<Var> objects currently
-bound to the procedure's read-only parameters, with the corresponding Hash
-keys being the names of the parameters they are bound to.
-
-=item C<call ()>
-
-This method performs any lazy validation on the invocant C<ProcBinding>,
-and with no failure, it then invokes the Muldis D procedure.  It is at this
-time that the current values of any bound C<Var> objects are taken.
 
 =back
 

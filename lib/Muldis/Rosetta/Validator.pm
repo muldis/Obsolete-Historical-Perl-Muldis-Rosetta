@@ -28,7 +28,7 @@ sub main {
     # Instantiate a Muldis Rosetta DBMS / virtual machine.
     my $machine = Muldis::Rosetta::Interface::new_machine({
         'engine_name' => $engine_name,
-        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.25.0' ],
+        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.43.0' ],
         'machine_config' => $machine_config,
     });
     does_ok( $machine, 'Muldis::Rosetta::Interface::Machine' );
@@ -51,19 +51,19 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # Declare our Perl-lexical variables to use for source data.
 
     my $src_suppliers = $process->new_var({
-        'decl_type' => 'sys.Core.Relation.Relation' });
+        'decl_type' => 'sys.std.Core.Type.Relation' });
     does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Var' );
     my $src_foods = $process->new_var({
-        'decl_type' => 'sys.Core.Relation.Relation' });
+        'decl_type' => 'sys.std.Core.Type.Relation' });
     does_ok( $src_foods, 'Muldis::Rosetta::Interface::Var' );
     my $src_shipments = $process->new_var({
-        'decl_type' => 'sys.Core.Relation.Relation' });
+        'decl_type' => 'sys.std.Core.Type.Relation' });
     does_ok( $src_shipments, 'Muldis::Rosetta::Interface::Var' );
 
     # Load our example literal source data sets into said Perl-lexicals.
 
     $src_suppliers->store_ast({
-        'ast' => [ 'Relation', 'sys.Core.Relation.Relation', [
+        'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
             {
                 'farm'    => [ 'NEText', 'Hodgesons' ],
                 'country' => [ 'NEText', 'Canada' ],
@@ -81,7 +81,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     pass( 'no death from loading example suppliers data into VM' );
 
     $src_foods->store_ast({
-        'ast' => [ 'Relation', 'sys.Core.Relation.Relation', [
+        'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
             {
                 'food'   => [ 'NEText', 'Bananas' ],
                 'colour' => [ 'NEText', 'yellow' ],
@@ -107,7 +107,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     pass( 'no death from loading example foods data into VM' );
 
     $src_shipments->store_ast({
-        'ast' => [ 'Relation', 'sys.Core.Relation.Relation', [
+        'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
             {
                 'farm' => [ 'NEText', 'Hodgesons' ],
                 'food' => [ 'NEText', 'Kiwis' ],
@@ -151,23 +151,23 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # data and see what suppliers there are for foods coloured 'orange'.
 
     my $desi_colour
-        = $process->new_var({ 'decl_type' => 'sys.Core.Text.Text' });
+        = $process->new_var({ 'decl_type' => 'sys.std.Core.Type.Text' });
     does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Var' );
     $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
 
     my $matched_suppl = $process->call_func({
-        'func_name' => 'sys.Core.Relation.semijoin',
+        'func_name' => 'sys.std.Core.Relation.semijoin',
         'args' => {
             'source' => $src_suppliers,
             'filter' => $process->call_func({
-                'func_name' => 'sys.Core.Relation.join',
+                'func_name' => 'sys.std.Core.Relation.join',
                 'args' => {
                     'topic' => [ 'QuasiSet',
-                            'sys.Core.Spec.QuasiSetOfRelation', [
+                            'quasi_set_of.sys.std.Core.Type.Relation', [
                         $src_shipments,
                         $src_foods,
-                        [ 'Relation', 'sys.Core.Relation.Relation', [
+                        [ 'Relation', 'sys.std.Core.Type.Relation', [
                             {
                                 'colour' => $desi_colour,
                             },
@@ -185,7 +185,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     # Finally, use the result somehow (not done here).
     # The result should be:
-    # [ 'Relation', 'sys.Core.Relation.Relation', [
+    # [ 'Relation', 'sys.std.Core.Type.Relation', [
     #     {
     #         'farm'    => [ 'NEText', 'Hodgesons' ],
     #         'country' => [ 'NEText', 'Canada' ],
