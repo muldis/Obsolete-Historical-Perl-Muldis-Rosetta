@@ -121,7 +121,7 @@ sub assoc_processes {
     # Lists of user-held objects associated with parts of this Process.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
-    my $ATTR_ASSOC_VARS          = 'assoc_vars';
+    my $ATTR_ASSOC_VALUES = 'assoc_values';
 
     # Maintain actual state of the this DBMS' virtual machine.
     # TODO: the VM itself should be in another file, this attr with it.
@@ -147,7 +147,7 @@ sub _build {
     $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self} = $self;
     weaken $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self};
 
-    $self->{$ATTR_ASSOC_VARS}          = {};
+    $self->{$ATTR_ASSOC_VALUES} = {};
 
     $self->{$ATTR_TRANS_NEST_LEVEL} = 0;
 
@@ -163,16 +163,16 @@ sub DESTROY {
 
 ###########################################################################
 
-sub new_var {
+sub new_value {
     my ($self, $args) = @_;
     my ($decl_type) = @{$args}{'decl_type'};
-    return Muldis::Rosetta::Engine::Example::Public::Var->new({
+    return Muldis::Rosetta::Engine::Example::Public::Value->new({
         'process' => $self, 'decl_type' => $decl_type });
 }
 
-sub assoc_vars {
+sub assoc_values {
     my ($self) = @_;
-    return [values %{$self->{$ATTR_ASSOC_VARS}}];
+    return [values %{$self->{$ATTR_ASSOC_VALUES}}];
 }
 
 ###########################################################################
@@ -184,7 +184,7 @@ sub call_func {
 #    my $f = Muldis::Rosetta::Engine::Example::Public::X->new({
 #        'process' => $self });
 
-    my $result = Muldis::Rosetta::Engine::Example::Public::Var->new({
+    my $result = Muldis::Rosetta::Engine::Example::Public::Value->new({
         'process' => $self,
         'decl_type' => 'sys.std.Core.Type.Universal' });
 
@@ -257,19 +257,19 @@ sub rollback_trans {
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::Rosetta::Engine::Example::Public::Var; # class
-    use base 'Muldis::Rosetta::Interface::Var';
+{ package Muldis::Rosetta::Engine::Example::Public::Value; # class
+    use base 'Muldis::Rosetta::Interface::Value';
 
     use Carp;
     use Scalar::Util qw( refaddr weaken );
 
     my $ATTR_PROCESS = 'process';
 
-    my $ATTR_VAR = 'var';
-    # TODO: cache Perl-Hosted Muldis D version of $!var.
+    my $ATTR_VALUE = 'value';
+    # TODO: cache Perl-Hosted Muldis D version of $!value.
 
-    # Allow Var objs to update Process' "assoc" list re themselves.
-    my $PROCESS_ATTR_ASSOC_VARS = 'assoc_vars';
+    # Allow Value objs to update Process' "assoc" list re themselves.
+    my $PROCESS_ATTR_ASSOC_VALUES = 'assoc_values';
 
 ###########################################################################
 
@@ -285,10 +285,10 @@ sub _build {
     my ($process, $decl_type) = @{$args}{'process', 'decl_type'};
 
     $self->{$ATTR_PROCESS} = $process;
-    $process->{$PROCESS_ATTR_ASSOC_VARS}->{refaddr $self} = $self;
-    weaken $process->{$PROCESS_ATTR_ASSOC_VARS}->{refaddr $self};
+    $process->{$PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self} = $self;
+    weaken $process->{$PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self};
 
-#    $self->{$ATTR_VAR} = Muldis::Rosetta::Engine::Example::VM::Var->new({
+#    $self->{$ATTR_VALUE} = Muldis::Rosetta::Engine::Example::VM::Value->new({
 #        'decl_type' => $decl_type }); # TODO; or some such
 
     return;
@@ -297,7 +297,7 @@ sub _build {
 sub DESTROY {
     my ($self) = @_;
     delete $self->{$ATTR_PROCESS}->{
-        $PROCESS_ATTR_ASSOC_VARS}->{refaddr $self};
+        $PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self};
     return;
 }
 
@@ -305,7 +305,7 @@ sub DESTROY {
 
 sub fetch_ast {
     my ($self) = @_;
-#    return $self->{$ATTR_VAR}->as_phmd(); # TODO; or some such
+#    return $self->{$ATTR_VALUE}->as_phmd(); # TODO; or some such
     return;
 }
 
@@ -313,13 +313,13 @@ sub store_ast {
     my ($self, $args) = @_;
     my ($ast) = @{$args}{'ast'};
     # TODO: input checks.
-#    $self->{$ATTR_VAR} = from_phmd( $ast ); # TODO; or some such
+#    $self->{$ATTR_VALUE} = from_phmd( $ast ); # TODO; or some such
     return;
 }
 
 ###########################################################################
 
-} # class Muldis::Rosetta::Engine::Example::Public::Var
+} # class Muldis::Rosetta::Engine::Example::Public::Value
 
 ###########################################################################
 ###########################################################################
@@ -344,7 +344,7 @@ Perl 5.
 It also describes the same-number versions for Perl 5 of
 Muldis::Rosetta::Engine::Example::Public::Machine,
 Muldis::Rosetta::Engine::Example::Public::Process,
-Muldis::Rosetta::Engine::Example::Public::Var.
+Muldis::Rosetta::Engine::Example::Public::Value.
 
 =head1 SYNOPSIS
 

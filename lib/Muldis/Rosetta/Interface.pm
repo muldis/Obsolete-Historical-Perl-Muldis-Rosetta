@@ -114,12 +114,12 @@ sub new_machine {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub new_var {
+    sub new_value {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub assoc_vars {
+    sub assoc_values {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
@@ -159,7 +159,7 @@ sub new_machine {
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::Rosetta::Interface::Var; # role
+{ package Muldis::Rosetta::Interface::Value; # role
     use Carp;
     use Scalar::Util qw(blessed);
 
@@ -183,7 +183,7 @@ sub new_machine {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-} # role Muldis::Rosetta::Interface::Var
+} # role Muldis::Rosetta::Interface::Value
 
 ###########################################################################
 ###########################################################################
@@ -208,7 +208,7 @@ This document describes Muldis::Rosetta::Interface version 0.7.0 for Perl
 It also describes the same-number versions for Perl 5 of
 Muldis::Rosetta::Interface::Machine ("Machine"),
 Muldis::Rosetta::Interface::Process ("Process"),
-Muldis::Rosetta::Interface::Var ("Var").
+Muldis::Rosetta::Interface::Value ("Value").
 
 =head1 SYNOPSIS
 
@@ -225,9 +225,9 @@ a third Perl variable holding the relation data of the result.
     });
     my $process = $machine->new_process();
 
-    my $r1 = $process->new_var({
+    my $r1 = $process->new_value({
         'decl_type' => 'sys.std.Core.Type.Relation' });
-    my $r2 = $process->new_var({
+    my $r2 = $process->new_value({
         'decl_type' => 'sys.std.Core.Type.Relation' });
 
     $r1->store_ast({ 'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
@@ -410,32 +410,33 @@ object, the one whose C<new_process> method created it.
 This method returns the C<Machine> object that the invocant C<Process> is
 associated with.
 
-=item C<new_var of Muldis::Rosetta::Interface::Var (Str :$decl_type!)>
+=item C<new_value of Muldis::Rosetta::Interface::Value (Str :$decl_type!)>
 
-This method creates and returns a new C<Var> object that is associated with
-the invocant C<Process>, and whose declared Muldis D type is named by the
-C<$decl_type> argument, and whose default Muldis D value is the default
+This method creates and returns a new C<Value> object that is associated
+with the invocant C<Process>, and whose declared Muldis D type is named by
+the C<$decl_type> argument, and whose default Muldis D value is the default
 value of its declared type.
 
-=item C<assoc_vars of Array ()>
+=item C<assoc_values of Array ()>
 
 This method returns, as elements of a new (unordered) Array, all the
-currently existing C<Var> objects that are associated with the invocant
+currently existing C<Value> objects that are associated with the invocant
 C<Process>.
 
-=item C<call_func of Muldis::Rosetta::Interface::Var (Str :$func_name!,
+=item C<call_func of Muldis::Rosetta::Interface::Value (Str :$func_name!,
 Hash :$args!)>
 
 This method invokes the Muldis D function named by its C<$func_name>
 argument, giving it arguments from C<$args>, and then returning the result
-as a new C<Var> object.
+as a C<Value> object.
 
 =item C<call_proc (Str :$proc_name!, Hash :$upd_args!, Hash :$ro_args!)>
 
-This method invokes the Muldis D procedure named by its C<$proc_name>
-argument, giving it subject-to-update arguments from C<$upd_args> and
-read-only arguments from C<$ro_args>; the C<Var> objects in C<$upd_args>
-are possibly updated as a side-effect of the procedure's execution.
+This method invokes the Muldis D procedure (or updater or system_service)
+named by its C<$proc_name> argument, giving it subject-to-update arguments
+from C<$upd_args> and read-only arguments from C<$ro_args>; the C<Value>
+objects in C<$upd_args> are possibly substituted for other C<value> objects
+as a side-effect of the procedure's execution.
 
 =item C<trans_nest_level of Int ()>
 
@@ -470,40 +471,42 @@ virtual machine process; it dies if there isn't one.
 
 =back
 
-=head2 The Muldis::Rosetta::Interface::Var Role
+=head2 The Muldis::Rosetta::Interface::Value Role
 
-A C<Var> object is a Muldis D variable that is lexically scoped to the Perl
-environment (like an ordinary Perl variable).  It is associated with a
-specific C<Process> object, the one whose C<new_var> method created it, but
-it is considered anonymous and non-invokable within the virtual machine.
-The only way for Muldis D code to work with these variables is if they
-bound to Perl invocations of Muldis D routines being C<call(|\w+)> by Perl;
-a Muldis D routine parameter one is bound to is the name it is referenced
-by in the virtual machine.  C<Var> objects are the normal way to directly
-share or move data between the Muldis D and Perl environments.  A C<Var> is
-strongly typed, and the declared Muldis D type of the variable (which
-affects what values it is allowed to hold) is set when the C<Var> object is
-created, and this declared type can't be changed afterwards.
+A C<Value> object is a Muldis D variable that is lexically scoped to the
+Perl environment (like an ordinary Perl variable).  It is associated with a
+specific C<Process> object, the one whose C<new_value> method created it,
+but it is considered anonymous and non-invokable within the virtual
+machine. The only way for Muldis D code to work with these variables is if
+they bound to Perl invocations of Muldis D routines being C<call(|\w+)> by
+Perl; a Muldis D routine parameter one is bound to is the name it is
+referenced by in the virtual machine.  C<Value> objects are the normal way
+to directly share or move data between the Muldis D and Perl environments.
+A C<Value> is strongly typed, and the declared Muldis D type of the
+variable (which affects what values it is allowed to hold) is set when the
+C<Value> object is created, and this declared type can't be changed
+afterwards.
 
 =over
 
 =item C<assoc_process of Muldis::Rosetta::Interface::Process ()>
 
-This method returns the C<Process> object that the invocant C<Var> is
+This method returns the C<Process> object that the invocant C<Value> is
 associated with.
 
 =item C<decl_type of Str ()>
 
-This method returns the declared Muldis D type of its invocant C<Var>.
+This method returns the declared Muldis D type of its invocant C<Value>.
 
 =item C<fetch_ast of Array ()>
 
-This method returns the current Muldis D value of its invocant C<Var> as a
-Perl Hosted Data Muldis D data structure (whose root node is a Perl Array).
+This method returns the current Muldis D value of its invocant C<Value> as
+a Perl Hosted Data Muldis D data structure (whose root node is a Perl
+Array).
 
 =item C<store_ast (Array :$ast!)>
 
-This method assigns a new Muldis D value to its invocant C<Var>, which is
+This method assigns a new Muldis D value to its invocant C<Value>, which is
 supplied in the C<$ast> argument; the argument is expected to be a valid
 Perl Hosted Data Muldis D data structure (whose root node is a Perl Array).
 

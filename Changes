@@ -22,11 +22,19 @@
     * (Interface.pm, Validator.pm)  Updated any references to Muldis D type
     names to reflect those in the current language spec version 0.43.0.
 
-    * (Interface.pm, Example.pm)  Removed the roles|classes named
+    * (Interface.pm, Example.pm)  Removed the API roles|classes named
     "(Func|Proc)Binding", thereby majorly simplifying the public API of a
     Rosetta Engine; also removed the associated attributes|accessors of the
     "Process" role|class.  You now simply invoke a Muldis D routine
     directly using a "Process" method.
+
+    * (Interface.pm, Example.pm, Validator.pm)  Replaced the API role|class
+    Var with Value, as it now represents an immutable value rather than a
+    mutable variable.  The Muldis Rosetta API now just uses ordinary Perl
+    variables as its variables in Perl routines; they are valued with Value
+    objects, and you update them in Perl space like you do with Perl vars.
+    TODO: UPDATE THE VALUE ROLE|CLASS TO ACTUALLY BE A VALUE CLASS, AND NOT
+    A RENAMED VARIABLE CLASS; UPDATE VALIDATOR'S USE OF IT LIKEWISE.
 
     * The file archives/OSCON2008SessionProposal.txt was moved from the
     Muldis Rosetta version control / distribution to the Muldis D one; also

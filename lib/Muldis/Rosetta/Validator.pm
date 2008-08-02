@@ -50,15 +50,15 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     # Declare our Perl-lexical variables to use for source data.
 
-    my $src_suppliers = $process->new_var({
+    my $src_suppliers = $process->new_value({
         'decl_type' => 'sys.std.Core.Type.Relation' });
-    does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Var' );
-    my $src_foods = $process->new_var({
+    does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Value' );
+    my $src_foods = $process->new_value({
         'decl_type' => 'sys.std.Core.Type.Relation' });
-    does_ok( $src_foods, 'Muldis::Rosetta::Interface::Var' );
-    my $src_shipments = $process->new_var({
+    does_ok( $src_foods, 'Muldis::Rosetta::Interface::Value' );
+    my $src_shipments = $process->new_value({
         'decl_type' => 'sys.std.Core.Type.Relation' });
-    does_ok( $src_shipments, 'Muldis::Rosetta::Interface::Var' );
+    does_ok( $src_shipments, 'Muldis::Rosetta::Interface::Value' );
 
     # Load our example literal source data sets into said Perl-lexicals.
 
@@ -151,8 +151,8 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # data and see what suppliers there are for foods coloured 'orange'.
 
     my $desi_colour
-        = $process->new_var({ 'decl_type' => 'sys.std.Core.Type.Text' });
-    does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Var' );
+        = $process->new_value({ 'decl_type' => 'sys.std.Core.Type.Text' });
+    does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Value' );
     $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
 
@@ -178,7 +178,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
         },
     });
     pass( 'no death from executing search query' );
-    does_ok( $matched_suppl, 'Muldis::Rosetta::Interface::Var' );
+    does_ok( $matched_suppl, 'Muldis::Rosetta::Interface::Value' );
 
     my $matched_suppl_ast = $matched_suppl->fetch_ast();
     pass( 'no death from fetching search results from VM' );
