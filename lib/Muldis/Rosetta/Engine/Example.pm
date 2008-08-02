@@ -177,9 +177,9 @@ sub assoc_values {
 
 ###########################################################################
 
-sub call_func {
+sub func_invo {
     my ($self, $args) = @_;
-    my ($func_name, $f_args) = @{$args}{'func_name', 'args'};
+    my ($function, $f_args) = @{$args}{'function', 'args'};
 
 #    my $f = Muldis::Rosetta::Engine::Example::Public::X->new({
 #        'process' => $self });
@@ -188,7 +188,7 @@ sub call_func {
         'process' => $self,
         'decl_type' => 'sys.std.Core.Type.Universal' });
 
-#    $f->bind_func({ 'func_name' => $func_name });
+#    $f->bind_func({ 'function' => $function });
 #    $f->bind_result({ 'var' => $result });
 #    $f->bind_params({ 'args' => $f_args });
 
@@ -197,17 +197,32 @@ sub call_func {
     return $result;
 }
 
-###########################################################################
-
-sub call_proc {
+sub upd_invo {
     my ($self, $args) = @_;
-    my ($proc_name, $upd_args, $ro_args)
-        = @{$args}{'proc_name', 'upd_args', 'ro_args'};
+    my ($updater, $upd_args, $ro_args)
+        = @{$args}{'updater', 'upd_args', 'ro_args'};
 
 #    my $p = Muldis::Rosetta::Engine::Example::Public::X->new({
 #        'process' => $self });
 
-#    $p->bind_proc({ 'proc_name' => $proc_name });
+#    $p->bind_upd({ 'updater' => $updater });
+#    $p->bind_upd_params({ 'args' => $upd_args });
+#    $p->bind_ro_params({ 'args' => $ro_args });
+
+#    $p->call();
+
+    return;
+}
+
+sub proc_invo {
+    my ($self, $args) = @_;
+    my ($procedure, $upd_args, $ro_args)
+        = @{$args}{'procedure', 'upd_args', 'ro_args'};
+
+#    my $p = Muldis::Rosetta::Engine::Example::Public::X->new({
+#        'process' => $self });
+
+#    $p->bind_proc({ 'procedure' => $procedure });
 #    $p->bind_upd_params({ 'args' => $upd_args });
 #    $p->bind_ro_params({ 'args' => $ro_args });
 

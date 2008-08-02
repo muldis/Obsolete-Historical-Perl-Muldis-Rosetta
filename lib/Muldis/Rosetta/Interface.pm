@@ -124,12 +124,17 @@ sub new_machine {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub call_func {
+    sub func_invo {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub call_proc {
+    sub upd_invo {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub proc_invo {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
@@ -256,8 +261,8 @@ a third Perl variable holding the relation data of the result.
         },
     ] ] });
 
-    my $r3 = $process->call_func(
-        'func_name' => 'sys.std.Core.Relation.join',
+    my $r3 = $process->func_invo(
+        'function' => 'sys.std.Core.Relation.join',
         'args' => {
             'topic' => [ 'QuasiSet', 'quasi_set_of.sys.std.Core.Type.Relation', [
                 $r1,
@@ -423,20 +428,28 @@ This method returns, as elements of a new (unordered) Array, all the
 currently existing C<Value> objects that are associated with the invocant
 C<Process>.
 
-=item C<call_func of Muldis::Rosetta::Interface::Value (Str :$func_name!,
-Hash :$args!)>
+=item C<func_invo of Muldis::Rosetta::Interface::Value (Str :$function!,
+Hash :$args?)>
 
-This method invokes the Muldis D function named by its C<$func_name>
+This method invokes the Muldis D function named by its C<$function>
 argument, giving it arguments from C<$args>, and then returning the result
 as a C<Value> object.
 
-=item C<call_proc (Str :$proc_name!, Hash :$upd_args!, Hash :$ro_args!)>
+=item C<upd_invo (Str :$updater!, Hash :$upd_args!, Hash :$ro_args?)>
 
-This method invokes the Muldis D procedure (or updater or system_service)
-named by its C<$proc_name> argument, giving it subject-to-update arguments
-from C<$upd_args> and read-only arguments from C<$ro_args>; the C<Value>
-objects in C<$upd_args> are possibly substituted for other C<value> objects
-as a side-effect of the procedure's execution.
+This method invokes the Muldis D updater named by its C<$updater> argument,
+giving it subject-to-update arguments from C<$upd_args> and read-only
+arguments from C<$ro_args>; the C<Value> objects in C<$upd_args> are
+possibly substituted for other C<value> objects as a side-effect of the
+updater's execution.
+
+=item C<proc_invo (Str :$procedure!, Hash :$upd_args?, Hash :$ro_args?)>
+
+This method invokes the Muldis D procedure (or system_service) named by its
+C<$procedure> argument, giving it subject-to-update arguments from
+C<$upd_args> and read-only arguments from C<$ro_args>; the C<Value> objects
+in C<$upd_args> are possibly substituted for other C<value> objects as a
+side-effect of the procedure's execution.
 
 =item C<trans_nest_level of Int ()>
 

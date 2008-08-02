@@ -156,12 +156,12 @@ sub _scenario_foods_suppliers_shipments_v1 {
     $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
 
-    my $matched_suppl = $process->call_func({
-        'func_name' => 'sys.std.Core.Relation.semijoin',
+    my $matched_suppl = $process->func_invo({
+        'function' => 'sys.std.Core.Relation.semijoin',
         'args' => {
             'source' => $src_suppliers,
-            'filter' => $process->call_func({
-                'func_name' => 'sys.std.Core.Relation.join',
+            'filter' => $process->func_invo({
+                'function' => 'sys.std.Core.Relation.join',
                 'args' => {
                     'topic' => [ 'QuasiSet',
                             'quasi_set_of.sys.std.Core.Type.Relation', [

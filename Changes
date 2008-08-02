@@ -28,6 +28,13 @@
     "Process" role|class.  You now simply invoke a Muldis D routine
     directly using a "Process" method.
 
+    * (Interface.pm, Example.pm, Validator.pm)  Renamed the Process
+    role|class' "call_(func|proc)" methods to "(func|proc)_invo", and split
+    the latter into itself and "upd_invo"; also renamed each method's
+    primary argument.  A result of these changes is that these 3 methods
+    are now direct counterparts to certain Muldis D system-defined routines
+    or expr|stmt node types, that have the same names.
+
     * (Interface.pm, Example.pm, Validator.pm)  Replaced the API role|class
     Var with Value, as it now represents an immutable value rather than a
     mutable variable.  The Muldis Rosetta API now just uses ordinary Perl
