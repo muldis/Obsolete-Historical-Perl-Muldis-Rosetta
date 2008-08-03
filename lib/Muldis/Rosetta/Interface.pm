@@ -113,6 +113,11 @@ sub new_machine {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
+    sub execute {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
     sub new_value {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
@@ -172,17 +177,7 @@ sub new_machine {
         confess q{not implemented by subclass } . (blessed $self);
     }
 
-    sub decl_type {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub fetch_ast {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub store_ast {
+    sub source_code {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
@@ -412,12 +407,23 @@ C<Process> object's "expected command language" attribute.  This method
 dies if the specified language is defined and its value isn't one that the
 invocant's Engine knows how to or desires to handle.
 
-=item C<new_value of Muldis::Rosetta::Interface::Value (Str :$decl_type!)>
+=item C<execute (Any :$source_code!)>
+
+This method compiles and executes the (typically Muldis D) source code
+given in its C<$source_code> argument.  This method dies if the source code
+fails to compile for some reason, or if the executing code has a runtime
+exception.
+
+=item C<new_value of Muldis::Rosetta::Interface::Value (Any
+:$source_code!)>
 
 This method creates and returns a new C<Value> object that is associated
-with the invocant C<Process>, and whose declared Muldis D type is named by
-the C<$decl_type> argument, and whose default Muldis D value is the default
-value of its declared type.
+with the invocant C<Process>; that C<Value> object is initialized using the
+(typically Muldis D) source code given in its C<$source_code> argument,
+which defines a value literal.  If the C<$source_code> is in a Perl Hosted
+Data language, then it may consist partially of other C<Value> objects.  If
+C<$source_code> is itself just a C<Value> object, then this method will
+just return that same object.
 
 =item C<assoc_values of Array ()>
 
@@ -430,7 +436,11 @@ Hash :$args?)>
 
 This method invokes the Muldis D function named by its C<$function>
 argument, giving it arguments from C<$args>, and then returning the result
-as a C<Value> object.
+as a C<Value> object.  Each C<$args> Hash key must match the name of a
+parameter of the named function, and the corresponding Hash value is the
+argument for that parameter; each Hash value may be either a C<Value>
+object or some other Perl value that would be suitable as the sole
+constructor argument for a new C<Value> object.
 
 =item C<upd_invo (Str :$updater!, Hash :$upd_args!, Hash :$ro_args?)>
 
@@ -438,7 +448,13 @@ This method invokes the Muldis D updater named by its C<$updater> argument,
 giving it subject-to-update arguments from C<$upd_args> and read-only
 arguments from C<$ro_args>; the C<Value> objects in C<$upd_args> are
 possibly substituted for other C<value> objects as a side-effect of the
-updater's execution.
+updater's execution.  The C<$ro_args> parameter is as per the C<$args>
+parameter of the C<func_invo> method, but the C<$upd_args> parameter is a
+bit different; each Hash value in the C<$upd_args> argument must be a Perl
+scalar reference pointing to the Perl variable being bound to the
+subject-to-update parameter; said Perl variable is then what holds a
+C<Value> object et al prior to the updater's execution, and that may have
+been updated to hold a different C<Value> object as a side-effect.
 
 =item C<proc_invo (Str :$procedure!, Hash :$upd_args?, Hash :$ro_args?)>
 
@@ -446,7 +462,9 @@ This method invokes the Muldis D procedure (or system_service) named by its
 C<$procedure> argument, giving it subject-to-update arguments from
 C<$upd_args> and read-only arguments from C<$ro_args>; the C<Value> objects
 in C<$upd_args> are possibly substituted for other C<value> objects as a
-side-effect of the procedure's execution.
+side-effect of the procedure's execution.  The parameters of C<proc_invo>
+are as per those of the C<upd_invo> method, save that only C<upd_invo>
+makes C<$upd_args> mandatory, while C<proc_invo> makes it optional.
 
 =item C<trans_nest_level of Int ()>
 
@@ -483,19 +501,16 @@ virtual machine process; it dies if there isn't one.
 
 =head2 The Muldis::Rosetta::Interface::Value Role
 
-A C<Value> object is a Muldis D variable that is lexically scoped to the
-Perl environment (like an ordinary Perl variable).  It is associated with a
-specific C<Process> object, the one whose C<new_value> method created it,
-but it is considered anonymous and non-invokable within the virtual
-machine. The only way for Muldis D code to work with these variables is if
-they bound to Perl invocations of Muldis D routines being C<call(|\w+)> by
-Perl; a Muldis D routine parameter one is bound to is the name it is
-referenced by in the virtual machine.  C<Value> objects are the normal way
-to directly share or move data between the Muldis D and Perl environments.
-A C<Value> is strongly typed, and the declared Muldis D type of the
-variable (which affects what values it is allowed to hold) is set when the
-C<Value> object is created, and this declared type can't be changed
-afterwards.
+A C<Value> object represents a single Muldis Rosetta in-DBMS value, which
+is conceptually immutable, eternal, and not fixed in time or space; the
+object is immutable.  It is associated with a specific C<Process> object,
+the one whose C<new_value> method created it.  You can use C<Value> objects
+in Perl routines the same as normal immutable Perl values or objects,
+including that you just do ordinary Perl variable assignment.  C<Value>
+objects are the normal way to directly share or move data between the
+Muldis Rosetta DBMS and main Perl environments.  The value that a C<Value>
+object represents is set when the C<Value> object is created, and it can't
+be changed afterwards.
 
 =over
 
@@ -504,21 +519,14 @@ afterwards.
 This method returns the C<Process> object that the invocant C<Value> is
 associated with.
 
-=item C<decl_type of Str ()>
+=item C<source_code of Any (Any :$lang?)>
 
-This method returns the declared Muldis D type of its invocant C<Value>.
-
-=item C<fetch_ast of Array ()>
-
-This method returns the current Muldis D value of its invocant C<Value> as
-a Perl Hosted Data Muldis D data structure (whose root node is a Perl
-Array).
-
-=item C<store_ast (Array :$ast!)>
-
-This method assigns a new Muldis D value to its invocant C<Value>, which is
-supplied in the C<$ast> argument; the argument is expected to be a valid
-Perl Hosted Data Muldis D data structure (whose root node is a Perl Array).
+This method returns (typically Muldis D) source code that defines a value
+literal equivalent to the in-DBMS value that the invocant C<Value>
+represents.  The language of the source code to return must be explicitly
+specified, either by giving a defined C<$lang> argument, or by ensuring
+that the C<Process> object associated with this C<Value> has a defined
+"expected command language" attribute.
 
 =back
 

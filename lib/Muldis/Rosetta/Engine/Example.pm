@@ -152,6 +152,8 @@ sub DESTROY {
     my ($self) = @_;
     # TODO: check for active trans and rollback ... or member VM does it.
     # Likewise with closing open files or whatever.
+    delete $self->{$ATTR_MACHINE}->{
+        $MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self};
     return;
 }
 
@@ -178,11 +180,22 @@ sub update_command_lang {
 
 ###########################################################################
 
+sub execute {
+    my ($self, $args) = @_;
+    my ($source_code) = @{$args}{'source_code'};
+
+    # TODO: execute $source code
+
+    return;
+}
+
+###########################################################################
+
 sub new_value {
     my ($self, $args) = @_;
-    my ($decl_type) = @{$args}{'decl_type'};
+    my ($source_code) = @{$args}{'source_code'};
     return Muldis::Rosetta::Engine::Example::Public::Value->new({
-        'process' => $self, 'decl_type' => $decl_type });
+        'process' => $self, 'source_code' => $source_code });
 }
 
 sub assoc_values {
@@ -196,18 +209,7 @@ sub func_invo {
     my ($self, $args) = @_;
     my ($function, $f_args) = @{$args}{'function', 'args'};
 
-#    my $f = Muldis::Rosetta::Engine::Example::Public::X->new({
-#        'process' => $self });
-
-    my $result = Muldis::Rosetta::Engine::Example::Public::Value->new({
-        'process' => $self,
-        'decl_type' => 'sys.std.Core.Type.Universal' });
-
-#    $f->bind_func({ 'function' => $function });
-#    $f->bind_result({ 'var' => $result });
-#    $f->bind_params({ 'args' => $f_args });
-
-#    $f->call();
+    my $result;
 
     return $result;
 }
@@ -217,15 +219,6 @@ sub upd_invo {
     my ($updater, $upd_args, $ro_args)
         = @{$args}{'updater', 'upd_args', 'ro_args'};
 
-#    my $p = Muldis::Rosetta::Engine::Example::Public::X->new({
-#        'process' => $self });
-
-#    $p->bind_upd({ 'updater' => $updater });
-#    $p->bind_upd_params({ 'args' => $upd_args });
-#    $p->bind_ro_params({ 'args' => $ro_args });
-
-#    $p->call();
-
     return;
 }
 
@@ -233,15 +226,6 @@ sub proc_invo {
     my ($self, $args) = @_;
     my ($procedure, $upd_args, $ro_args)
         = @{$args}{'procedure', 'upd_args', 'ro_args'};
-
-#    my $p = Muldis::Rosetta::Engine::Example::Public::X->new({
-#        'process' => $self });
-
-#    $p->bind_proc({ 'procedure' => $procedure });
-#    $p->bind_upd_params({ 'args' => $upd_args });
-#    $p->bind_ro_params({ 'args' => $ro_args });
-
-#    $p->call();
 
     return;
 }
@@ -312,14 +296,15 @@ sub new {
 
 sub _build {
     my ($self, $args) = @_;
-    my ($process, $decl_type) = @{$args}{'process', 'decl_type'};
+    my ($process, $source_code) = @{$args}{'process', 'source_code'};
 
     $self->{$ATTR_PROCESS} = $process;
     $process->{$PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self} = $self;
     weaken $process->{$PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self};
 
+    # TODO: input checks.
 #    $self->{$ATTR_VALUE} = Muldis::Rosetta::Engine::Example::VM::Value->new({
-#        'decl_type' => $decl_type }); # TODO; or some such
+#        'source_code' => $source_code }); # TODO; or some such
 
     return;
 }
@@ -333,17 +318,17 @@ sub DESTROY {
 
 ###########################################################################
 
-sub fetch_ast {
+sub assoc_process {
     my ($self) = @_;
-#    return $self->{$ATTR_VALUE}->as_phmd(); # TODO; or some such
-    return;
+    return $self->{$ATTR_PROCESS};
 }
 
-sub store_ast {
+###########################################################################
+
+sub source_code {
     my ($self, $args) = @_;
-    my ($ast) = @{$args}{'ast'};
-    # TODO: input checks.
-#    $self->{$ATTR_VALUE} = from_phmd( $ast ); # TODO; or some such
+    my ($lang) = @{$args}{'lang'};
+#    return $self->{$ATTR_VALUE}->source_code( $lang ); # TODO; or som such
     return;
 }
 
