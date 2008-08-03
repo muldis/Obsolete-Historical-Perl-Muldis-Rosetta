@@ -9,7 +9,7 @@ use Muldis::Rosetta::Interface;
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    use version; our $VERSION = qv('0.7.0');
+    use version; our $VERSION = qv('0.8.0');
 
     use Test::More;
 
@@ -168,7 +168,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     pass( 'no death from executing search query' );
     does_ok( $matched_suppl, 'Muldis::Rosetta::Interface::Value' );
 
-    my $matched_suppl_ast = $matched_suppl->fetch_ast();
+    my $matched_suppl_as_perl = $matched_suppl->source_code();
     pass( 'no death from fetching search results from VM' );
 
     # Finally, use the result somehow (not done here).
@@ -185,7 +185,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # ] ]
 
     print "# debug: orange food suppliers found:\n";
-#    print "# " . $rel_def_matched_suppl->as_perl() . "\n";
+#    print "# " . $matched_suppl_as_perl->as_perl() . "\n";
     print "#  TODO, as_perl()\n";
 
     return;
@@ -220,7 +220,7 @@ A common comprehensive test suite to run against all Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Validator version 0.7.0 for Perl
+This document describes Muldis::Rosetta::Validator version 0.8.0 for Perl
 5.
 
 =head1 SYNOPSIS
@@ -308,7 +308,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-0.7.0|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-0.8.0|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

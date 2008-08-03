@@ -9,7 +9,7 @@ use Muldis::Rosetta::Interface;
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    use version; our $VERSION = qv('0.7.0');
+    use version; our $VERSION = qv('0.8.0');
     # Note: This given version applies to all of this file's packages.
 
 ###########################################################################
@@ -209,7 +209,7 @@ sub func_invo {
     my ($self, $args) = @_;
     my ($function, $f_args) = @{$args}{'function', 'args'};
 
-    my $result;
+    my $result = $self->new_value(); # TODO, the real work
 
     return $result;
 }
@@ -219,6 +219,8 @@ sub upd_invo {
     my ($updater, $upd_args, $ro_args)
         = @{$args}{'updater', 'upd_args', 'ro_args'};
 
+    # TODO, the real work
+
     return;
 }
 
@@ -226,6 +228,8 @@ sub proc_invo {
     my ($self, $args) = @_;
     my ($procedure, $upd_args, $ro_args)
         = @{$args}{'procedure', 'upd_args', 'ro_args'};
+
+    # TODO, the real work
 
     return;
 }
@@ -354,7 +358,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.7.0 for
+This document describes Muldis::Rosetta::Engine::Example version 0.8.0 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -438,7 +442,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-0.7.0|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-0.8.0|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

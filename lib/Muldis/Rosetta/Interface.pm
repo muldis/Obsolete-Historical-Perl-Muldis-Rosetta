@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface; # module
-    use version; our $VERSION = qv('0.7.0');
+    use version; our $VERSION = qv('0.8.0');
     # Note: This given version applies to all of this file's packages.
 
     use Carp;
@@ -201,7 +201,7 @@ Common public API for Muldis Rosetta Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Interface version 0.7.0 for Perl
+This document describes Muldis::Rosetta::Interface version 0.8.0 for Perl
 5.
 
 It also describes the same-number versions for Perl 5 of
