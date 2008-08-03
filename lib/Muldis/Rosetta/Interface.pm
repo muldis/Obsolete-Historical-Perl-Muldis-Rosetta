@@ -223,60 +223,52 @@ a third Perl variable holding the relation data of the result.
     $process->update_command_lang({ 'lang' => [ 'Muldis_D',
         'http://muldis.com', '0.43.0', 'HDMD_Perl_Tiny', {} ] });
 
-    my $r1 = $process->new_value({
-        'decl_type' => 'sys.std.Core.Type.Relation' });
-    my $r2 = $process->new_value({
-        'decl_type' => 'sys.std.Core.Type.Relation' });
-
-    $r1->store_ast({ 'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
+    my $r1 = $process->new_value({ 'source_code' => [ 'Relation', [
         {
-            'x' => [ 'PInt', 'perl_pint', 4 ],
-            'y' => [ 'PInt', 'perl_pint', 7 ],
+            'x' => [ 'Int', 'perl_int', 4 ],
+            'y' => [ 'Int', 'perl_int', 7 ],
         },
         {
-            'x' => [ 'PInt', 'perl_pint', 3 ],
-            'y' => [ 'PInt', 'perl_pint', 2 ],
+            'x' => [ 'Int', 'perl_int', 3 ],
+            'y' => [ 'Int', 'perl_int', 2 ],
         },
     ] ] });
 
-    $r2->store_ast({ 'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
+    my $r2 = $process->new_value({ 'source_code' => [ 'Relation', [
         {
-            'y' => [ 'PInt', 'perl_pint', 5 ],
-            'z' => [ 'PInt', 'perl_pint', 6 ],
+            'y' => [ 'Int', 'perl_int', 5 ],
+            'z' => [ 'Int', 'perl_int', 6 ],
         },
         {
-            'y' => [ 'PInt', 'perl_pint', 2 ],
-            'z' => [ 'PInt', 'perl_pint', 1 ],
+            'y' => [ 'Int', 'perl_int', 2 ],
+            'z' => [ 'Int', 'perl_int', 1 ],
         },
         {
-            'y' => [ 'PInt', 'perl_pint', 2 ],
-            'z' => [ 'PInt', 'perl_pint', 4 ],
+            'y' => [ 'Int', 'perl_int', 2 ],
+            'z' => [ 'Int', 'perl_int', 4 ],
         },
     ] ] });
 
     my $r3 = $process->func_invo({
         'function' => 'sys.std.Core.Relation.join',
         'args' => {
-            'topic' => [ 'QuasiSet', 'quasi_set_of.sys.std.Core.Type.Relation', [
-                $r1,
-                $r2,
-            ] ],
+            'topic' => [ 'QuasiSet', [ $r1, $r2 ] ],
         }
     });
 
-    my $r3_ast = $r3->fetch_ast();
+    my $r3_as_perl = $r3->source_code();
 
-    # Then $r3_ast contains:
-    # [ 'Relation', 'sys.std.Core.Type.Relation', [
+    # Then $r3_as_perl contains:
+    # [ 'Relation', [
     #     {
-    #         'x' => [ 'PInt', 'perl_pint', 3 ],
-    #         'y' => [ 'PInt', 'perl_pint', 2 ],
-    #         'z' => [ 'PInt', 'perl_pint', 1 ],
+    #         'x' => [ 'Int', 'perl_int', 3 ],
+    #         'y' => [ 'Int', 'perl_int', 2 ],
+    #         'z' => [ 'Int', 'perl_int', 1 ],
     #     },
     #     {
-    #         'x' => [ 'PInt', 'perl_pint', 3 ],
-    #         'y' => [ 'PInt', 'perl_pint', 2 ],
-    #         'z' => [ 'PInt', 'perl_pint', 4 ],
+    #         'x' => [ 'Int', 'perl_int', 3 ],
+    #         'y' => [ 'Int', 'perl_int', 2 ],
+    #         'z' => [ 'Int', 'perl_int', 4 ],
     #     },
     # ] ]
 

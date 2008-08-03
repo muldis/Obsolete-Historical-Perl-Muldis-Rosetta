@@ -303,8 +303,9 @@ sub _build {
     weaken $process->{$PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self};
 
     # TODO: input checks.
-#    $self->{$ATTR_VALUE} = Muldis::Rosetta::Engine::Example::VM::Value->new({
-#        'source_code' => $source_code }); # TODO; or some such
+#    $self->{$ATTR_VALUE}
+#        = Muldis::Rosetta::Engine::Example::VM::Value->new({
+#            'source_code' => $source_code }); # TODO; or some such
 
     return;
 }

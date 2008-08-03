@@ -51,113 +51,103 @@ sub main {
 sub _scenario_foods_suppliers_shipments_v1 {
     my ($process) = @_;
 
-    # Declare our Perl-lexical variables to use for source data.
+    # Declare our example literal source data sets.
 
     my $src_suppliers = $process->new_value({
-        'decl_type' => 'sys.std.Core.Type.Relation' });
-    does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Value' );
-    my $src_foods = $process->new_value({
-        'decl_type' => 'sys.std.Core.Type.Relation' });
-    does_ok( $src_foods, 'Muldis::Rosetta::Interface::Value' );
-    my $src_shipments = $process->new_value({
-        'decl_type' => 'sys.std.Core.Type.Relation' });
-    does_ok( $src_shipments, 'Muldis::Rosetta::Interface::Value' );
-
-    # Load our example literal source data sets into said Perl-lexicals.
-
-    $src_suppliers->store_ast({
-        'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
+        'source_code' => [ 'Relation', [
             {
-                'farm'    => [ 'NEText', 'Hodgesons' ],
-                'country' => [ 'NEText', 'Canada' ],
+                'farm'    => [ 'Text', 'Hodgesons' ],
+                'country' => [ 'Text', 'Canada' ],
             },
             {
-                'farm'    => [ 'NEText', 'Beckers' ],
-                'country' => [ 'NEText', 'England' ],
+                'farm'    => [ 'Text', 'Beckers' ],
+                'country' => [ 'Text', 'England' ],
             },
             {
-                'farm'    => [ 'NEText', 'Wickets' ],
-                'country' => [ 'NEText', 'Canada' ],
+                'farm'    => [ 'Text', 'Wickets' ],
+                'country' => [ 'Text', 'Canada' ],
             },
         ] ],
     });
     pass( 'no death from loading example suppliers data into VM' );
+    does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Value' );
 
-    $src_foods->store_ast({
-        'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
+    my $src_foods = $process->new_value({
+        'source_code' => [ 'Relation', [
             {
-                'food'   => [ 'NEText', 'Bananas' ],
-                'colour' => [ 'NEText', 'yellow' ],
+                'food'   => [ 'Text', 'Bananas' ],
+                'colour' => [ 'Text', 'yellow' ],
             },
             {
-                'food'   => [ 'NEText', 'Carrots' ],
-                'colour' => [ 'NEText', 'orange' ],
+                'food'   => [ 'Text', 'Carrots' ],
+                'colour' => [ 'Text', 'orange' ],
             },
             {
-                'food'   => [ 'NEText', 'Oranges' ],
-                'colour' => [ 'NEText', 'orange' ],
+                'food'   => [ 'Text', 'Oranges' ],
+                'colour' => [ 'Text', 'orange' ],
             },
             {
-                'food'   => [ 'NEText', 'Kiwis' ],
-                'colour' => [ 'NEText', 'green' ],
+                'food'   => [ 'Text', 'Kiwis' ],
+                'colour' => [ 'Text', 'green' ],
             },
             {
-                'food'   => [ 'NEText', 'Lemons' ],
-                'colour' => [ 'NEText', 'yellow' ],
+                'food'   => [ 'Text', 'Lemons' ],
+                'colour' => [ 'Text', 'yellow' ],
             },
         ] ],
     });
     pass( 'no death from loading example foods data into VM' );
+    does_ok( $src_foods, 'Muldis::Rosetta::Interface::Value' );
 
-    $src_shipments->store_ast({
-        'ast' => [ 'Relation', 'sys.std.Core.Type.Relation', [
+    my $src_shipments = $process->new_value({
+        'source_code' => [ 'Relation', [
             {
-                'farm' => [ 'NEText', 'Hodgesons' ],
-                'food' => [ 'NEText', 'Kiwis' ],
-                'qty'  => [ 'PInt', 'perl_pint', 100 ],
+                'farm' => [ 'Text', 'Hodgesons' ],
+                'food' => [ 'Text', 'Kiwis' ],
+                'qty'  => [ 'Int', 'perl_int', 100 ],
             },
             {
-                'farm' => [ 'NEText', 'Hodgesons' ],
-                'food' => [ 'NEText', 'Lemons' ],
-                'qty'  => [ 'PInt', 'perl_pint', 130 ],
+                'farm' => [ 'Text', 'Hodgesons' ],
+                'food' => [ 'Text', 'Lemons' ],
+                'qty'  => [ 'Int', 'perl_int', 130 ],
             },
             {
-                'farm' => [ 'NEText', 'Hodgesons' ],
-                'food' => [ 'NEText', 'Oranges' ],
-                'qty'  => [ 'PInt', 'perl_pint', 10 ],
+                'farm' => [ 'Text', 'Hodgesons' ],
+                'food' => [ 'Text', 'Oranges' ],
+                'qty'  => [ 'Int', 'perl_int', 10 ],
             },
             {
-                'farm' => [ 'NEText', 'Hodgesons' ],
-                'food' => [ 'NEText', 'Carrots' ],
-                'qty'  => [ 'PInt', 'perl_pint', 50 ],
+                'farm' => [ 'Text', 'Hodgesons' ],
+                'food' => [ 'Text', 'Carrots' ],
+                'qty'  => [ 'Int', 'perl_int', 50 ],
             },
             {
-                'farm' => [ 'NEText', 'Beckers' ],
-                'food' => [ 'NEText', 'Carrots' ],
-                'qty'  => [ 'PInt', 'perl_pint', 90 ],
+                'farm' => [ 'Text', 'Beckers' ],
+                'food' => [ 'Text', 'Carrots' ],
+                'qty'  => [ 'Int', 'perl_int', 90 ],
             },
             {
-                'farm' => [ 'NEText', 'Beckers' ],
-                'food' => [ 'NEText', 'Bananas' ],
-                'qty'  => [ 'PInt', 'perl_pint', 120 ],
+                'farm' => [ 'Text', 'Beckers' ],
+                'food' => [ 'Text', 'Bananas' ],
+                'qty'  => [ 'Int', 'perl_int', 120 ],
             },
             {
-                'farm' => [ 'NEText', 'Wickets' ],
-                'food' => [ 'NEText', 'Lemons' ],
-                'qty'  => [ 'PInt', 'perl_pint', 30 ],
+                'farm' => [ 'Text', 'Wickets' ],
+                'food' => [ 'Text', 'Lemons' ],
+                'qty'  => [ 'Int', 'perl_int', 30 ],
             },
         ] ],
     });
     pass( 'no death from loading example shipments data into VM' );
+    does_ok( $src_shipments, 'Muldis::Rosetta::Interface::Value' );
 
     # Execute a query against the virtual machine, to look at our sample
     # data and see what suppliers there are for foods coloured 'orange'.
 
-    my $desi_colour
-        = $process->new_value({ 'decl_type' => 'sys.std.Core.Type.Text' });
-    does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Value' );
-    $desi_colour->store_ast({ 'ast' => [ 'NEText', 'orange' ] });
+    my $desi_colour = $process->new_value({
+        'source_code' => [ 'Text', 'orange' ] });
     pass( 'no death from loading desired colour into VM' );
+    does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Value' );
 
     my $matched_suppl = $process->func_invo({
         'function' => 'sys.std.Core.Relation.semijoin',
@@ -166,15 +156,10 @@ sub _scenario_foods_suppliers_shipments_v1 {
             'filter' => $process->func_invo({
                 'function' => 'sys.std.Core.Relation.join',
                 'args' => {
-                    'topic' => [ 'QuasiSet',
-                            'quasi_set_of.sys.std.Core.Type.Relation', [
+                    'topic' => [ 'QuasiSet', [
                         $src_shipments,
                         $src_foods,
-                        [ 'Relation', 'sys.std.Core.Type.Relation', [
-                            {
-                                'colour' => $desi_colour,
-                            },
-                        ] ],
+                        [ 'Relation', [ { 'colour' => $desi_colour } ] ],
                     ] ],
                 },
             }),
@@ -188,14 +173,14 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     # Finally, use the result somehow (not done here).
     # The result should be:
-    # [ 'Relation', 'sys.std.Core.Type.Relation', [
+    # [ 'Relation', [
     #     {
-    #         'farm'    => [ 'NEText', 'Hodgesons' ],
-    #         'country' => [ 'NEText', 'Canada' ],
+    #         'farm'    => [ 'Text', 'Hodgesons' ],
+    #         'country' => [ 'Text', 'Canada' ],
     #     },
     #     {
-    #         'farm'    => [ 'NEText', 'Beckers' ],
-    #         'country' => [ 'NEText', 'England' ],
+    #         'farm'    => [ 'Text', 'Beckers' ],
+    #         'country' => [ 'Text', 'England' ],
     #     },
     # ] ]
 
