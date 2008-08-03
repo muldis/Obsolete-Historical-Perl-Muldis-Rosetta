@@ -16,10 +16,8 @@ use Muldis::Rosetta::Interface;
 
 sub new_machine {
     my ($args) = @_;
-    my ($exp_ast_lang, $machine_config)
-        = @{$args}{'exp_ast_lang', 'machine_config'};
+    my ($machine_config) = @{$args}{'machine_config'};
     return Muldis::Rosetta::Engine::Example::Public::Machine->new({
-        'exp_ast_lang' => $exp_ast_lang,
         'machine_config' => $machine_config });
 }
 
@@ -38,7 +36,6 @@ sub new_machine {
     # User-supplied config data for this Machine object.
     # For the moment, the Example Engine doesn't actually have anything
     # that can be config in this way, so input $machine_config is ignored.
-    my $ATTR_EXP_AST_LANG   = 'exp_ast_lang';
     my $ATTR_MACHINE_CONFIG = 'machine_config';
 
     # Lists of user-held objects associated with parts of this Machine.
@@ -57,11 +54,9 @@ sub new {
 
 sub _build {
     my ($self, $args) = @_;
-    my ($exp_ast_lang, $machine_config)
-        = @{$args}{'exp_ast_lang', 'machine_config'};
+    my ($machine_config) = @{$args}{'machine_config'};
 
     # TODO: input checks.
-    $self->{$ATTR_EXP_AST_LANG}   = [@{$exp_ast_lang}];
     $self->{$ATTR_MACHINE_CONFIG} = $machine_config;
 
     $self->{$ATTR_ASSOC_PROCESSES} = {};
@@ -78,24 +73,11 @@ sub DESTROY {
 
 ###########################################################################
 
-sub fetch_exp_ast_lang {
-    my ($self) = @_;
-    return [@{$self->{$ATTR_EXP_AST_LANG}}];
-}
-
-sub store_exp_ast_lang {
-    my ($self, $args) = @_;
-    my ($lang) = @{$args}{'lang'};
-    $self->{$ATTR_EXP_AST_LANG} = [@{$lang}];
-    return;
-}
-
-###########################################################################
-
 sub new_process {
-    my ($self) = @_;
+    my ($self, $args) = @_;
+    my ($process_config) = @{$args}{'process_config'};
     return Muldis::Rosetta::Engine::Example::Public::Process->new({
-        'machine' => $self });
+        'machine' => $self, 'process_config' => $process_config });
 }
 
 sub assoc_processes {
@@ -117,6 +99,13 @@ sub assoc_processes {
     use Scalar::Util qw( refaddr weaken );
 
     my $ATTR_MACHINE = 'machine';
+
+    # User-supplied config data for this Process object.
+    # For the moment, the Example Engine doesn't actually have anything
+    # that can be config in this way, so input $process_config is ignored.
+    my $ATTR_PROCESS_CONFIG = 'process_config';
+
+    my $ATTR_COMMAND_LANG = 'command_lang';
 
     # Lists of user-held objects associated with parts of this Process.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
@@ -141,11 +130,16 @@ sub new {
 
 sub _build {
     my ($self, $args) = @_;
-    my ($machine) = @{$args}{'machine'};
+    my ($machine, $process_config) = @{$args}{'machine', 'process_config'};
 
     $self->{$ATTR_MACHINE} = $machine;
     $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self} = $self;
     weaken $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self};
+
+    # TODO: input checks.
+    $self->{$ATTR_PROCESS_CONFIG} = $process_config;
+
+    $self->{$ATTR_COMMAND_LANG} = undef;
 
     $self->{$ATTR_ASSOC_VALUES} = {};
 
@@ -158,6 +152,27 @@ sub DESTROY {
     my ($self) = @_;
     # TODO: check for active trans and rollback ... or member VM does it.
     # Likewise with closing open files or whatever.
+    return;
+}
+
+###########################################################################
+
+sub assoc_machine {
+    my ($self) = @_;
+    return $self->{$ATTR_MACHINE};
+}
+
+###########################################################################
+
+sub command_lang {
+    my ($self) = @_;
+    return $self->{$ATTR_COMMAND_LANG};
+}
+
+sub update_command_lang {
+    my ($self, $args) = @_;
+    my ($lang) = @{$args}{'lang'};
+    $self->{$ATTR_COMMAND_LANG} = $lang;
     return;
 }
 
@@ -391,8 +406,33 @@ I<This documentation is pending.>
 
 =head1 INTERFACE
 
-I<This documentation is pending; this section may also be split into
-several.>
+Muldis::Rosetta::Engine::Example supports multiple command languages, all
+of which are official Muldis D dialects.  You may supply commands to
+Example written in any of the following:
+
+=over
+
+=item B<Tiny Plain Text Muldis D>
+
+See L<Muldis::D::Dialect::PTMD_Tiny> for details.
+
+The language name is specified either as a Perl character string whose
+value is C<Muldis_D:'http://muldis.com':'0.43.0':'PTMD_Tiny':{}> or as a
+Perl array whose value is C<[ 'Muldis_D', 'http://muldis.com', '0.43.0',
+'PTMD_Tiny', {} ]>.  No other version numbers are currently supported.
+
+=item B<Tiny Perl Hosted Data Muldis D>
+
+See L<Muldis::D::Dialect::HDMD_Perl_Tiny> for details.
+
+The language name is specified either as a Perl character string whose
+value is C<Muldis_D:'http://muldis.com':'0.43.0':'HDMD_Perl_Tiny':{}> or as
+a Perl array whose value is C<[ 'Muldis_D', 'http://muldis.com', '0.43.0',
+'HDMD_Perl_Tiny', {} ]>.  No other version numbers are currently supported.
+
+=back
+
+You may also supply or retrieve data through Example in any of the above.
 
 =head1 DIAGNOSTICS
 

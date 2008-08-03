@@ -18,8 +18,8 @@ use warnings FATAL => 'all';
 
 sub new_machine {
     my ($args) = @_;
-    my ($engine_name, $exp_ast_lang, $machine_config)
-        = @{$args}{'engine_name', 'exp_ast_lang', 'machine_config'};
+    my ($engine_name, $machine_config)
+        = @{$args}{'engine_name', 'machine_config'};
 
     confess q{new_machine(): Bad :$engine_name arg; Perl 5 does not}
             . q{ consider it to be a character str, or it's the empty str.}
@@ -53,7 +53,6 @@ sub new_machine {
         if !$engine_name->can( 'new_machine' );
     my $machine = eval {
         &{$engine_name->can( 'new_machine' )}({
-            'exp_ast_lang' => $exp_ast_lang,
             'machine_config' => $machine_config });
     };
     if (my $err = $@) {
@@ -80,16 +79,6 @@ sub new_machine {
     use Carp;
     use Scalar::Util qw(blessed);
 
-    sub fetch_exp_ast_lang {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub store_exp_ast_lang {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
     sub new_process {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
@@ -110,6 +99,16 @@ sub new_machine {
     use Scalar::Util qw(blessed);
 
     sub assoc_machine {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub command_lang {
+        my ($self) = @_;
+        confess q{not implemented by subclass } . (blessed $self);
+    }
+
+    sub update_command_lang {
         my ($self) = @_;
         confess q{not implemented by subclass } . (blessed $self);
     }
@@ -224,11 +223,10 @@ a third Perl variable holding the relation data of the result.
     use Muldis::Rosetta::Interface;
 
     my $machine = Muldis::Rosetta::Interface::new_machine({
-        'engine_name' => 'Muldis::Rosetta::Engine::Example',
-        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.43.0' ],
-        'machine_config' => {},
-    });
+        'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
+    $process->update_command_lang({ 'lang' => [ 'Muldis_D',
+        'http://muldis.com', '0.43.0', 'HDMD_Perl_Tiny', {} ] });
 
     my $r1 = $process->new_value({
         'decl_type' => 'sys.std.Core.Type.Relation' });
@@ -261,15 +259,15 @@ a third Perl variable holding the relation data of the result.
         },
     ] ] });
 
-    my $r3 = $process->func_invo(
+    my $r3 = $process->func_invo({
         'function' => 'sys.std.Core.Relation.join',
         'args' => {
             'topic' => [ 'QuasiSet', 'quasi_set_of.sys.std.Core.Type.Relation', [
                 $r1,
                 $r2,
-            ],
+            ] ],
         }
-    );
+    });
 
     my $r3_ast = $r3->fetch_ast();
 
@@ -334,7 +332,7 @@ the Muldis Rosetta API.
 =over
 
 =item C<new_machine of Muldis::Rosetta::Interface::Machine (Str
-:$engine_name!, Array :$exp_ast_lang!, Any :$machine_config!)>
+:$engine_name!, Any :$machine_config?)>
 
 This constructor function creates and returns a C<Machine> object that is
 implemented by the Muldis Rosetta Engine named by its named argument
@@ -347,11 +345,7 @@ return an object of some class of the same Engine which does the
 C<Muldis::Rosetta::Interface::Machine> role.  This function will start by
 testing if the root package is already loaded (it may be declared by some
 already-loaded file of another name), and only if not, will it do a Perl
-'require' of the C<$engine_name>.  The new C<Machine> object's "expected
-AST language" attribute is initialized from the C<$exp_ast_lang> argument,
-which is a 3-element Array as described for the argument of the C<Machine>
-method C<store_exp_ast_lang> (if applicable, the C<$machine_config>
-argument is interpreted in light of C<$exp_ast_lang>).
+'require' of the C<$engine_name>.
 
 =back
 
@@ -368,30 +362,12 @@ and then an exception thrown.
 
 =over
 
-=item C<fetch_exp_ast_lang of Array ()>
-
-This method returns, as a 3-element (ordered) Array, the long name of the
-Muldis D (or alternative) language version that its invocant C<Machine>
-object and its associated/child objects expect their AST/code/value input
-to conform to, and that their AST/code/value output will conform to.  The 3
-elements of the array (each a Str) are, in order, the language spec base
-name (typically C<Muldis_D>), the language spec authority (typically
-C<http://muldis.com> when the base name is C<Muldis_D>), and the language
-spec version number (looks like C<1.2.3> for C<Muldis_D> plus
-C<http://muldis.com>).
-
-=item C<store_exp_ast_lang (Array :$lang!)>
-
-This method assigns a new expected language long name to its invocant
-C<Machine>, which is supplied in the C<$lang> argument; the argument is
-expected to be a 3-element Array as described for C<fetch_exp_ast_lang>.
-This method dies if the specified language/version isn't one that the
-invocant's Engine knows how to or desires to handle.
-
-=item C<new_process of Muldis::Rosetta::Interface::Process ()>
+=item C<new_process of Muldis::Rosetta::Interface::Process (Any
+:$process_config?)>
 
 This method creates and returns a new C<Process> object that is associated
-with the invocant C<Machine>.
+with the invocant C<Machine>; that C<Process> object is initialized using
+the C<$process_config> argument.
 
 =item C<assoc_processes of Array ()>
 
@@ -408,12 +384,33 @@ which has its own autonomous transactional context, and for the most part,
 its own isolated environment.  It is associated with a specific C<Machine>
 object, the one whose C<new_process> method created it.
 
+A new C<Process> object's "expected command language" attribute is
+undefined by default, meaning that each command fed to it must declare what
+language it is written in; if that attribute was made defined, then
+commands fed to it would not need to declare their language and will be
+interpreted according to the expected language.
+
 =over
 
 =item C<assoc_machine of Muldis::Rosetta::Interface::Machine ()>
 
 This method returns the C<Machine> object that the invocant C<Process> is
 associated with.
+
+=item C<command_lang of Any ()>
+
+This method returns the fully qualified name of its invocant C<Process>
+object's "expected command language" attribute, which might be undefined;
+if it is defined, then is either a Perl Str that names a Plain Text
+language, or it is a Perl (ordered) Array that names a Perl Hosted Data
+language; these may be Muldis D dialects or some other language.
+
+=item C<update_command_lang (Any :$lang!)>
+
+This method assigns a new (possibly undefined) value to its invocant
+C<Process> object's "expected command language" attribute.  This method
+dies if the specified language is defined and its value isn't one that the
+invocant's Engine knows how to or desires to handle.
 
 =item C<new_value of Muldis::Rosetta::Interface::Value (Str :$decl_type!)>
 

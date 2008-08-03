@@ -17,8 +17,8 @@ use Muldis::Rosetta::Interface;
 
 sub main {
     my ($args) = @_;
-    my ($engine_name, $machine_config)
-        = @{$args}{'engine_name', 'machine_config'};
+    my ($engine_name, $machine_config, $process_config)
+        = @{$args}{'engine_name', 'machine_config', 'process_config'};
 
     plan( 'tests' => 13 );
 
@@ -28,12 +28,15 @@ sub main {
     # Instantiate a Muldis Rosetta DBMS / virtual machine.
     my $machine = Muldis::Rosetta::Interface::new_machine({
         'engine_name' => $engine_name,
-        'exp_ast_lang' => [ 'Muldis_D', 'http://muldis.com', '0.43.0' ],
         'machine_config' => $machine_config,
     });
     does_ok( $machine, 'Muldis::Rosetta::Interface::Machine' );
-    my $process = $machine->new_process();
+    my $process = $machine->new_process({
+        'process_config' => $process_config,
+    });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
+    $process->update_command_lang({ 'lang' => [ 'Muldis_D',
+        'http://muldis.com', '0.43.0', 'HDMD_Perl_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 

@@ -19,9 +19,6 @@
     require the commands they process to be of any specific language, and
     also that they both typically take multiple language dialects.
 
-    * (Interface.pm, Validator.pm)  Updated any references to Muldis D type
-    names to reflect those in the current language spec version 0.43.0.
-
     * (Interface.pm, Example.pm)  Removed the API roles|classes named
     "(Func|Proc)Binding", thereby majorly simplifying the public API of a
     Rosetta Engine; also removed the associated attributes|accessors of the
@@ -35,6 +32,32 @@
     are now direct counterparts to certain Muldis D system-defined routines
     or expr|stmt node types, that have the same names.
 
+    * (Interface.pm, Example.pm, Validator.pm)  Made the "machine_config"
+    parameter of the Machine constructor function and its wrapper function
+    optional.  Added an optional "process_config" parameter for the Process
+    constructor and its wrapper method that is analagous to this.  Added a
+    "process_config" parameter to Validator.pm's "main" procedure, and
+    updated Muldis_Rosetta_50_Validate_Example.t to pass it an argument.
+
+    * (Interface.pm, Example.pm, Validator.pm)  Removed the 'exp_ast_lang'
+    attribute from the Machine role|class, and added as a replacement the
+    'command_lang' attribute to the Process role|class; replaced the
+    corresponding accessor methods likewise.  The new attribute is not
+    required to have a defined value like the old attribute, and the new
+    can not be initialized using a constructor parameter like the old, but
+    can only be set with the accessor method.  If 'command_lang' is
+    undefined (as by default), then each command fed to a Process must
+    declare the language it is written in; if 'command_lang' is defined,
+    then each command need not declare, and is interpreted as being written
+    in the language named by 'command_lang'.  Overall, these changes permit
+    one to supply commands in multiple languages to the same DBMS, while
+    still not having to be verbose.  Also the language doesn't have to be
+    Muldis D, but could be SQL or something else the Engine accepts.
+
+    * (Example.pm)  Fleshed out the INTERFACE pod section to specify what
+    command languages the Example Engine accepts as input; currently it is
+    just the 2 official Muldis D "Tiny" dialects.
+
     * (Interface.pm, Example.pm, Validator.pm)  Replaced the API role|class
     Var with Value, as it now represents an immutable value rather than a
     mutable variable.  The Muldis Rosetta API now just uses ordinary Perl
@@ -42,6 +65,8 @@
     objects, and you update them in Perl space like you do with Perl vars.
     TODO: UPDATE THE VALUE ROLE|CLASS TO ACTUALLY BE A VALUE CLASS, AND NOT
     A RENAMED VARIABLE CLASS; UPDATE VALIDATOR'S USE OF IT LIKEWISE.
+
+    * (Interface.pm, Engine.pm, Validator.pm)  Made other misc updates.
 
     * The file archives/OSCON2008SessionProposal.txt was moved from the
     Muldis Rosetta version control / distribution to the Muldis D one; also
