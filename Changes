@@ -11,8 +11,7 @@
     them.
 
     * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
-    and Example.pm 0.8.0.  The other pre-existing versioned files are
-    unchanged.
+    and Example.pm 0.8.0 and SeeAlso.pod 0.5.1.
 
     * (Rosetta.pm)  Updated the DESCRIPTION pod to say that the Perl DBI
     and Muldis Rosetta are more similar, specifically that both do not
@@ -69,8 +68,8 @@
     understands against the DBMS; this is how you run Muldis D 'bootloader'
     routine code in Muldis Rosetta.
 
-    * (Interface.pm, Engine.pm, Validator.pm)  Made other misc updates,
-    such as bringing code samples and tests up to date with the API.
+    * (Interface.pm, Engine.pm, Validator.pm, SeeAlso.pod)  Made other misc
+    updates, such as bringing code samples, tests up to date with the API.
 
     * The file archives/OSCON2008SessionProposal.txt was moved from the
     Muldis Rosetta version control / distribution to the Muldis D one; also
