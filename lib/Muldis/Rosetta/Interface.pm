@@ -471,6 +471,9 @@ It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
+It also requires these Perl 5 packages that are on CPAN:
+L<Moose::Role-0.55|Moose::Role>.
+
 =head1 INCOMPATIBILITIES
 
 None reported.

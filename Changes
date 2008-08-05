@@ -1,6 +1,48 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
+2008-08-xx   Darren Duncan <perl@DarrenDuncan.net>
+
+    * Muldis Rosetta version 0.9.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.9.0.tar.gz.  Muldis Rosetta version 0.9.0 for Perl 6
+    is not released at all.  The rest of this Changes entry refers only to
+    the Perl 5 version, and it should not be assumed that the Perl 6
+    version incorporates all of said updates, though it may have some of
+    them.
+
+    * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
+    and Example.pm 0.9.0.  The other pre-existing versioned files are
+    unchanged.
+
+    * As of this release, Muldis Rosetta for Perl 5 uses the Moose
+    postmodern object system for Perl 5; this distribution has now gained
+    an external dependency on the Perl 5 framework 'Moose', which is not
+    bundled with any version of Perl and will need to be installed from
+    CPAN; Moose also has a few not-bundled dependencies of its own.
+
+    * (Interface.pm, Example.pm)  Updated the 3 Interface roles
+    Machine|Process|Value to actually declare themselves as roles using
+    Moose::Role, and updated the 3 corresponding Example Engine classes to
+    actually declare themselves as Moose classes, and as composing said 3
+    roles (using the Moose 'with' keyword).  Also updated the 'new_machine'
+    submethod of Muldis::Rosetta::Interface to retain compatability with
+    the isa() to does() change.
+
+    * (Validator.pm)  Updated the does_ok() utility routine to actually
+    perform a does() test rather than isa(); this involved cloning the
+    isa_ok() of Test::More into Validator.pm, with a few small changes.
+
+    * (Example.pm)  Renamed all the _build submethods to BUILD, removed all
+    the new(), and renamed all the DESTROY to DEMOLISH, since Moose now
+    takes care of the framing bits for us.
+
+    * (Example.pm)  Removed all the constant declarations that are class
+    attribute names, just using their string literal values directly as the
+    $self hash keys.  Also added Moose 'has' declarations for all the class
+    attributes, though currently they probably don't do anything since we
+    still manually specify everything with BUILD, DEMOLISH, and explicit
+    accessor methods; this is expected to change in a future release.
+
 2008-08-02   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.8.0 for Perl 5 is released on CPAN as

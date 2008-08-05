@@ -286,9 +286,8 @@ sub BUILD {
     weaken $process->{'assoc_values'}->{refaddr $self};
 
     # TODO: input checks.
-#    $self->{$ATTR_VALUE}
-#        = Muldis::Rosetta::Engine::Example::VM::Value->new({
-#            'source_code' => $source_code }); # TODO; or some such
+#    $self->{'value'} = Muldis::Rosetta::Engine::Example::VM::Value->new({
+#        'source_code' => $source_code }); # TODO; or some such
 
     return;
 }
@@ -419,6 +418,9 @@ recommends one that is at least 5.10.0.
 It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
+
+It also requires these Perl 5 packages that are on CPAN:
+L<Moose-0.55|Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-0.8.0|Muldis::Rosetta::Interface>.
