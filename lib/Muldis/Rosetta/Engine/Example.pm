@@ -29,42 +29,37 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Machine; # class
-    use base 'Muldis::Rosetta::Interface::Machine';
+    use Moose;
+
+    with 'Muldis::Rosetta::Interface::Machine';
 
     use Carp;
 
     # User-supplied config data for this Machine object.
     # For the moment, the Example Engine doesn't actually have anything
     # that can be config in this way, so input $machine_config is ignored.
-    my $ATTR_MACHINE_CONFIG = 'machine_config';
+    has 'machine_config';
 
     # Lists of user-held objects associated with parts of this Machine.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
-    my $ATTR_ASSOC_PROCESSES = 'assoc_processes';
+    has 'assoc_processes';
 
 ###########################################################################
 
-sub new {
-    my ($class, $args) = @_;
-    my $self = bless {}, $class;
-    $self->_build( $args );
-    return $self;
-}
-
-sub _build {
+sub BUILD {
     my ($self, $args) = @_;
     my ($machine_config) = @{$args}{'machine_config'};
 
     # TODO: input checks.
-    $self->{$ATTR_MACHINE_CONFIG} = $machine_config;
+    $self->{'machine_config'} = $machine_config;
 
-    $self->{$ATTR_ASSOC_PROCESSES} = {};
+    $self->{'assoc_processes'} = {};
 
     return;
 }
 
-sub DESTROY {
+sub DEMOLISH {
     my ($self) = @_;
     # TODO: check for active trans and rollback ... or member VM does it.
     # Likewise with closing open files or whatever.
@@ -82,78 +77,70 @@ sub new_process {
 
 sub assoc_processes {
     my ($self) = @_;
-    return [values %{$self->{$ATTR_ASSOC_PROCESSES}}];
+    return [values %{$self->{'assoc_processes'}}];
 }
 
 ###########################################################################
 
+    __PACKAGE__->meta()->make_immutable();
 } # class Muldis::Rosetta::Engine::Example::Public::Machine
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use base 'Muldis::Rosetta::Interface::Process';
+    use Moose;
+
+    with 'Muldis::Rosetta::Interface::Process';
 
     use Carp;
     use Scalar::Util qw( refaddr weaken );
 
-    my $ATTR_MACHINE = 'machine';
+    has 'machine';
 
     # User-supplied config data for this Process object.
     # For the moment, the Example Engine doesn't actually have anything
     # that can be config in this way, so input $process_config is ignored.
-    my $ATTR_PROCESS_CONFIG = 'process_config';
+    has 'process_config';
 
-    my $ATTR_COMMAND_LANG = 'command_lang';
+    has 'command_lang';
 
     # Lists of user-held objects associated with parts of this Process.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
-    my $ATTR_ASSOC_VALUES = 'assoc_values';
+    has 'assoc_values';
 
     # Maintain actual state of the this DBMS' virtual machine.
     # TODO: the VM itself should be in another file, this attr with it.
-    my $ATTR_TRANS_NEST_LEVEL = 'trans_nest_level';
-
-    # Allow Process objs to update Machine's "assoc" list re themselves.
-    my $MACHINE_ATTR_ASSOC_PROCESSES = 'assoc_processes';
+    has 'trans_nest_level';
 
 ###########################################################################
 
-sub new {
-    my ($class, $args) = @_;
-    my $self = bless {}, $class;
-    $self->_build( $args );
-    return $self;
-}
-
-sub _build {
+sub BUILD {
     my ($self, $args) = @_;
     my ($machine, $process_config) = @{$args}{'machine', 'process_config'};
 
-    $self->{$ATTR_MACHINE} = $machine;
-    $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self} = $self;
-    weaken $machine->{$MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self};
+    $self->{'machine'} = $machine;
+    $machine->{'assoc_processes'}->{refaddr $self} = $self;
+    weaken $machine->{'assoc_processes'}->{refaddr $self};
 
     # TODO: input checks.
-    $self->{$ATTR_PROCESS_CONFIG} = $process_config;
+    $self->{'process_config'} = $process_config;
 
-    $self->{$ATTR_COMMAND_LANG} = undef;
+    $self->{'command_lang'} = undef;
 
-    $self->{$ATTR_ASSOC_VALUES} = {};
+    $self->{'assoc_values'} = {};
 
-    $self->{$ATTR_TRANS_NEST_LEVEL} = 0;
+    $self->{'trans_nest_level'} = 0;
 
     return;
 }
 
-sub DESTROY {
+sub DEMOLISH {
     my ($self) = @_;
     # TODO: check for active trans and rollback ... or member VM does it.
     # Likewise with closing open files or whatever.
-    delete $self->{$ATTR_MACHINE}->{
-        $MACHINE_ATTR_ASSOC_PROCESSES}->{refaddr $self};
+    delete $self->{'machine'}->{'assoc_processes'}->{refaddr $self};
     return;
 }
 
@@ -161,20 +148,20 @@ sub DESTROY {
 
 sub assoc_machine {
     my ($self) = @_;
-    return $self->{$ATTR_MACHINE};
+    return $self->{'machine'};
 }
 
 ###########################################################################
 
 sub command_lang {
     my ($self) = @_;
-    return $self->{$ATTR_COMMAND_LANG};
+    return $self->{'command_lang'};
 }
 
 sub update_command_lang {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-    $self->{$ATTR_COMMAND_LANG} = $lang;
+    $self->{'command_lang'} = $lang;
     return;
 }
 
@@ -200,7 +187,7 @@ sub new_value {
 
 sub assoc_values {
     my ($self) = @_;
-    return [values %{$self->{$ATTR_ASSOC_VALUES}}];
+    return [values %{$self->{'assoc_values'}}];
 }
 
 ###########################################################################
@@ -238,13 +225,13 @@ sub proc_invo {
 
 sub trans_nest_level {
     my ($self) = @_;
-    return $self->{$ATTR_TRANS_NEST_LEVEL};
+    return $self->{'trans_nest_level'};
 }
 
 sub start_trans {
     my ($self) = @_;
     # TODO: the actual work.
-    $self->{$ATTR_TRANS_NEST_LEVEL} ++;
+    $self->{'trans_nest_level'} ++;
     return;
 }
 
@@ -252,9 +239,9 @@ sub commit_trans {
     my ($self) = @_;
     confess q{commit_trans(): Could not commit a transaction;}
             . q{ none are currently active.}
-        if $self->{$ATTR_TRANS_NEST_LEVEL} == 0;
+        if $self->{'trans_nest_level'} == 0;
     # TODO: the actual work.
-    $self->{$ATTR_TRANS_NEST_LEVEL} --;
+    $self->{'trans_nest_level'} --;
     return;
 }
 
@@ -262,49 +249,41 @@ sub rollback_trans {
     my ($self) = @_;
     confess q{rollback_trans(): Could not rollback a transaction;}
             . q{ none are currently active.}
-        if $self->{$ATTR_TRANS_NEST_LEVEL} == 0;
+        if $self->{'trans_nest_level'} == 0;
     # TODO: the actual work.
-    $self->{$ATTR_TRANS_NEST_LEVEL} --;
+    $self->{'trans_nest_level'} --;
     return;
 }
 
 ###########################################################################
 
+    __PACKAGE__->meta()->make_immutable();
 } # class Muldis::Rosetta::Engine::Example::Public::Process
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use base 'Muldis::Rosetta::Interface::Value';
+    use Moose;
 
-    use Carp;
+    with 'Muldis::Rosetta::Interface::Value';
+
     use Scalar::Util qw( refaddr weaken );
 
-    my $ATTR_PROCESS = 'process';
+    has 'process';
 
-    my $ATTR_VALUE = 'value';
+    has 'value';
     # TODO: cache Perl-Hosted Muldis D version of $!value.
-
-    # Allow Value objs to update Process' "assoc" list re themselves.
-    my $PROCESS_ATTR_ASSOC_VALUES = 'assoc_values';
 
 ###########################################################################
 
-sub new {
-    my ($class, $args) = @_;
-    my $self = bless {}, $class;
-    $self->_build( $args );
-    return $self;
-}
-
-sub _build {
+sub BUILD {
     my ($self, $args) = @_;
     my ($process, $source_code) = @{$args}{'process', 'source_code'};
 
-    $self->{$ATTR_PROCESS} = $process;
-    $process->{$PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self} = $self;
-    weaken $process->{$PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self};
+    $self->{'process'} = $process;
+    $process->{'assoc_values'}->{refaddr $self} = $self;
+    weaken $process->{'assoc_values'}->{refaddr $self};
 
     # TODO: input checks.
 #    $self->{$ATTR_VALUE}
@@ -314,10 +293,9 @@ sub _build {
     return;
 }
 
-sub DESTROY {
+sub DEMOLISH {
     my ($self) = @_;
-    delete $self->{$ATTR_PROCESS}->{
-        $PROCESS_ATTR_ASSOC_VALUES}->{refaddr $self};
+    delete $self->{'process'}->{'assoc_values'}->{refaddr $self};
     return;
 }
 
@@ -325,7 +303,7 @@ sub DESTROY {
 
 sub assoc_process {
     my ($self) = @_;
-    return $self->{$ATTR_PROCESS};
+    return $self->{'process'};
 }
 
 ###########################################################################
@@ -333,12 +311,13 @@ sub assoc_process {
 sub source_code {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-#    return $self->{$ATTR_VALUE}->source_code( $lang ); # TODO; or som such
+#    return $self->{'value'}->source_code( $lang ); # TODO; or some such
     return;
 }
 
 ###########################################################################
 
+    __PACKAGE__->meta()->make_immutable();
 } # class Muldis::Rosetta::Engine::Example::Public::Value
 
 ###########################################################################

@@ -62,8 +62,8 @@ sub new_machine {
     confess q{new_machine(): The new_machine() constructor function of the}
             . qq{ Muldis Rosetta Engine mod '$engine_name' did not ret an}
             . q{ obj of a Muldis::Rosetta::Interface::Machine-doing class.}
-        if !blessed $machine
-            or !$machine->isa( 'Muldis::Rosetta::Interface::Machine' );
+        if !blessed $machine or !$machine->isa( 'Moose::Object' )
+            or !$machine->does( 'Muldis::Rosetta::Interface::Machine' );
 
     return $machine;
 }
@@ -76,18 +76,10 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Machine; # role
-    use Carp;
-    use Scalar::Util qw(blessed);
+    use Moose::Role;
 
-    sub new_process {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub assoc_processes {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
+    requires 'new_process';
+    requires 'assoc_processes';
 
 } # role Muldis::Rosetta::Interface::Machine
 
@@ -95,73 +87,21 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Process; # role
-    use Carp;
-    use Scalar::Util qw(blessed);
+    use Moose::Role;
 
-    sub assoc_machine {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub command_lang {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub update_command_lang {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub execute {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub new_value {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub assoc_values {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub func_invo {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub upd_invo {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub proc_invo {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub trans_nest_level {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub start_trans {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub commit_trans {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub rollback_trans {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
+    requires 'assoc_machine';
+    requires 'command_lang';
+    requires 'update_command_lang';
+    requires 'execute';
+    requires 'new_value';
+    requires 'assoc_values';
+    requires 'func_invo';
+    requires 'upd_invo';
+    requires 'proc_invo';
+    requires 'trans_nest_level';
+    requires 'start_trans';
+    requires 'commit_trans';
+    requires 'rollback_trans';
 
 } # role Muldis::Rosetta::Interface::Process
 
@@ -169,18 +109,10 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Value; # role
-    use Carp;
-    use Scalar::Util qw(blessed);
+    use Moose::Role;
 
-    sub assoc_process {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
-
-    sub source_code {
-        my ($self) = @_;
-        confess q{not implemented by subclass } . (blessed $self);
-    }
+    requires 'assoc_process';
+    requires 'source_code';
 
 } # role Muldis::Rosetta::Interface::Value
 
