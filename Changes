@@ -1,6 +1,36 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
+2008-08-xx   Darren Duncan <perl@DarrenDuncan.net>
+
+    * Muldis Rosetta version 0.10.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.10.0.tar.gz.  Muldis Rosetta version 0.10.0 for Perl 6
+    is not released at all.  The rest of this Changes entry refers only to
+    the Perl 5 version, and it should not be assumed that the Perl 6
+    version incorporates all of said updates, though it may have some of
+    them.
+
+    * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
+    and Example.pm 0.10.0.  The other pre-existing versioned files are
+    unchanged.
+
+    * (Engine.pm)  Renamed Process|Value attr 'machine'|'process' to prefix
+    'assoc_', and the corresponding Process|Value constructor parameter was
+    likewise renamed; corresponding updates to new_(process|value) methods.
+
+    * (Engine.pm)  Renamed all attributes of all classes to prepend an
+    underscore to their names.  Fleshed out all the Moose 'has'
+    declarations of said attributes, so that they are all "is rw" and so
+    have auto-generated accessor methods of the same (new) names of the
+    attributes.  Updated all Engine.pm code to use these attr accessor
+    methods rather than using direct $self hash accesses.  Further fleshed
+    out the 'has' to define their initialization from either default
+    literals or constructor params, as well as marking any constructor
+    params that are required, and a few with other constraints.  The BUILD
+    submethods are now considerably smaller with most of their contents now
+    replaced by the 'has'.  Some of the more complicated input checking and
+    post-processing remains in the BUILD though.
+
 2008-08-04   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.9.0 for Perl 5 is released on CPAN as

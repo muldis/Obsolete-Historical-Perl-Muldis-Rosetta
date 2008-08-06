@@ -38,23 +38,27 @@ sub new_machine {
     # User-supplied config data for this Machine object.
     # For the moment, the Example Engine doesn't actually have anything
     # that can be config in this way, so input $machine_config is ignored.
-    has 'machine_config';
+    has '_machine_config' => (
+        is       => 'rw',
+        init_arg => 'machine_config',
+        required => 0,
+        default  => undef,
+    );
 
     # Lists of user-held objects associated with parts of this Machine.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
-    has 'assoc_processes';
+    has '_assoc_processes' => (
+        is      => 'rw',
+        default => sub { {} },
+    );
 
 ###########################################################################
 
 sub BUILD {
-    my ($self, $args) = @_;
-    my ($machine_config) = @{$args}{'machine_config'};
+    my ($self) = @_;
 
-    # TODO: input checks.
-    $self->{'machine_config'} = $machine_config;
-
-    $self->{'assoc_processes'} = {};
+    # TODO: input checks on $!machine_config.
 
     return;
 }
@@ -72,12 +76,12 @@ sub new_process {
     my ($self, $args) = @_;
     my ($process_config) = @{$args}{'process_config'};
     return Muldis::Rosetta::Engine::Example::Public::Process->new({
-        'machine' => $self, 'process_config' => $process_config });
+        'assoc_machine' => $self, 'process_config' => $process_config });
 }
 
 sub assoc_processes {
     my ($self) = @_;
-    return [values %{$self->{'assoc_processes'}}];
+    return [values %{$self->_assoc_processes}];
 }
 
 ###########################################################################
@@ -96,42 +100,52 @@ sub assoc_processes {
     use Carp;
     use Scalar::Util qw( refaddr weaken );
 
-    has 'machine';
+    has '_assoc_machine' => (
+        is       => 'rw',
+        init_arg => 'assoc_machine',
+        required => 1,
+        isa      => 'Muldis::Rosetta::Engine::Example::Public::Machine',
+    );
 
     # User-supplied config data for this Process object.
     # For the moment, the Example Engine doesn't actually have anything
     # that can be config in this way, so input $process_config is ignored.
-    has 'process_config';
+    has '_process_config' => (
+        is      => 'rw',
+        init_arg => 'process_config',
+        required => 0,
+        default  => undef,
+    );
 
-    has 'command_lang';
+    has '_command_lang' => (
+        is      => 'rw',
+        default => undef,
+    );
 
     # Lists of user-held objects associated with parts of this Process.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
-    has 'assoc_values';
+    has '_assoc_values' => (
+        is      => 'rw',
+        default => sub { {} },
+    );
 
     # Maintain actual state of the this DBMS' virtual machine.
     # TODO: the VM itself should be in another file, this attr with it.
-    has 'trans_nest_level';
+    has '_trans_nest_level' => (
+        is      => 'rw',
+        default => 0,
+    );
 
 ###########################################################################
 
 sub BUILD {
-    my ($self, $args) = @_;
-    my ($machine, $process_config) = @{$args}{'machine', 'process_config'};
+    my ($self) = @_;
 
-    $self->{'machine'} = $machine;
-    $machine->{'assoc_processes'}->{refaddr $self} = $self;
-    weaken $machine->{'assoc_processes'}->{refaddr $self};
+    $self->_assoc_machine->_assoc_processes->{refaddr $self} = $self;
+    weaken $self->_assoc_machine->_assoc_processes->{refaddr $self};
 
-    # TODO: input checks.
-    $self->{'process_config'} = $process_config;
-
-    $self->{'command_lang'} = undef;
-
-    $self->{'assoc_values'} = {};
-
-    $self->{'trans_nest_level'} = 0;
+    # TODO: input checks on $!process_config.
 
     return;
 }
@@ -140,7 +154,7 @@ sub DEMOLISH {
     my ($self) = @_;
     # TODO: check for active trans and rollback ... or member VM does it.
     # Likewise with closing open files or whatever.
-    delete $self->{'machine'}->{'assoc_processes'}->{refaddr $self};
+    delete $self->_assoc_machine->_assoc_processes->{refaddr $self};
     return;
 }
 
@@ -148,20 +162,20 @@ sub DEMOLISH {
 
 sub assoc_machine {
     my ($self) = @_;
-    return $self->{'machine'};
+    return $self->_assoc_machine;
 }
 
 ###########################################################################
 
 sub command_lang {
     my ($self) = @_;
-    return $self->{'command_lang'};
+    return $self->_command_lang;
 }
 
 sub update_command_lang {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-    $self->{'command_lang'} = $lang;
+    $self->_command_lang( $lang );
     return;
 }
 
@@ -182,12 +196,12 @@ sub new_value {
     my ($self, $args) = @_;
     my ($source_code) = @{$args}{'source_code'};
     return Muldis::Rosetta::Engine::Example::Public::Value->new({
-        'process' => $self, 'source_code' => $source_code });
+        'assoc_process' => $self, 'source_code' => $source_code });
 }
 
 sub assoc_values {
     my ($self) = @_;
-    return [values %{$self->{'assoc_values'}}];
+    return [values %{$self->_assoc_values}];
 }
 
 ###########################################################################
@@ -225,13 +239,13 @@ sub proc_invo {
 
 sub trans_nest_level {
     my ($self) = @_;
-    return $self->{'trans_nest_level'};
+    return $self->_trans_nest_level;
 }
 
 sub start_trans {
     my ($self) = @_;
     # TODO: the actual work.
-    $self->{'trans_nest_level'} ++;
+    $self->_trans_nest_level( $self->_trans_nest_level ++ );
     return;
 }
 
@@ -239,9 +253,9 @@ sub commit_trans {
     my ($self) = @_;
     confess q{commit_trans(): Could not commit a transaction;}
             . q{ none are currently active.}
-        if $self->{'trans_nest_level'} == 0;
+        if $self->_trans_nest_level == 0;
     # TODO: the actual work.
-    $self->{'trans_nest_level'} --;
+    $self->_trans_nest_level( $self->_trans_nest_level -- );
     return;
 }
 
@@ -249,9 +263,9 @@ sub rollback_trans {
     my ($self) = @_;
     confess q{rollback_trans(): Could not rollback a transaction;}
             . q{ none are currently active.}
-        if $self->{'trans_nest_level'} == 0;
+        if $self->_trans_nest_level == 0;
     # TODO: the actual work.
-    $self->{'trans_nest_level'} --;
+    $self->_trans_nest_level( $self->_trans_nest_level -- );
     return;
 }
 
@@ -270,23 +284,29 @@ sub rollback_trans {
 
     use Scalar::Util qw( refaddr weaken );
 
-    has 'process';
+    has '_assoc_process' => (
+        is       => 'rw',
+        init_arg => 'assoc_process',
+        required => 1,
+        isa      => 'Muldis::Rosetta::Engine::Example::Public::Process',
+    );
 
-    has 'value';
+    has '_value' => (
+        is => 'rw',
+    );
     # TODO: cache Perl-Hosted Muldis D version of $!value.
 
 ###########################################################################
 
 sub BUILD {
     my ($self, $args) = @_;
-    my ($process, $source_code) = @{$args}{'process', 'source_code'};
+    my ($source_code) = @{$args}{'source_code'};
 
-    $self->{'process'} = $process;
-    $process->{'assoc_values'}->{refaddr $self} = $self;
-    weaken $process->{'assoc_values'}->{refaddr $self};
+    $self->_assoc_process->_assoc_values->{refaddr $self} = $self;
+    weaken $self->_assoc_process->_assoc_values->{refaddr $self};
 
-    # TODO: input checks.
-#    $self->{'value'} = Muldis::Rosetta::Engine::Example::VM::Value->new({
+    # TODO: input checks on $source_code.
+#    $self->_value = Muldis::Rosetta::Engine::Example::VM::Value->new({
 #        'source_code' => $source_code }); # TODO; or some such
 
     return;
@@ -294,7 +314,7 @@ sub BUILD {
 
 sub DEMOLISH {
     my ($self) = @_;
-    delete $self->{'process'}->{'assoc_values'}->{refaddr $self};
+    delete $self->_assoc_process->_assoc_values->{refaddr $self};
     return;
 }
 
@@ -302,7 +322,7 @@ sub DEMOLISH {
 
 sub assoc_process {
     my ($self) = @_;
-    return $self->{'process'};
+    return $self->_assoc_process;
 }
 
 ###########################################################################
@@ -310,7 +330,7 @@ sub assoc_process {
 sub source_code {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-#    return $self->{'value'}->source_code( $lang ); # TODO; or some such
+#    return $self->_value->source_code( $lang ); # TODO; or some such
     return;
 }
 
