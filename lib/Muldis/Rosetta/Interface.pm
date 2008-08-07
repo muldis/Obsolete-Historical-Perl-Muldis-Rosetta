@@ -346,8 +346,7 @@ with the invocant C<Process>; that C<Value> object is initialized using the
 (typically Muldis D) source code given in its C<$source_code> argument,
 which defines a value literal.  If the C<$source_code> is in a Perl Hosted
 Data language, then it may consist partially of other C<Value> objects.  If
-C<$source_code> is itself just a C<Value> object, then this method will
-just return that same object.
+C<$source_code> is itself just a C<Value> object, then it will be cloned.
 
 =item C<assoc_values of Array ()>
 

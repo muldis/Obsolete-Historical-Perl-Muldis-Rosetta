@@ -14,6 +14,10 @@
     and Example.pm 0.10.0.  The other pre-existing versioned files are
     unchanged.
 
+    * (Interface.pm)  Fixed the documentation of 'new_value' to say it will
+    clone a Value object given as its 'source_code' argument, rather than
+    simply return the same object.
+
     * (Engine.pm)  Renamed Process|Value attr 'machine'|'process' to prefix
     'assoc_', and the corresponding Process|Value constructor parameter was
     likewise renamed; corresponding updates to new_(process|value) methods.
