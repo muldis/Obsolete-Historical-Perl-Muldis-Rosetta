@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta; # package
-    use version; our $VERSION = qv('0.9.0');
+    use version; our $VERSION = qv('0.10.0');
     # Note that Perl code only exists at all in this file in order to help
     # the CPAN indexer handle the distribution properly.
 } # package Muldis::Rosetta
@@ -29,7 +29,7 @@ Full-featured truly relational DBMS in Perl
 
 =head1 VERSION
 
-This document is Muldis::Rosetta version 0.9.0.
+This document is Muldis::Rosetta version 0.10.0.
 
 =head1 DESCRIPTION
 
