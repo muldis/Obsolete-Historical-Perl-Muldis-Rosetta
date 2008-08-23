@@ -33,8 +33,6 @@ sub new_machine {
 
     with 'Muldis::Rosetta::Interface::Machine';
 
-    use Carp;
-
     # User-supplied config data for this Machine object.
     # For the moment, the Example Engine doesn't actually have anything
     # that can be config in this way, so input $machine_config is ignored.
@@ -97,7 +95,6 @@ sub assoc_processes {
 
     with 'Muldis::Rosetta::Interface::Process';
 
-    use Carp;
     use Scalar::Util qw( refaddr weaken );
 
     has '_assoc_machine' => (
