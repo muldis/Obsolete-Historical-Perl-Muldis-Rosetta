@@ -14,9 +14,34 @@
     and Example.pm 0.11.0.  The other pre-existing versioned files are
     unchanged.
 
+    * (Interface.pm)  Updated the API documentation to fix a certain
+    ambiguity problem with source code.  It now says that any supplied
+    source code that is a Perl Str is always treated as being some
+    plain-text language, and source code that is any kind of Perl 5
+    reference or object is always treated as being some Perl-hosted-data
+    language; to disambiguate Perl-hosted-data source code that consists of
+    just a "Cat.Name" literal (which is normally specified as a Perl Str
+    rather than a Perl Array) from general plain-text code, Muldis Rosetta
+    now requires one to specify such Perl-hosted-data source code by
+    supplying source code which is a Perl 5 reference to a Perl Str, rather
+    than supplying it as a plain Perl Str.
+
     * (Engine.pm)  Removed any 'use Carp' within class defs, since it turns
     out that Moose exports its 'confess' into our classes for us.  (It also
     exports 'blessed' of Scalar::Util.)
+
+    * (Interface.pm, Example.pm, Validator.pm)  Split up the conceptual
+    Process attribute "expected command language" into the 2 "expected
+    plain-text|perl-hosted-data command language", so now the plain-text
+    and Perl-hosted-data language groupings each have their default which
+    can be unset or set that just affects work with that language group.
+    Split up the Process role|class' 2 "(|update_)command_lang" methods
+    into the 4 "(|update_)(pt|hd)_command_lang" methods; also updated the
+    "pt" versions to return/take a Perl Str, and the "hd" to return/take a
+    Perl Array, rather than return/take Any.  Similarly split up the Value
+    role|class' 1 "source_code" method into the 2 "(pt|hd)_source_code"
+    methods; the return/take data types were similarly changed except that
+    the "hd" still results in Any.
 
 2008-08-19   Darren Duncan <perl@DarrenDuncan.net>
 

@@ -35,7 +35,7 @@ sub main {
         'process_config' => $process_config,
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
-    $process->update_command_lang({ 'lang' => [ 'Muldis_D',
+    $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
         'http://muldis.com', '0.46.0', 'HDMD_Perl_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
@@ -168,7 +168,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     pass( 'no death from executing search query' );
     does_ok( $matched_suppl, 'Muldis::Rosetta::Interface::Value' );
 
-    my $matched_suppl_as_perl = $matched_suppl->source_code();
+    my $matched_suppl_as_perl = $matched_suppl->hd_source_code();
     pass( 'no death from fetching search results from VM' );
 
     # Finally, use the result somehow (not done here).

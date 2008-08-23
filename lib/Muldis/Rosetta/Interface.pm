@@ -94,8 +94,10 @@ sub new_machine {
     use Moose::Role;
 
     requires 'assoc_machine';
-    requires 'command_lang';
-    requires 'update_command_lang';
+    requires 'pt_command_lang';
+    requires 'update_pt_command_lang';
+    requires 'hd_command_lang';
+    requires 'update_hd_command_lang';
     requires 'execute';
     requires 'new_value';
     requires 'assoc_values';
@@ -116,7 +118,8 @@ sub new_machine {
     use Moose::Role;
 
     requires 'assoc_process';
-    requires 'source_code';
+    requires 'pt_source_code';
+    requires 'hd_source_code';
 
 } # role Muldis::Rosetta::Interface::Value
 
@@ -156,7 +159,7 @@ a third Perl variable holding the relation data of the result.
     my $machine = Muldis::Rosetta::Interface::new_machine({
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
-    $process->update_command_lang({ 'lang' => [ 'Muldis_D',
+    $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
         'http://muldis.com', '0.46.0', 'HDMD_Perl_Tiny', {} ] });
 
     my $r1 = $process->new_value({ 'source_code' => [ 'Relation', [
@@ -192,7 +195,7 @@ a third Perl variable holding the relation data of the result.
         }
     });
 
-    my $r3_as_perl = $r3->source_code();
+    my $r3_as_perl = $r3->hd_source_code();
 
     # Then $r3_as_perl contains:
     # [ 'Relation', [
@@ -307,11 +310,13 @@ which has its own autonomous transactional context, and for the most part,
 its own isolated environment.  It is associated with a specific C<Machine>
 object, the one whose C<new_process> method created it.
 
-A new C<Process> object's "expected command language" attribute is
-undefined by default, meaning that each command fed to it must declare what
-language it is written in; if that attribute was made defined, then
-commands fed to it would not need to declare their language and will be
-interpreted according to the expected language.
+A new C<Process> object's "expected plain-text|Perl-hosted-data command
+language" attribute is undefined by default, meaning that each
+plain-text|Perl-hosted-data command fed to it must declare what
+plain-text|Perl-hosted-data language it is written in; if that attribute
+was made defined, then plain-text|Perl-hosted-data commands fed to it would
+not need to declare their plain-text|Perl-hosted-data language and will be
+interpreted according to the expected plain-text|Perl-hosted-data language.
 
 =over
 
@@ -320,27 +325,44 @@ interpreted according to the expected language.
 This method returns the C<Machine> object that the invocant C<Process> is
 associated with.
 
-=item C<command_lang of Any ()>
+=item C<pt_command_lang of Str ()>
 
 This method returns the fully qualified name of its invocant C<Process>
-object's "expected command language" attribute, which might be undefined;
-if it is defined, then is either a Perl Str that names a Plain Text
-language, or it is a Perl (ordered) Array that names a Perl Hosted Data
+object's "expected plain-text command language" attribute, which might be
+undefined; if it is defined, then is a Perl Str that names a Plain Text
 language; these may be Muldis D dialects or some other language.
 
-=item C<update_command_lang (Any :$lang!)>
+=item C<update_pt_command_lang (Str :$lang!)>
 
 This method assigns a new (possibly undefined) value to its invocant
-C<Process> object's "expected command language" attribute.  This method
-dies if the specified language is defined and its value isn't one that the
-invocant's Engine knows how to or desires to handle.
+C<Process> object's "expected plain-text command language" attribute.  This
+method dies if the specified language is defined and its value isn't one
+that the invocant's Engine knows how to or desires to handle.
+
+=item C<hd_command_lang of Array ()>
+
+This method returns the fully qualified name of its invocant C<Process>
+object's "expected Perl-hosted-data command language" attribute, which
+might be undefined; if it is defined, then is a Perl (ordered) Array that
+names a Perl Hosted Data language; these may be Muldis D dialects or some
+other language.
+
+=item C<update_hd_command_lang (Array :$lang!)>
+
+This method assigns a new (possibly undefined) value to its invocant
+C<Process> object's "expected Perl-hosted-data command language" attribute.
+This method dies if the specified language is defined and its value isn't
+one that the invocant's Engine knows how to or desires to handle.
 
 =item C<execute (Any :$source_code!)>
 
 This method compiles and executes the (typically Muldis D) source code
-given in its C<$source_code> argument.  This method dies if the source code
-fails to compile for some reason, or if the executing code has a runtime
-exception.
+given in its C<$source_code> argument.  If C<$source_code> is a Perl Str
+then it is treated as being written in a plain-text language; if
+C<$source_code> is any kind of Perl 5 reference or Perl 5 object then it is
+treated as being written in a Perl-hosted-data language.  This method dies
+if the source code fails to compile for some reason, or if the executing
+code has a runtime exception.
 
 =item C<new_value of Muldis::Rosetta::Interface::Value (Any
 :$source_code!)>
@@ -348,8 +370,17 @@ exception.
 This method creates and returns a new C<Value> object that is associated
 with the invocant C<Process>; that C<Value> object is initialized using the
 (typically Muldis D) source code given in its C<$source_code> argument,
-which defines a value literal.  If the C<$source_code> is in a Perl Hosted
-Data language, then it may consist partially of other C<Value> objects.  If
+which defines a value literal.  If C<$source_code> is a Perl Str then it is
+treated as being written in a plain-text language; if C<$source_code> is
+any kind of Perl 5 reference or Perl 5 object then it is treated as being
+written in a Perl-hosted-data language.  If C<$source_code> is written in
+Perl Hosted Muldis D, it would typically be a Perl (ordered) Array; but if
+one wants to declare a C<Value> in that language that is just a Muldis D
+C<Cat.Name>, then C<$source_code> must be a Perl 5 scalar reference to a
+Perl Str rather than just being a Perl Str as the Perl Hosted Muldis D spec
+states, in order to disambiguate this kind of Perl-hosted-data code from
+plain-text code.  If the C<$source_code> is in a Perl Hosted Data language,
+then it may consist partially of other C<Value> objects.  If
 C<$source_code> is itself just a C<Value> object, then it will be cloned.
 
 =item C<assoc_values of Array ()>
@@ -374,7 +405,7 @@ constructor argument for a new C<Value> object.
 This method invokes the Muldis D updater named by its C<$updater> argument,
 giving it subject-to-update arguments from C<$upd_args> and read-only
 arguments from C<$ro_args>; the C<Value> objects in C<$upd_args> are
-possibly substituted for other C<value> objects as a side-effect of the
+possibly substituted for other C<Value> objects as a side-effect of the
 updater's execution.  The C<$ro_args> parameter is as per the C<$args>
 parameter of the C<func_invo> method, but the C<$upd_args> parameter is a
 bit different; each Hash value in the C<$upd_args> argument must be a Perl
@@ -388,7 +419,7 @@ been updated to hold a different C<Value> object as a side-effect.
 This method invokes the Muldis D procedure (or system_service) named by its
 C<$procedure> argument, giving it subject-to-update arguments from
 C<$upd_args> and read-only arguments from C<$ro_args>; the C<Value> objects
-in C<$upd_args> are possibly substituted for other C<value> objects as a
+in C<$upd_args> are possibly substituted for other C<Value> objects as a
 side-effect of the procedure's execution.  The parameters of C<proc_invo>
 are as per those of the C<upd_invo> method, save that only C<upd_invo>
 makes C<$upd_args> mandatory, while C<proc_invo> makes it optional.
@@ -446,14 +477,24 @@ be changed afterwards.
 This method returns the C<Process> object that the invocant C<Value> is
 associated with.
 
-=item C<source_code of Any (Any :$lang?)>
+=item C<pt_source_code of Str (Str :$lang?)>
 
-This method returns (typically Muldis D) source code that defines a value
-literal equivalent to the in-DBMS value that the invocant C<Value>
-represents.  The language of the source code to return must be explicitly
-specified, either by giving a defined C<$lang> argument, or by ensuring
-that the C<Process> object associated with this C<Value> has a defined
-"expected command language" attribute.
+This method returns (typically Muldis D) plain-text source code that
+defines a value literal equivalent to the in-DBMS value that the invocant
+C<Value> represents.  The plain-text language of the source code to return
+must be explicitly specified, either by giving a defined C<$lang> argument,
+or by ensuring that the C<Process> object associated with this C<Value> has
+a defined "expected plain-text command language" attribute.
+
+=item C<hd_source_code of Any (Array :$lang?)>
+
+This method returns (typically Muldis D) Perl-hosted-data source code that
+defines a value literal equivalent to the in-DBMS value that the invocant
+C<Value> represents.  The Perl-hosted-data language of the source code to
+return must be explicitly specified, either by giving a defined C<$lang>
+argument, or by ensuring that the C<Process> object associated with this
+C<Value> has a defined "expected Perl-hosted-data command language"
+attribute.
 
 =back
 

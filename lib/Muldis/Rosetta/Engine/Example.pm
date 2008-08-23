@@ -114,7 +114,11 @@ sub assoc_processes {
         default  => undef,
     );
 
-    has '_command_lang' => (
+    has '_pt_command_lang' => (
+        is      => 'rw',
+        default => undef,
+    );
+    has '_hd_command_lang' => (
         is      => 'rw',
         default => undef,
     );
@@ -164,15 +168,27 @@ sub assoc_machine {
 
 ###########################################################################
 
-sub command_lang {
+sub pt_command_lang {
     my ($self) = @_;
-    return $self->_command_lang;
+    return $self->_pt_command_lang;
 }
 
-sub update_command_lang {
+sub update_pt_command_lang {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-    $self->_command_lang( $lang );
+    $self->_pt_command_lang( $lang );
+    return;
+}
+
+sub hd_command_lang {
+    my ($self) = @_;
+    return $self->_hd_command_lang;
+}
+
+sub update_hd_command_lang {
+    my ($self, $args) = @_;
+    my ($lang) = @{$args}{'lang'};
+    $self->_hd_command_lang( $lang );
     return;
 }
 
@@ -324,10 +340,17 @@ sub assoc_process {
 
 ###########################################################################
 
-sub source_code {
+sub pt_source_code {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-#    return $self->_value->source_code( $lang ); # TODO; or some such
+#    return $self->_value->pt_source_code( $lang ); # TODO; or some such
+    return;
+}
+
+sub hd_source_code {
+    my ($self, $args) = @_;
+    my ($lang) = @{$args}{'lang'};
+#    return $self->_value->hd_source_code( $lang ); # TODO; or some such
     return;
 }
 
