@@ -162,31 +162,20 @@ a third Perl variable holding the relation data of the result.
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
         'http://muldis.com', '0.46.0', 'HDMD_Perl_Tiny', {} ] });
 
-    my $r1 = $process->new_value({ 'source_code' => [ 'Relation', [
-        {
-            'x' => [ 'Int', 'perl_int', 4 ],
-            'y' => [ 'Int', 'perl_int', 7 ],
-        },
-        {
-            'x' => [ 'Int', 'perl_int', 3 ],
-            'y' => [ 'Int', 'perl_int', 2 ],
-        },
-    ] ] });
+    my $r1 = $process->new_value({
+        'source_code' => [ 'Relation', [ 'x', 'y', ], [
+            [ [ 'Int', 'perl_int', 4 ], [ 'Int', 'perl_int', 7 ], ],
+            [ [ 'Int', 'perl_int', 3 ], [ 'Int', 'perl_int', 2 ], ],
+        ] ]
+    });
 
-    my $r2 = $process->new_value({ 'source_code' => [ 'Relation', [
-        {
-            'y' => [ 'Int', 'perl_int', 5 ],
-            'z' => [ 'Int', 'perl_int', 6 ],
-        },
-        {
-            'y' => [ 'Int', 'perl_int', 2 ],
-            'z' => [ 'Int', 'perl_int', 1 ],
-        },
-        {
-            'y' => [ 'Int', 'perl_int', 2 ],
-            'z' => [ 'Int', 'perl_int', 4 ],
-        },
-    ] ] });
+    my $r2 = $process->new_value({
+        'source_code' => [ 'Relation', [ 'y', 'z', ], [
+            [ [ 'Int', 'perl_int', 5 ], [ 'Int', 'perl_int', 6 ], ],
+            [ [ 'Int', 'perl_int', 2 ], [ 'Int', 'perl_int', 1 ], ],
+            [ [ 'Int', 'perl_int', 2 ], [ 'Int', 'perl_int', 4 ], ],
+        ] ]
+    });
 
     my $r3 = $process->func_invo({
         'function' => 'sys.std.Core.Relation.join',

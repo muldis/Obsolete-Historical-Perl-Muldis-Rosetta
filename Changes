@@ -43,6 +43,10 @@
     methods; the return/take data types were similarly changed except that
     the "hd" still results in Any.
 
+    * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code
+    to use the less verbose ordered-attributes relation literal syntax
+    where the result doesn't make the file lines too long.
+
 2008-08-19   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.10.0 for Perl 5 is released on CPAN as

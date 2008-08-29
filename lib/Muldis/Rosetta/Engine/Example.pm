@@ -250,6 +250,9 @@ sub proc_invo {
 
 ###########################################################################
 
+# When Public::Process gets a VM::Process typed attribute, that attribute
+# should have the Moose 'handles' opt set, which lists all these 4 'trans'.
+
 sub trans_nest_level {
     my ($self) = @_;
     return $self->_trans_nest_level;

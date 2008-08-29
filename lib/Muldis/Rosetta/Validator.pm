@@ -54,46 +54,22 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # Declare our example literal source data sets.
 
     my $src_suppliers = $process->new_value({
-        'source_code' => [ 'Relation', [
-            {
-                'farm'    => [ 'Text', 'Hodgesons' ],
-                'country' => [ 'Text', 'Canada' ],
-            },
-            {
-                'farm'    => [ 'Text', 'Beckers' ],
-                'country' => [ 'Text', 'England' ],
-            },
-            {
-                'farm'    => [ 'Text', 'Wickets' ],
-                'country' => [ 'Text', 'Canada' ],
-            },
+        'source_code' => [ 'Relation', [ 'farm', 'country', ], [
+            [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ], ],
+            [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ], ],
+            [ [ 'Text', 'Wickets'   ], [ 'Text', 'Canada'  ], ],
         ] ],
     });
     pass( 'no death from loading example suppliers data into VM' );
     does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Value' );
 
     my $src_foods = $process->new_value({
-        'source_code' => [ 'Relation', [
-            {
-                'food'   => [ 'Text', 'Bananas' ],
-                'colour' => [ 'Text', 'yellow' ],
-            },
-            {
-                'food'   => [ 'Text', 'Carrots' ],
-                'colour' => [ 'Text', 'orange' ],
-            },
-            {
-                'food'   => [ 'Text', 'Oranges' ],
-                'colour' => [ 'Text', 'orange' ],
-            },
-            {
-                'food'   => [ 'Text', 'Kiwis' ],
-                'colour' => [ 'Text', 'green' ],
-            },
-            {
-                'food'   => [ 'Text', 'Lemons' ],
-                'colour' => [ 'Text', 'yellow' ],
-            },
+        'source_code' => [ 'Relation', [ 'food', 'colour', ], [
+            [ [ 'Text', 'Bananas' ], [ 'Text', 'yellow' ], ],
+            [ [ 'Text', 'Carrots' ], [ 'Text', 'orange' ], ],
+            [ [ 'Text', 'Oranges' ], [ 'Text', 'orange' ], ],
+            [ [ 'Text', 'Kiwis'   ], [ 'Text', 'green'  ], ],
+            [ [ 'Text', 'Lemons'  ], [ 'Text', 'yellow' ], ],
         ] ],
     });
     pass( 'no death from loading example foods data into VM' );
@@ -173,16 +149,10 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     # Finally, use the result somehow (not done here).
     # The result should be:
-    # [ 'Relation', [
-    #     {
-    #         'farm'    => [ 'Text', 'Hodgesons' ],
-    #         'country' => [ 'Text', 'Canada' ],
-    #     },
-    #     {
-    #         'farm'    => [ 'Text', 'Beckers' ],
-    #         'country' => [ 'Text', 'England' ],
-    #     },
-    # ] ]
+    # [ 'Relation', [ 'farm', 'country', ], [
+    #     [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ], ],
+    #     [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ], ],
+    # ] ],
 
     print "# debug: orange food suppliers found:\n";
 #    print "# " . $matched_suppl_as_perl->as_perl() . "\n";
