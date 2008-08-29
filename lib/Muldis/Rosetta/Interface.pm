@@ -83,7 +83,6 @@ sub new_machine {
     use Moose::Role;
 
     requires 'new_process';
-    requires 'assoc_processes';
 
 } # role Muldis::Rosetta::Interface::Machine
 
@@ -100,7 +99,6 @@ sub new_machine {
     requires 'update_hd_command_lang';
     requires 'execute';
     requires 'new_value';
-    requires 'assoc_values';
     requires 'func_invo';
     requires 'upd_invo';
     requires 'proc_invo';
@@ -218,9 +216,9 @@ I<This documentation is pending.>
 
 The interface of Muldis::Rosetta::Interface is fundamentally
 object-oriented; you use it by creating objects from its member classes (or
-more specifically, of implementing subclasses of its member roles) and then
-invoking methods on those objects.  All of their attributes are private, so
-you must use accessor methods.
+more specifically, of implementing classes that compose its member roles)
+and then invoking methods on those objects.  All of their attributes are
+private, so you must use accessor methods.
 
 To aid portability of your applications over multiple implementing Engines,
 the normal way to create Interface objects is by invoking a
@@ -284,12 +282,6 @@ This method creates and returns a new C<Process> object that is associated
 with the invocant C<Machine>; that C<Process> object is initialized using
 the C<$process_config> argument.
 
-=item C<assoc_processes of Array ()>
-
-This method returns, as elements of a new (unordered) Array, all the
-currently existing C<Process> objects that are associated with the invocant
-C<Machine>.
-
 =back
 
 =head2 The Muldis::Rosetta::Interface::Process Role
@@ -301,11 +293,14 @@ object, the one whose C<new_process> method created it.
 
 A new C<Process> object's "expected plain-text|Perl-hosted-data command
 language" attribute is undefined by default, meaning that each
-plain-text|Perl-hosted-data command fed to it must declare what
-plain-text|Perl-hosted-data language it is written in; if that attribute
-was made defined, then plain-text|Perl-hosted-data commands fed to it would
-not need to declare their plain-text|Perl-hosted-data language and will be
-interpreted according to the expected plain-text|Perl-hosted-data language.
+plain-text|Perl-hosted-data command fed to the process must declare what
+plain-text|Perl-hosted-data language it is written in, and according to
+that declaration will the command be interpreted; if that attribute was
+made defined, then plain-text|Perl-hosted-data commands fed to the process
+either must not declare their plain-text|Perl-hosted-data language or must
+declare the same plain-text|Perl-hosted-data language as the attribute, and
+so the command will be interpreted according to the expected
+plain-text|Perl-hosted-data language attribute.
 
 =over
 
@@ -371,12 +366,6 @@ states, in order to disambiguate this kind of Perl-hosted-data code from
 plain-text code.  If the C<$source_code> is in a Perl Hosted Data language,
 then it may consist partially of other C<Value> objects.  If
 C<$source_code> is itself just a C<Value> object, then it will be cloned.
-
-=item C<assoc_values of Array ()>
-
-This method returns, as elements of a new (unordered) Array, all the
-currently existing C<Value> objects that are associated with the invocant
-C<Process>.
 
 =item C<func_invo of Muldis::Rosetta::Interface::Value (Str :$function!,
 Hash :$args?)>
@@ -471,19 +460,22 @@ associated with.
 This method returns (typically Muldis D) plain-text source code that
 defines a value literal equivalent to the in-DBMS value that the invocant
 C<Value> represents.  The plain-text language of the source code to return
-must be explicitly specified, either by giving a defined C<$lang> argument,
-or by ensuring that the C<Process> object associated with this C<Value> has
-a defined "expected plain-text command language" attribute.
+must be explicitly specified, typically by ensuring that the C<Process>
+object associated with this C<Value> has a defined "expected plain-text
+command language" attribute; alternately a defined C<$lang> argument may be
+used, but if that argument is given while the attribute is defined, then
+the 2 values must match.
 
 =item C<hd_source_code of Any (Array :$lang?)>
 
 This method returns (typically Muldis D) Perl-hosted-data source code that
 defines a value literal equivalent to the in-DBMS value that the invocant
 C<Value> represents.  The Perl-hosted-data language of the source code to
-return must be explicitly specified, either by giving a defined C<$lang>
-argument, or by ensuring that the C<Process> object associated with this
-C<Value> has a defined "expected Perl-hosted-data command language"
-attribute.
+return must be explicitly specified, typically by ensuring that the
+C<Process> object associated with this C<Value> has a defined "expected
+Perl-hosted-data command language" attribute; alternately a defined
+C<$lang> argument may be used, but if that argument is given while the
+attribute is defined, then the 2 values must match.
 
 =back
 

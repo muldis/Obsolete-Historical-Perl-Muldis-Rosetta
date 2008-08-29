@@ -30,6 +30,11 @@
     out that Moose exports its 'confess' into our classes for us.  (It also
     exports 'blessed' of Scalar::Util.)
 
+    * (Interface.pm, Example.pm)  Removed the 2 role|class methods
+    "Machine.assoc_processes" and "Process.assoc_values", which seem to be
+    of dubious value; if in the future it turns out they actually would be
+    useful after all, they might then return.
+
     * (Interface.pm, Example.pm, Validator.pm)  Split up the conceptual
     Process attribute "expected command language" into the 2 "expected
     plain-text|perl-hosted-data command language", so now the plain-text
@@ -42,6 +47,12 @@
     role|class' 1 "source_code" method into the 2 "(pt|hd)_source_code"
     methods; the return/take data types were similarly changed except that
     the "hd" still results in Any.
+
+    * (Interface.pm)  Updated the API documentation to specify that when a
+    Process object has a defined "expected pt|hd command language"
+    attribute, then all pt|hd source code given to that process or built by
+    that process must be of that language; any declared language names used
+    per command may only be respected when the attribute is undefined.
 
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code
     to use the less verbose ordered-attributes relation literal syntax

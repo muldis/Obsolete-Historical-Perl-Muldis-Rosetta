@@ -46,6 +46,7 @@ sub new_machine {
     # Lists of user-held objects associated with parts of this Machine.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
+    # TODO: This attribute should disappear or only exist in VM:: analogy.
     has '_assoc_processes' => (
         is      => 'rw',
         default => sub { {} },
@@ -75,11 +76,6 @@ sub new_process {
     my ($process_config) = @{$args}{'process_config'};
     return Muldis::Rosetta::Engine::Example::Public::Process->new({
         'assoc_machine' => $self, 'process_config' => $process_config });
-}
-
-sub assoc_processes {
-    my ($self) = @_;
-    return [values %{$self->_assoc_processes}];
 }
 
 ###########################################################################
@@ -126,6 +122,7 @@ sub assoc_processes {
     # Lists of user-held objects associated with parts of this Process.
     # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
     # These should be weak obj-refs, so objs disappear from here
+    # TODO: This attribute should disappear or only exist in VM:: analogy.
     has '_assoc_values' => (
         is      => 'rw',
         default => sub { {} },
@@ -210,11 +207,6 @@ sub new_value {
     my ($source_code) = @{$args}{'source_code'};
     return Muldis::Rosetta::Engine::Example::Public::Value->new({
         'assoc_process' => $self, 'source_code' => $source_code });
-}
-
-sub assoc_values {
-    my ($self) = @_;
-    return [values %{$self->_assoc_values}];
 }
 
 ###########################################################################
