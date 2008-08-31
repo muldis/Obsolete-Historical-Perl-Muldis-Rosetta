@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.010000;
+use Muldis::Rosetta::Interface 0.011000;
 
 #use Muldis::Rosetta::Engine::Example::Runtime;
 #use Muldis::Rosetta::Engine::Example::Value;
@@ -14,7 +14,7 @@ use Muldis::Rosetta::Interface 0.010000;
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    use version 0.74; our $VERSION = qv('0.10.0');
+    use version 0.74; our $VERSION = qv('0.11.0');
     # Note: This given version applies to all of this file's packages.
 
 ###########################################################################
@@ -355,7 +355,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.10.0 for
+This document describes Muldis::Rosetta::Engine::Example version 0.11.0 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -404,8 +404,8 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_Tiny> for details.
 
 The language name is specified either as a Perl character string whose
-value is C<Muldis_D:'http://muldis.com':'0.46.0':'PTMD_Tiny':{}> or as a
-Perl array whose value is C<[ 'Muldis_D', 'http://muldis.com', '0.46.0',
+value is C<Muldis_D:'http://muldis.com':'0.47.0':'PTMD_Tiny':{}> or as a
+Perl array whose value is C<[ 'Muldis_D', 'http://muldis.com', '0.47.0',
 'PTMD_Tiny', {} ]>.  No other version numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -413,8 +413,8 @@ Perl array whose value is C<[ 'Muldis_D', 'http://muldis.com', '0.46.0',
 See L<Muldis::D::Dialect::HDMD_Perl_Tiny> for details.
 
 The language name is specified either as a Perl character string whose
-value is C<Muldis_D:'http://muldis.com':'0.46.0':'HDMD_Perl_Tiny':{}> or as
-a Perl array whose value is C<[ 'Muldis_D', 'http://muldis.com', '0.46.0',
+value is C<Muldis_D:'http://muldis.com':'0.47.0':'HDMD_Perl_Tiny':{}> or as
+a Perl array whose value is C<[ 'Muldis_D', 'http://muldis.com', '0.47.0',
 'HDMD_Perl_Tiny', {} ]>.  No other version numbers are currently supported.
 
 =back
@@ -442,7 +442,7 @@ It also requires these Perl 5 packages that are on CPAN:
 L<Moose-0.55|Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-0.10.0|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-0.11.0|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

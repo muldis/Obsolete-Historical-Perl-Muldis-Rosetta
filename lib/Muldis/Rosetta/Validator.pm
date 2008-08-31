@@ -3,13 +3,13 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.010000;
+use Muldis::Rosetta::Interface 0.011000;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    use version 0.74; our $VERSION = qv('0.10.0');
+    use version 0.74; our $VERSION = qv('0.11.0');
 
     use Test::More;
 
@@ -36,7 +36,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.46.0', 'HDMD_Perl_Tiny', {} ] });
+        'http://muldis.com', '0.47.0', 'HDMD_Perl_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -235,7 +235,7 @@ A common comprehensive test suite to run against all Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Validator version 0.10.0 for Perl
+This document describes Muldis::Rosetta::Validator version 0.11.0 for Perl
 5.
 
 =head1 SYNOPSIS
@@ -323,7 +323,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-0.10.0|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-0.11.0|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
