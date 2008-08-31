@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface; # module
-    use version; our $VERSION = qv('0.10.0');
+    use version 0.74; our $VERSION = qv('0.10.0');
     # Note: This given version applies to all of this file's packages.
 
     use Carp;

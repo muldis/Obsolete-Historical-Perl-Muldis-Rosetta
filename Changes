@@ -33,7 +33,8 @@
     * (Interface.pm, Example.pm)  Removed the 2 role|class methods
     "Machine.assoc_processes" and "Process.assoc_values", which seem to be
     of dubious value; if in the future it turns out they actually would be
-    useful after all, they might then return.
+    useful after all, they might then return.  Also removed the 2
+    corresponding attributes from Example since they aren't needed.
 
     * (Interface.pm, Example.pm, Validator.pm)  Split up the conceptual
     Process attribute "expected command language" into the 2 "expected
@@ -57,6 +58,26 @@
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code
     to use the less verbose ordered-attributes relation literal syntax
     where the result doesn't make the file lines too long.
+
+    * (Example.pm)  Made several large Example.pm updates so that its code
+    more closely resembles what it would be once the other implementing
+    files of the Example Engine were added.  Added commented-out dependency
+    statements on 4 new files in the Example/ namespace: Runtime, Value,
+    PlainText, HostedData; it is also expected that those files in turn
+    would depend on yet more files such as: Storage, Operators, etc.  Added
+    new private attribute "_inner" to each of the Machine|Process|Value
+    classes (but in the last it is a rename from "_value"), whose declared
+    types are of classes that would be declared in either Runtime or Value;
+    the ::Public classes in Example.pm would then be serving as
+    public-facing wrappers for said.  Removed the private attributes
+    "_(machine|process)_config", "_trans_nest_level", since the "inner"
+    Machine|Process will have those instead.  Stripped down the 4
+    "trans"-named methods of Process so they now simply delegate to the
+    "inner" Process object's same methods, which would then do the work
+    that the stripped no longer do.  Fleshed out the Value class' BUILD
+    submethod and 2 "source_code" methods so that they properly invoke the
+    Muldis D source code parsers or builders that PlainText|HostedData
+    provide, by which the outside world interacts with the "inner" Value.
 
 2008-08-19   Darren Duncan <perl@DarrenDuncan.net>
 

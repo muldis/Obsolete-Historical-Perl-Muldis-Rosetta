@@ -67,10 +67,6 @@ raising the Perl version dependency to 5.10 from 5.8.1, to simplify further
 dependencies.
 
 * Applicable to the Perl 5 version only:  Consider lowering the Perl
-version dependency to 5.6 from 5.8.1, so that other projects which may
-become dependants of Muldis-Rosetta and already work under 5.6 won't have
-to force Perl core upgrades.  If this is done, the list of further
-dependencies will doubtless increase to include some things bundled with
-Perl 5.8, and/or Unicode may not work so well here.
+version dependency to 5.8.0 from 5.8.1 ... or maybe not.
 
 * Whatever else needs doing, such as, fixing bugs.

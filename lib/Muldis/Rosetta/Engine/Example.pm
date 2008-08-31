@@ -3,13 +3,18 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface;
+use Muldis::Rosetta::Interface 0.010000;
+
+#use Muldis::Rosetta::Engine::Example::Runtime;
+#use Muldis::Rosetta::Engine::Example::Value;
+#use Muldis::Rosetta::Engine::Example::PlainText;
+#use Muldis::Rosetta::Engine::Example::HostedData;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    use version; our $VERSION = qv('0.10.0');
+    use version 0.74; our $VERSION = qv('0.10.0');
     # Note: This given version applies to all of this file's packages.
 
 ###########################################################################
@@ -33,39 +38,24 @@ sub new_machine {
 
     with 'Muldis::Rosetta::Interface::Machine';
 
-    # User-supplied config data for this Machine object.
-    # For the moment, the Example Engine doesn't actually have anything
-    # that can be config in this way, so input $machine_config is ignored.
-    has '_machine_config' => (
-        is       => 'rw',
-        init_arg => 'machine_config',
-        required => 0,
-        default  => undef,
-    );
-
-    # Lists of user-held objects associated with parts of this Machine.
-    # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
-    # These should be weak obj-refs, so objs disappear from here
-    # TODO: This attribute should disappear or only exist in VM:: analogy.
-    has '_assoc_processes' => (
+    has '_inner' => (
         is      => 'rw',
-        default => sub { {} },
+        isa     => 'Muldis::Rosetta::Engine::Example::Runtime::Machine',
+        default => undef,
     );
 
 ###########################################################################
 
 sub BUILD {
-    my ($self) = @_;
+    my ($self, $args) = @_;
+    my ($machine_config) = @{$args}{'machine_config'};
 
-    # TODO: input checks on $!machine_config.
+    # TODO: input checks on $machine_config.
+    defined $machine_config or $machine_config = {};
 
-    return;
-}
+#    $self->_inner( Muldis::Rosetta::Engine::Example::Runtime::Machine
+#        ->new({ 'machine_config' => $machine_config }) );
 
-sub DEMOLISH {
-    my ($self) = @_;
-    # TODO: check for active trans and rollback ... or member VM does it.
-    # Likewise with closing open files or whatever.
     return;
 }
 
@@ -91,72 +81,55 @@ sub new_process {
 
     with 'Muldis::Rosetta::Interface::Process';
 
-    use Scalar::Util qw( refaddr weaken );
-
     has '_assoc_machine' => (
-        is       => 'rw',
+        is       => 'ro',
+        isa      => 'Muldis::Rosetta::Engine::Example::Public::Machine',
         init_arg => 'assoc_machine',
         required => 1,
-        isa      => 'Muldis::Rosetta::Engine::Example::Public::Machine',
     );
 
-    # User-supplied config data for this Process object.
-    # For the moment, the Example Engine doesn't actually have anything
-    # that can be config in this way, so input $process_config is ignored.
-    has '_process_config' => (
+    has '_inner' => (
         is      => 'rw',
-        init_arg => 'process_config',
-        required => 0,
-        default  => undef,
+        isa     => 'Muldis::Rosetta::Engine::Example::Runtime::Process',
+        default => undef,
+# Disabled since Moose::Role's "requires" doesn't recog auto-gen methods.
+#        handles => [qw(
+#            trans_nest_level start_trans commit_trans rollback_trans
+#        )],
     );
 
     has '_pt_command_lang' => (
         is      => 'rw',
+        isa     => 'Maybe[Str]',
         default => undef,
     );
     has '_hd_command_lang' => (
         is      => 'rw',
+        isa     => 'Maybe[ArrayRef]',
         default => undef,
-    );
-
-    # Lists of user-held objects associated with parts of this Process.
-    # For each of these, Hash keys are obj .WHERE/addrs, vals the objs.
-    # These should be weak obj-refs, so objs disappear from here
-    # TODO: This attribute should disappear or only exist in VM:: analogy.
-    has '_assoc_values' => (
-        is      => 'rw',
-        default => sub { {} },
-    );
-
-    # Maintain actual state of the this DBMS' virtual machine.
-    # TODO: the VM itself should be in another file, this attr with it.
-    has '_trans_nest_level' => (
-        is      => 'rw',
-        default => 0,
     );
 
 ###########################################################################
 
 sub BUILD {
-    my ($self) = @_;
+    my ($self, $args) = @_;
+    my ($process_config) = @{$args}{'process_config'};
 
-    $self->_assoc_machine->_assoc_processes->{refaddr $self} = $self;
-    weaken $self->_assoc_machine->_assoc_processes->{refaddr $self};
+    # TODO: input checks on $process_config.
+    defined $process_config or $process_config = {};
 
-    # TODO: input checks on $!process_config.
+#    $self->_inner( Muldis::Rosetta::Engine::Example::Runtime::Process
+#            ->new({
+#        'assoc_machine'  => $self->_assoc_machine->_inner,
+#        'process_config' => $process_config
+#    }) );
 
-    return;
-}
-
-sub DEMOLISH {
-    my ($self) = @_;
-    # TODO: check for active trans and rollback ... or member VM does it.
-    # Likewise with closing open files or whatever.
-    delete $self->_assoc_machine->_assoc_processes->{refaddr $self};
     return;
 }
 
 ###########################################################################
+
+# Needed since Moose::Role's "requires" doesn't recognize auto-gen methods.
 
 sub assoc_machine {
     my ($self) = @_;
@@ -215,7 +188,7 @@ sub func_invo {
     my ($self, $args) = @_;
     my ($function, $f_args) = @{$args}{'function', 'args'};
 
-    my $result = $self->new_value(); # TODO, the real work
+    my $result = $self->new_value({ 'source_code' => 1 }); # TODO real work
 
     return $result;
 }
@@ -242,38 +215,28 @@ sub proc_invo {
 
 ###########################################################################
 
-# When Public::Process gets a VM::Process typed attribute, that attribute
-# should have the Moose 'handles' opt set, which lists all these 4 'trans'.
+# Needed since Moose::Role's "requires" doesn't recognize auto-gen methods.
 
 sub trans_nest_level {
     my ($self) = @_;
-    return $self->_trans_nest_level;
+    return $self->_inner->trans_nest_level;
 }
 
 sub start_trans {
     my ($self) = @_;
-    # TODO: the actual work.
-    $self->_trans_nest_level( $self->_trans_nest_level ++ );
+    $self->_inner->start_trans();
     return;
 }
 
 sub commit_trans {
     my ($self) = @_;
-    confess q{commit_trans(): Could not commit a transaction;}
-            . q{ none are currently active.}
-        if $self->_trans_nest_level == 0;
-    # TODO: the actual work.
-    $self->_trans_nest_level( $self->_trans_nest_level -- );
+    $self->_inner->commit_trans();
     return;
 }
 
 sub rollback_trans {
     my ($self) = @_;
-    confess q{rollback_trans(): Could not rollback a transaction;}
-            . q{ none are currently active.}
-        if $self->_trans_nest_level == 0;
-    # TODO: the actual work.
-    $self->_trans_nest_level( $self->_trans_nest_level -- );
+    $self->_inner->rollback_trans();
     return;
 }
 
@@ -290,19 +253,18 @@ sub rollback_trans {
 
     with 'Muldis::Rosetta::Interface::Value';
 
-    use Scalar::Util qw( refaddr weaken );
-
     has '_assoc_process' => (
-        is       => 'rw',
+        is       => 'ro',
+        isa      => 'Muldis::Rosetta::Engine::Example::Public::Process',
         init_arg => 'assoc_process',
         required => 1,
-        isa      => 'Muldis::Rosetta::Engine::Example::Public::Process',
     );
 
-    has '_value' => (
-        is => 'rw',
+    has '_inner' => (
+        is      => 'rw',
+        does    => 'Muldis::Rosetta::Engine::Example::Value::Universal',
+        default => undef,
     );
-    # TODO: cache Perl-Hosted Muldis D version of $!value.
 
 ###########################################################################
 
@@ -310,23 +272,35 @@ sub BUILD {
     my ($self, $args) = @_;
     my ($source_code) = @{$args}{'source_code'};
 
-    $self->_assoc_process->_assoc_values->{refaddr $self} = $self;
-    weaken $self->_assoc_process->_assoc_values->{refaddr $self};
+    confess q{new_value(): Bad :$source_code arg; it is undefined.}
+        if !defined $source_code;
 
-    # TODO: input checks on $source_code.
-#    $self->_value = Muldis::Rosetta::Engine::Example::VM::Value->new({
-#        'source_code' => $source_code }); # TODO; or some such
+    my $assoc_process = $self->_assoc_process;
 
-    return;
-}
+    if (ref $source_code) {
+#        $self->_inner( Muldis::Rosetta::Engine::Example::HostedData
+#                ->value_from_source_code({
+#            'assoc_process' => $assoc_process->_inner,
+#            'source_code' => $source_code,
+#            'exp_command_lang' => $assoc_process->_hd_command_lang,
+#        }) );
+    }
 
-sub DEMOLISH {
-    my ($self) = @_;
-    delete $self->_assoc_process->_assoc_values->{refaddr $self};
+    else {
+#        $self->_inner( Muldis::Rosetta::Engine::Example::PlainText
+#                ->value_from_source_code({
+#            'assoc_process' => $assoc_process->_inner,
+#            'source_code' => $source_code,
+#            'exp_command_lang' => $assoc_process->_pt_command_lang,
+#        }) );
+    }
+
     return;
 }
 
 ###########################################################################
+
+# Needed since Moose::Role's "requires" doesn't recognize auto-gen methods.
 
 sub assoc_process {
     my ($self) = @_;
@@ -338,14 +312,24 @@ sub assoc_process {
 sub pt_source_code {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-#    return $self->_value->pt_source_code( $lang ); # TODO; or some such
+#    return Muldis::Rosetta::Engine::Example::PlainText
+#            ->source_code_from_value({
+#        'value' => $self->_inner,
+#        'exp_command_lang'
+#            => ($self->_assoc_process->_pt_command_lang || $lang),
+#    });
     return;
 }
 
 sub hd_source_code {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-#    return $self->_value->hd_source_code( $lang ); # TODO; or some such
+#    return Muldis::Rosetta::Engine::Example::HostedData
+#            ->source_code_from_value({
+#        'value' => $self->_inner,
+#        'exp_command_lang'
+#            => ($self->_assoc_process->_hd_command_lang || $lang),
+#    });
     return;
 }
 

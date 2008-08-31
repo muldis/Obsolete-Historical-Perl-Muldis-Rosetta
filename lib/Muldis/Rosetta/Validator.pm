@@ -3,13 +3,13 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface;
+use Muldis::Rosetta::Interface 0.010000;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    use version; our $VERSION = qv('0.10.0');
+    use version 0.74; our $VERSION = qv('0.10.0');
 
     use Test::More;
 
