@@ -34,7 +34,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Machine; # class
-    use Moose;
+    use Moose 0.56;
 
     with 'Muldis::Rosetta::Interface::Machine';
 
@@ -77,7 +77,7 @@ sub new_process {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use Moose;
+    use Moose 0.56;
 
     with 'Muldis::Rosetta::Interface::Process';
 
@@ -249,7 +249,7 @@ sub rollback_trans {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use Moose;
+    use Moose 0.56;
 
     with 'Muldis::Rosetta::Interface::Value';
 
@@ -439,7 +439,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose-0.55|Moose>.
+L<Moose-0.56|Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-0.11.0|Muldis::Rosetta::Interface>.

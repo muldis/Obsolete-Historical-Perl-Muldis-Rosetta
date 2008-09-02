@@ -11,7 +11,7 @@ use Muldis::Rosetta::Interface 0.011000;
 { package Muldis::Rosetta::Validator; # module
     use version 0.74; our $VERSION = qv('0.11.0');
 
-    use Test::More;
+    use Test::More 0.72;
 
 ###########################################################################
 
@@ -163,10 +163,12 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
 ###########################################################################
 
-# Modified clone of isa_ok from Test::More,
+# Modified clone of isa_ok from Test::More 0.72 (what Perl 5.10.0 bundles),
 # since we actually want to test with does() rather than isa();
 # it is identical to the original save the s/isa/does/g and s/class/role/g;
 # this will probably be replaced later with something simple.
+# Note: The internals of Test::More/etc were different at least as recently
+# as version 0.62 (what Perl 5.8.8 bundles); 0.62 is incompat with this.
 
 sub does_ok ($$;$) {
     my($object, $role, $obj_name) = @_;
@@ -255,6 +257,7 @@ Muldis Rosetta Engine distribution:
     Muldis::Rosetta::Validator::main({
         'engine_name' => 'Muldis::Rosetta::Engine::Example',
         'machine_config' => {},
+        'process_config' => {},
     });
 
     1;
