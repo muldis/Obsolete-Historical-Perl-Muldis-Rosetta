@@ -3,30 +3,23 @@
 
 2008-09-xx   Darren Duncan <perl@DarrenDuncan.net>
 
-    * Muldis Rosetta version 0.12.0 for Perl 5 is released on CPAN as
-    Muldis-Rosetta-0.12.0.tar.gz.  Muldis Rosetta version 0.12.0 for Perl 6
+    * Muldis Rosetta version 0.11.1 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.11.1.tar.gz.  Muldis Rosetta version 0.11.1 for Perl 6
     is not released at all.  The rest of this Changes entry refers only to
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
     them.
 
     * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
-    and Example.pm 0.12.0.  The other pre-existing versioned files are
+    and Example.pm 0.11.1.  The other pre-existing versioned files are
     unchanged.
 
     * Updated the Makefile.PL to remove the obsolete warning message about
     a warning message that the POD manifyer might give.
 
-    * As of this release, this distribution has gained an external
-    dependency on a specific minimum version 0.72 of the Perl 5 module
-    Test::More (rather than "any version"), which is not bundled with Perl
-    5.8.x; however, it *is* bundled with Perl 5.10.x, so if you are using
-    that newer Perl, you won't have to install a newer Test::More
-    separately from CPAN.  The reason for this is that the current
-    Validator.pm includes a minimally modified copy of a Test::More 0.72
-    routine that invokes various Test::More/etc private things which were
-    different at least as recently as version 0.62 (Perl 5.8.8); older
-    versions are known to break the current Validator.
+    * (Validator.pm)  Removed routine does_ok(), which was a slightly
+    modified clone of Test::More's isa_ok().  Instead, added dependency on
+    Test::Moose, which provides routines to complement Test::More.
 
 2008-08-30   Darren Duncan <perl@DarrenDuncan.net>
 
