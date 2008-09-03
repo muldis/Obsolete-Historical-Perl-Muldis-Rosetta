@@ -10,19 +10,19 @@ use Test::More;
 plan( 'tests' => 8 );
 
 use_ok( 'Muldis::Rosetta' );
-is( $Muldis::Rosetta::VERSION, qv('0.11.0'),
+is( $Muldis::Rosetta::VERSION, qv('0.11.1'),
     'Muldis::Rosetta is the correct version' );
 
 use_ok( 'Muldis::Rosetta::Interface' );
-is( $Muldis::Rosetta::Interface::VERSION, qv('0.11.0'),
+is( $Muldis::Rosetta::Interface::VERSION, qv('0.11.1'),
     'Muldis::Rosetta::Interface is the correct version' );
 
 use_ok( 'Muldis::Rosetta::Validator' );
-is( $Muldis::Rosetta::Validator::VERSION, qv('0.11.0'),
+is( $Muldis::Rosetta::Validator::VERSION, qv('0.11.1'),
     'Muldis::Rosetta::Validator is the correct version' );
 
 use_ok( 'Muldis::Rosetta::Engine::Example' );
-is( $Muldis::Rosetta::Engine::Example::VERSION, qv('0.11.0'),
+is( $Muldis::Rosetta::Engine::Example::VERSION, qv('0.11.1'),
     'Muldis::Rosetta::Engine::Example is the correct version' );
 
 1; # Magic true value required at end of a reusable file's code.
