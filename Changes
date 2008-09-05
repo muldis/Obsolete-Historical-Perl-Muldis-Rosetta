@@ -1,6 +1,41 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
+2008-09-xx   Darren Duncan <perl@DarrenDuncan.net>
+
+    * Muldis Rosetta version 0.12.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.12.0.tar.gz.  Muldis Rosetta version 0.12.0 for Perl 6
+    is not released at all.  The rest of this Changes entry refers only to
+    the Perl 5 version, and it should not be assumed that the Perl 6
+    version incorporates all of said updates, though it may have some of
+    them.
+
+    * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
+    and Example.pm 0.12.0.  The other pre-existing versioned files are
+    unchanged.
+
+    * (Interface.pm, Example.pm, Validator.pm,
+    Muldis_Rosetta_50_Validate_Example.t)  The Machine role|class
+    constructor submethod no longer has any parameters, and the new_machine
+    constructor wrapper functions now have just the single 'engine_name'
+    parameter; they all, as well as the 'main' procedure of Validator.pm,
+    no longer have a 'machine_config' parameter.  From now on, if a Machine
+    would have any config options of its own, they will be set using
+    accessors on a Machine object rather than in its constructor.  Also
+    updated the corresponding 'process_config' parameter for the Process
+    role|class and its wrappers, restricting it such that it must be a Perl
+    Hash (or be undefined), rather than Interface.pm saying it may be
+    anything and be up to each Engine to restrict its own way.
+
+    * (Interface.pm, Example.pm)  The Machine role|class is now a
+    singleton, such that each Muldis Rosetta Engine may only have one
+    Machine object per Perl process, and that Machine thus serves as a
+    proxy for the Engine as a whole, any methods on it being "global";
+    updated the Interface.pm docs to say so.  To help implement this in
+    Example.pm, added external dependency on MooseX::Singleton, which now
+    provides the metaclass for Example's Machine class rather than just
+    Moose doing that.
+
 2008-09-03   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.11.1 for Perl 5 is released on CPAN as

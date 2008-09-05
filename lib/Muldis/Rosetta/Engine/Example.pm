@@ -20,10 +20,7 @@ use Muldis::Rosetta::Interface 0.011001;
 ###########################################################################
 
 sub new_machine {
-    my ($args) = @_;
-    my ($machine_config) = @{$args}{'machine_config'};
-    return Muldis::Rosetta::Engine::Example::Public::Machine->new({
-        'machine_config' => $machine_config });
+    return Muldis::Rosetta::Engine::Example::Public::Machine->new();
 }
 
 ###########################################################################
@@ -34,30 +31,17 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Machine; # class
-    use Moose 0.56;
+    use MooseX::Singleton 0.11;
 
     with 'Muldis::Rosetta::Interface::Machine';
 
     has '_inner' => (
         is      => 'rw',
         isa     => 'Muldis::Rosetta::Engine::Example::Runtime::Machine',
-        default => undef,
+#        default => sub {
+#            Muldis::Rosetta::Engine::Example::Runtime::Machine->new()
+#        },
     );
-
-###########################################################################
-
-sub BUILD {
-    my ($self, $args) = @_;
-    my ($machine_config) = @{$args}{'machine_config'};
-
-    # TODO: input checks on $machine_config.
-    defined $machine_config or $machine_config = {};
-
-#    $self->_inner( Muldis::Rosetta::Engine::Example::Runtime::Machine
-#        ->new({ 'machine_config' => $machine_config }) );
-
-    return;
-}
 
 ###########################################################################
 
@@ -77,7 +61,7 @@ sub new_process {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use Moose 0.56;
+    use Moose 0.57;
 
     with 'Muldis::Rosetta::Interface::Process';
 
@@ -91,7 +75,6 @@ sub new_process {
     has '_inner' => (
         is      => 'rw',
         isa     => 'Muldis::Rosetta::Engine::Example::Runtime::Process',
-        default => undef,
 # Disabled since Moose::Role's "requires" doesn't recog auto-gen methods.
 #        handles => [qw(
 #            trans_nest_level start_trans commit_trans rollback_trans
@@ -99,14 +82,12 @@ sub new_process {
     );
 
     has '_pt_command_lang' => (
-        is      => 'rw',
-        isa     => 'Maybe[Str]',
-        default => undef,
+        is  => 'rw',
+        isa => 'Maybe[Str]',
     );
     has '_hd_command_lang' => (
-        is      => 'rw',
-        isa     => 'Maybe[ArrayRef]',
-        default => undef,
+        is  => 'rw',
+        isa => 'Maybe[ArrayRef]',
     );
 
 ###########################################################################
@@ -115,12 +96,15 @@ sub BUILD {
     my ($self, $args) = @_;
     my ($process_config) = @{$args}{'process_config'};
 
-    # TODO: input checks on $process_config.
     defined $process_config or $process_config = {};
+    confess q{new_process(): Bad :$process_config arg; Perl 5 does not}
+            . q{ consider it to be a Hash.}
+        if ref $process_config ne 'HASH';
+    # TODO: further input checks on $process_config as applicable.
 
 #    $self->_inner( Muldis::Rosetta::Engine::Example::Runtime::Process
 #            ->new({
-#        'assoc_machine'  => $self->_assoc_machine->_inner,
+#        'assoc_machine'  => $self->_assoc_machine()->_inner(),
 #        'process_config' => $process_config
 #    }) );
 
@@ -133,14 +117,14 @@ sub BUILD {
 
 sub assoc_machine {
     my ($self) = @_;
-    return $self->_assoc_machine;
+    return $self->_assoc_machine();
 }
 
 ###########################################################################
 
 sub pt_command_lang {
     my ($self) = @_;
-    return $self->_pt_command_lang;
+    return $self->_pt_command_lang();
 }
 
 sub update_pt_command_lang {
@@ -152,7 +136,7 @@ sub update_pt_command_lang {
 
 sub hd_command_lang {
     my ($self) = @_;
-    return $self->_hd_command_lang;
+    return $self->_hd_command_lang();
 }
 
 sub update_hd_command_lang {
@@ -219,24 +203,24 @@ sub proc_invo {
 
 sub trans_nest_level {
     my ($self) = @_;
-    return $self->_inner->trans_nest_level;
+    return $self->_inner()->trans_nest_level();
 }
 
 sub start_trans {
     my ($self) = @_;
-    $self->_inner->start_trans();
+    $self->_inner()->start_trans();
     return;
 }
 
 sub commit_trans {
     my ($self) = @_;
-    $self->_inner->commit_trans();
+    $self->_inner()->commit_trans();
     return;
 }
 
 sub rollback_trans {
     my ($self) = @_;
-    $self->_inner->rollback_trans();
+    $self->_inner()->rollback_trans();
     return;
 }
 
@@ -249,7 +233,7 @@ sub rollback_trans {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use Moose 0.56;
+    use Moose 0.57;
 
     with 'Muldis::Rosetta::Interface::Value';
 
@@ -261,9 +245,8 @@ sub rollback_trans {
     );
 
     has '_inner' => (
-        is      => 'rw',
-        does    => 'Muldis::Rosetta::Engine::Example::Value::Universal',
-        default => undef,
+        is   => 'rw',
+        does => 'Muldis::Rosetta::Engine::Example::Value::Universal',
     );
 
 ###########################################################################
@@ -275,23 +258,23 @@ sub BUILD {
     confess q{new_value(): Bad :$source_code arg; it is undefined.}
         if !defined $source_code;
 
-    my $assoc_process = $self->_assoc_process;
+    my $assoc_process = $self->_assoc_process();
 
     if (ref $source_code) {
 #        $self->_inner( Muldis::Rosetta::Engine::Example::HostedData
 #                ->value_from_source_code({
-#            'assoc_process' => $assoc_process->_inner,
+#            'assoc_process' => $assoc_process->_inner(),
 #            'source_code' => $source_code,
-#            'exp_command_lang' => $assoc_process->_hd_command_lang,
+#            'exp_command_lang' => $assoc_process->_hd_command_lang(),
 #        }) );
     }
 
     else {
 #        $self->_inner( Muldis::Rosetta::Engine::Example::PlainText
 #                ->value_from_source_code({
-#            'assoc_process' => $assoc_process->_inner,
+#            'assoc_process' => $assoc_process->_inner(),
 #            'source_code' => $source_code,
-#            'exp_command_lang' => $assoc_process->_pt_command_lang,
+#            'exp_command_lang' => $assoc_process->_pt_command_lang(),
 #        }) );
     }
 
@@ -304,7 +287,7 @@ sub BUILD {
 
 sub assoc_process {
     my ($self) = @_;
-    return $self->_assoc_process;
+    return $self->_assoc_process();
 }
 
 ###########################################################################
@@ -314,9 +297,9 @@ sub pt_source_code {
     my ($lang) = @{$args}{'lang'};
 #    return Muldis::Rosetta::Engine::Example::PlainText
 #            ->source_code_from_value({
-#        'value' => $self->_inner,
+#        'value' => $self->_inner(),
 #        'exp_command_lang'
-#            => ($self->_assoc_process->_pt_command_lang || $lang),
+#            => ($self->_assoc_process()->_pt_command_lang() || $lang),
 #    });
     return;
 }
@@ -326,9 +309,9 @@ sub hd_source_code {
     my ($lang) = @{$args}{'lang'};
 #    return Muldis::Rosetta::Engine::Example::HostedData
 #            ->source_code_from_value({
-#        'value' => $self->_inner,
+#        'value' => $self->_inner(),
 #        'exp_command_lang'
-#            => ($self->_assoc_process->_hd_command_lang || $lang),
+#            => ($self->_assoc_process()->_hd_command_lang() || $lang),
 #    });
     return;
 }
@@ -439,7 +422,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose-0.56|Moose>.
+L<Moose-0.57|Moose>, L<MooseX::Singleton-0.11|MooseX::Singleton>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-0.11.1|Muldis::Rosetta::Interface>.

@@ -18,8 +18,7 @@ use warnings FATAL => 'all';
 
 sub new_machine {
     my ($args) = @_;
-    my ($engine_name, $machine_config)
-        = @{$args}{'engine_name', 'machine_config'};
+    my ($engine_name) = @{$args}{'engine_name'};
 
     confess q{new_machine(): Bad :$engine_name arg; Perl 5 does not}
             . q{ consider it to be a character str, or it's the empty str.}
@@ -56,8 +55,7 @@ sub new_machine {
             . q{ does not provide the new_machine() constructor function.}
         if !$engine_name->can( 'new_machine' );
     my $machine = eval {
-        &{$engine_name->can( 'new_machine' )}({
-            'machine_config' => $machine_config });
+        &{$engine_name->can( 'new_machine' )}();
     };
     if (my $err = $@) {
         confess qq{new_machine(): Th Muldis Rosetta Eng mod '$engine_name'}
@@ -80,7 +78,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Machine; # role
-    use Moose::Role 0.56;
+    use Moose::Role 0.57;
 
     requires 'new_process';
 
@@ -90,7 +88,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Process; # role
-    use Moose::Role 0.56;
+    use Moose::Role 0.57;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -113,7 +111,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Value; # role
-    use Moose::Role 0.56;
+    use Moose::Role 0.57;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -245,20 +243,19 @@ the Muldis Rosetta API.
 =over
 
 =item C<new_machine of Muldis::Rosetta::Interface::Machine (Str
-:$engine_name!, Any :$machine_config?)>
+:$engine_name!)>
 
-This constructor function creates and returns a C<Machine> object that is
-implemented by the Muldis Rosetta Engine named by its named argument
-C<$engine_name>; that object is initialized using the C<$machine_config>
-argument.  The named argument C<$engine_name> is the name of a Perl module
-that is expected to be the root package of a Muldis Rosetta Engine, and
-which is expected to declare a C<new_machine> subroutine with a single
-named argument C<$machine_config>; invoking this subroutine is expected to
-return an object of some class of the same Engine which does the
-C<Muldis::Rosetta::Interface::Machine> role.  This function will start by
-testing if the root package is already loaded (it may be declared by some
-already-loaded file of another name), and only if not, will it do a Perl
-'require' of the C<$engine_name>.
+This constructor function selects (first creating if necessary) and returns
+the singleton C<Machine> object that is implemented by the Muldis Rosetta
+Engine named by its named argument C<$engine_name>.  The named argument
+C<$engine_name> is the name of a Perl module that is expected to be the
+root package of a Muldis Rosetta Engine, and which is expected to declare a
+C<new_machine> subroutine with zero parameters; invoking this subroutine is
+expected to return an object of some class of the same Engine which does
+the C<Muldis::Rosetta::Interface::Machine> role.  This function will start
+by testing if the root package is already loaded (it may be declared by
+some already-loaded file of another name), and only if not, will it do a
+Perl 'require' of the C<$engine_name>.
 
 =back
 
@@ -269,13 +266,18 @@ machine / Muldis D environment, which is the widest scope stateful context
 in which any other database activities happen.  Other activities meaning
 the compilation and execution of Muldis D code, mounting or unmounting
 depots, performing queries, data manipulation, data definition, and
-transactions.  If a C<Machine> object is ever garbage collected by Perl
-while it has any active transactions, then those will all be rolled back,
-and then an exception thrown.
+transactions.  It is expected that a Muldis Rosetta Engine would implement
+a C<Machine> as a singleton (or behave as if it did), so only one such
+object would exist at a time in a Perl process per distinct Engine, in
+which case a C<Machine> would be a proxy for the Engine as a whole, by
+which one can act on the Engine in a "global" sense.  If a C<Machine>
+object is ever garbage collected by Perl while it has any active
+transactions, then those will all be rolled back, and then an exception
+thrown.
 
 =over
 
-=item C<new_process of Muldis::Rosetta::Interface::Process (Any
+=item C<new_process of Muldis::Rosetta::Interface::Process (Hash
 :$process_config?)>
 
 This method creates and returns a new C<Process> object that is associated
@@ -497,7 +499,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose::Role-0.56|Moose::Role>.
+L<Moose::Role-0.57|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 
@@ -511,14 +513,12 @@ distribution-external references.
 
 =head1 BUGS AND LIMITATIONS
 
-The Muldis Rosetta framework for Perl 5 is built according to certain
-old-school or traditional Perl-5-land design principles, including that
-there are no explicit attempts in code to enforce privacy of the
-framework's internals, besides not documenting them as part of the public
-API.  (The Muldis Rosetta framework for Perl 6 is different.)  That said,
-you should still respect that privacy and just use the public API that
-Muldis Rosetta provides.  If you bypass the public API anyway, as Perl 5
-allows, you do so at your own peril.
+The Muldis Rosetta framework for Perl 5 does not make explicit attempts in
+code to enforce privacy of the framework's internals, besides not
+documenting them as part of the public API.  (The Muldis Rosetta framework
+for Perl 6 is different.)  That said, you should still respect that privacy
+and just use the public API that Muldis Rosetta provides.  If you bypass
+the public API anyway, as Perl 5 allows, you do so at your own peril.
 
 I<This documentation is pending.>
 
