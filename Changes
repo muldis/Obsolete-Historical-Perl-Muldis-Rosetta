@@ -10,6 +10,12 @@
     version incorporates all of said updates, though it may have some of
     them.
 
+    * Added the following 7 Example Engine internals files in the
+    lib/Muldis/Rosetta/Engine/Example/ namespace: Value.pm, Routines.pm,
+    Storage.pm, Runtime.pm, Util.pm, PlainText.pm, HostedData.pm; they all
+    debut at version 0.0.0.  The appropriate references were added in other
+    files [Example.pm, Muldis_Rosetta_00_Compile.t].
+
     * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
     and Example.pm 0.12.0.  The other pre-existing versioned files are
     unchanged.
@@ -35,6 +41,30 @@
     Example.pm, added external dependency on MooseX::Singleton, which now
     provides the metaclass for Example's Machine class rather than just
     Moose doing that.
+
+    * (Example.pm)  Under the DESCRIPTION main pod section, added pod
+    sub-section "Implementation and Limitations" which has a few details
+    about broad design decisions that go into the Example Engine, such as
+    how its implementation uses the SQLite DBMS as a model, loosely
+    speaking, and that it is mainly a RAM-based DBMS.  Also added an
+    initial something to the BUGS AND LIMITATIONS main pod section.
+
+    * (Value.pm, Routines.pm, Storage.pm, Runtime.pm, Util.pm,
+    PlainText.pm, HostedData.pm)  Created the initial empty shell contents
+    of these files.  Value.pm would provide physical representations of all
+    core data type values.  Routines.pm would provide implementations of
+    all core Muldis D system-defined routines.  Storage.pm would provide a
+    virtual file system for coordinating depot access.  Runtime.pm would
+    provide the main DBMS state manager and event loop.  Util.pm would
+    provide common elements of Muldis D source code parsers/builders and
+    more.  PlainText.pm would provide a parser and builder of Plain Text
+    Muldis D source code.  HostedData.pm would provide a parser and builder
+    of Perl Hosted Data Muldis D source code.
+
+    * (Runtime.pm)  Added this file's initial complement of classes, which
+    are the 2 ::Machine and ::Process; their initial methods are mostly
+    like those in Example.pm, since they are mainly what the ::Machine and
+    ::Process classes of Example.pm are wrappers for.
 
 2008-09-03   Darren Duncan <perl@DarrenDuncan.net>
 
