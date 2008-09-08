@@ -133,6 +133,7 @@ sub pt_command_lang {
 sub update_pt_command_lang {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
+    # TODO: validate $lang.
     $self->_pt_command_lang( $lang );
     return;
 }
@@ -145,6 +146,7 @@ sub hd_command_lang {
 sub update_hd_command_lang {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
+    # TODO: validate $lang.
     $self->_hd_command_lang( $lang );
     return;
 }
@@ -153,9 +155,34 @@ sub update_hd_command_lang {
 
 sub execute {
     my ($self, $args) = @_;
-    my ($source_code) = @{$args}{'source_code'};
+    my ($source_code, $lang) = @{$args}{'source_code', 'lang'};
 
-    # TODO: execute $source code
+    confess q{execute(): Bad :$source_code arg; it is undefined.}
+        if !defined $source_code;
+
+    # TODO: validate $lang.
+
+    my $boot_call_seq; # Perl array of what each boot_call parses into
+
+    if (ref $source_code) {
+        $boot_call_seq = Muldis::Rosetta::Engine::Example::HostedData
+                ->boot_call_seq_from_source_code({
+            'assoc_process' => $self->_inner(),
+            'source_code' => $source_code,
+            'exp_command_lang' => $self->_hd_command_lang(),
+        });
+    }
+
+    else {
+        $boot_call_seq = Muldis::Rosetta::Engine::Example::PlainText
+                ->boot_call_seq_from_source_code({
+            'assoc_process' => $self->_inner(),
+            'source_code' => $source_code,
+            'exp_command_lang' => $self->_pt_command_lang(),
+        });
+    }
+
+    # TODO: execute $boot_call_seq
 
     return;
 }
@@ -164,16 +191,18 @@ sub execute {
 
 sub new_value {
     my ($self, $args) = @_;
-    my ($source_code) = @{$args}{'source_code'};
+    my ($source_code, $lang) = @{$args}{'source_code', 'lang'};
     return Muldis::Rosetta::Engine::Example::Public::Value->new({
-        'assoc_process' => $self, 'source_code' => $source_code });
+        'assoc_process' => $self, 'source_code' => $source_code,
+        'lang' => $lang });
 }
 
 ###########################################################################
 
 sub func_invo {
     my ($self, $args) = @_;
-    my ($function, $f_args) = @{$args}{'function', 'args'};
+    my ($function, $f_args, $pt_lang, $hd_lang)
+        = @{$args}{'function', 'args', 'pt_lang', 'hd_lang'};
 
     my $result = $self->new_value({ 'source_code' => 1 }); # TODO real work
 
@@ -182,8 +211,8 @@ sub func_invo {
 
 sub upd_invo {
     my ($self, $args) = @_;
-    my ($updater, $upd_args, $ro_args)
-        = @{$args}{'updater', 'upd_args', 'ro_args'};
+    my ($updater, $upd_args, $ro_args, $pt_lang, $hd_lang)
+        = @{$args}{'updater', 'upd_args', 'ro_args', 'pt_lang', 'hd_lang'};
 
     # TODO, the real work
 
@@ -192,8 +221,8 @@ sub upd_invo {
 
 sub proc_invo {
     my ($self, $args) = @_;
-    my ($procedure, $upd_args, $ro_args)
-        = @{$args}{'procedure', 'upd_args', 'ro_args'};
+    my ($procedure, $upd_args, $ro_args, $pt_lang, $hd_lang) = @{$args}{
+        'procedure', 'upd_args', 'ro_args', 'pt_lang', 'hd_lang'};
 
     # TODO, the real work
 
@@ -256,10 +285,12 @@ sub rollback_trans {
 
 sub BUILD {
     my ($self, $args) = @_;
-    my ($source_code) = @{$args}{'source_code'};
+    my ($source_code, $lang) = @{$args}{'source_code', 'lang'};
 
     confess q{new_value(): Bad :$source_code arg; it is undefined.}
         if !defined $source_code;
+
+    # TODO: validate $lang.
 
     my $assoc_process = $self->_assoc_process();
 
@@ -298,11 +329,12 @@ sub assoc_process {
 sub pt_source_code {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
+    # TODO: validate $lang.
 #    return Muldis::Rosetta::Engine::Example::PlainText
 #            ->source_code_from_value({
 #        'value' => $self->_inner(),
 #        'exp_command_lang'
-#            => ($self->_assoc_process()->_pt_command_lang() || $lang),
+#            => ($lang || $self->_assoc_process()->_pt_command_lang()),
 #    });
     return;
 }
@@ -310,11 +342,12 @@ sub pt_source_code {
 sub hd_source_code {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
+    # TODO: validate $lang.
 #    return Muldis::Rosetta::Engine::Example::HostedData
 #            ->source_code_from_value({
 #        'value' => $self->_inner(),
 #        'exp_command_lang'
-#            => ($self->_assoc_process()->_hd_command_lang() || $lang),
+#            => ($lang || $self->_assoc_process()->_hd_command_lang()),
 #    });
     return;
 }

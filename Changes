@@ -42,6 +42,30 @@
     provides the metaclass for Example's Machine class rather than just
     Moose doing that.
 
+    * (Interface.pm)  In a reversal of one aspect of release 0.11.0,
+    updated the API documentation so it no longer says that a Process
+    object's defined "expected pt|hd command language" attribute will take
+    precedence over a declared language name used per command; so it is now
+    the case that the most local defined language declaration will take
+    precedence when it might conceivably be applicable; but the
+    documentation now mainly just implies that fact rather than explicitly
+    stating it, since typical user intuition should point to the truth.
+
+    * (Interface.pm, Example.pm)  Updated the Process|Value role|class so
+    that all routines with a 'source_code' parameter (that is, 'execute',
+    'new_value', the 3 'invo') now have an extra 1 or 2 optional parameters
+    named 'lang' or '(pt|hd)_lang'.  In the case of all Interface::Value
+    construction, either direct ('new_value') or indirect (from ro-args of
+    the 3 'invo'), it turns out that 'source_code' typically can't embed a
+    language declaration after all (what the previous API assumed), and so
+    the new parameters allow a per-source language declaration to be
+    supplied; so it is now mandatory for each source to get a language
+    declaration either from the new parameter or from the invocant Process'
+    expected language attribute, except when the source is already a Value
+    object.  In the case of 'execute', typically its 'source_code' *can*
+    embed a language declaration, and if it does then an external supply as
+    per Value construction isn't needed.
+
     * (Example.pm)  Under the DESCRIPTION main pod section, added pod
     sub-section "Implementation and Limitations" which has a few details
     about broad design decisions that go into the Example Engine, such as
