@@ -41,8 +41,9 @@ this distribution, I recommend doing so in this order:
    4.       lib/Muldis/Rosetta/Interface.pm
    5. (opt) lib/Muldis/Rosetta/Validator.pm
    6. (opt) lib/Muldis/Rosetta/Engine/Example.pm
-   7.       lib/Muldis/Rosetta/SeeAlso.pod
-   8. (opt) TODO
+   7. (opt) lib/Muldis/Rosetta/Util/Tiny.pm
+   8.       lib/Muldis/Rosetta/SeeAlso.pod
+   9. (opt) TODO
 
 Then you can carry on with anything else.
 

@@ -11,8 +11,8 @@ use warnings FATAL => 'all';
     # Note: This given version applies to all of this file's packages.
 
     use Carp;
-    use Encode qw(is_utf8);
-    use Scalar::Util qw(blessed);
+    use Encode 'is_utf8';
+    use Scalar::Util 'blessed';
 
 ###########################################################################
 

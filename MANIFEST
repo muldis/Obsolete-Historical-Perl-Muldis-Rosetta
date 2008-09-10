@@ -12,6 +12,7 @@ lib/Muldis/Rosetta/Engine/Example/Util.pm
 lib/Muldis/Rosetta/Engine/Example/Value.pm
 lib/Muldis/Rosetta/Interface.pm
 lib/Muldis/Rosetta/SeeAlso.pod
+lib/Muldis/Rosetta/Util/Tiny.pm
 lib/Muldis/Rosetta/Validator.pm
 LICENSE/GPL
 LICENSE/LGPL

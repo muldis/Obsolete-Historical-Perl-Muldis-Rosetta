@@ -4,6 +4,7 @@ use strict;
 use warnings FATAL => 'all';
 
 use Muldis::Rosetta::Interface 0.011001;
+use Muldis::Rosetta::Util::Tiny 0.000000;
 
 use Muldis::Rosetta::Engine::Example::Value 0.000000;
 use Muldis::Rosetta::Engine::Example::Routines 0.000000;
