@@ -14,6 +14,8 @@ WriteMakefile(
     'PREREQ_PM' => {
         # These are bundled with Perls 5.10.x but not Perls 5.8.x.
         'version' => 0.74,
+        # Bundled w Perls 5.10.1+,5.8.9+ but n earlier Perls 5.10.0,5.8.x.
+        'autodie' => 1.992,
         # These are not bundled with any version of Perl.
         'Moose' => 0.57,
         'Moose::Role' => 0.57,

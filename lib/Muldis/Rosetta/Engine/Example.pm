@@ -11,8 +11,6 @@ use Muldis::Rosetta::Engine::Example::Routines 0.000000;
 use Muldis::Rosetta::Engine::Example::Storage 0.000000;
 use Muldis::Rosetta::Engine::Example::Runtime 0.000000;
 use Muldis::Rosetta::Engine::Example::Util 0.000000;
-use Muldis::Rosetta::Engine::Example::PlainText 0.000000;
-use Muldis::Rosetta::Engine::Example::HostedData 0.000000;
 
 ###########################################################################
 ###########################################################################
@@ -536,7 +534,7 @@ recommends one that is at least 5.10.0.
 
 It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
-installation by users of earlier Perl versions: L<version>.
+installation by users of earlier Perl versions: L<version-0.74|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<Moose-0.57|Moose>, L<Moose::Role-0.57|Moose::Role>,

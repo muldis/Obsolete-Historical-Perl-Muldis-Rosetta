@@ -31,7 +31,7 @@ sub new_token_stream {
 
     if (!$ref_kind) { # TODO: or test if obj that represents a Str
         return Muldis::Rosetta::Util::Tiny::TokenStream::FromPTStr->new({
-            '_from' => $source_code });
+            '_source' => $source_code });
     }
 
     elsif ($ref_kind eq 'ARRAY' or $ref_kind eq 'SCALAR'
@@ -39,14 +39,14 @@ sub new_token_stream {
             'Moose::Object' ) and $source_code->does(
             'Muldis::Rosetta::Interface::Value' )) {
         return Muldis::Rosetta::Util::Tiny::TokenStream::FromHDArray->new({
-            '_from' => $source_code });
+            '_source' => $source_code });
     }
 
     elsif ($ref_kind eq 'GLOB' and openhandle $source_code
             or blessed $source_code and $source_code->isa( 'IO::Handle' )
             ) { # TODO: or test if obj that repr a FileHandle another way
         return Muldis::Rosetta::Util::Tiny::TokenStream::FromPTFH->new({
-            '_from' => $source_code });
+            '_source' => $source_code });
     }
 
     else { # $ref_kind eq 'HASH'|'CODE'|'Regexp'|other-'GLOB'|other-object
@@ -55,6 +55,8 @@ sub new_token_stream {
             . q{ of any Tiny dialect of Muldis D.};
     }
 }
+
+###########################################################################
 
 sub language_from_source_code {
     my ($args) = @_;
@@ -87,7 +89,7 @@ sub value_from_source_code {
 { package Muldis::Rosetta::Util::Tiny::TokenStream; # role
     use Moose::Role 0.57;
 
-    has '_from' => (
+    has '_source' => (
         is       => 'ro', # but some kinds may still mutate when read from
         isa      => 'Defined',
         required => 1,
@@ -112,6 +114,26 @@ sub value_from_source_code {
     use Moose 0.57;
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
+
+    use Encode 'is_utf8';
+
+###########################################################################
+
+sub BUILD {
+    my ($self) = @_;
+
+    my $source = $self->_source();
+
+    confess q{new_token_stream(): Bad :$source_code arg; it is not a Perl}
+            . q{ 5 ref and Perl doesn't consider it to be a character str.}
+        if !is_utf8 $source and $source =~ m/[^\x00-\x7F]/xs;
+            # TODO: also use some Encode::foo to check that the actual byte
+            # sequences are valid utf-8, in case the text value came from
+            # some bad source that just flipped the is_utf8 flag without
+            # actually first making the string valid utf8.
+
+    return;
+}
 
 ###########################################################################
 
@@ -143,6 +165,23 @@ sub pull_value {
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
 
+    use autodie 1.992;
+
+###########################################################################
+
+sub BUILD {
+    my ($self) = @_;
+
+    my $source = $self->_source();
+
+    # TODO: validate that the $source filehandle is actually configured to
+    # just return strings that Perl 5 considers to be (Unicode) characters.
+    # Note: binmode LAYER ":encoding(utf8)" validates incoming data as
+    # Unicode while ":utf8" just marks it as characters without checking.
+
+    return;
+}
+
 ###########################################################################
 
 sub pull_language {
@@ -172,6 +211,18 @@ sub pull_value {
     use Moose 0.57;
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
+
+###########################################################################
+
+sub BUILD {
+    my ($self) = @_;
+
+    my $source = $self->_source();
+
+    # TODO: any useful validation of $source doable prior to any pulls.
+
+    return;
+}
 
 ###########################################################################
 
@@ -289,7 +340,12 @@ recommends one that is at least 5.10.0.
 
 It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
-installation by users of earlier Perl versions: L<version>.
+installation by users of earlier Perl versions: L<version-0.74|version>.
+
+It also requires these Perl 5 packages that are bundled with any version of
+Perl 5.8.x that is at least 5.8.9 and any version of Perl 5.10.x that is at
+least 5.10.1, and are also on CPAN for separate installation by users of
+earlier Perl versions: L<autodie-1.992|autodie>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<Moose-0.57|Moose>, L<Moose::Role-0.57|Moose::Role>.

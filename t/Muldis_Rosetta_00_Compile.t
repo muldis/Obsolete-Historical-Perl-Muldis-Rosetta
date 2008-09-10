@@ -7,7 +7,7 @@ use version 0.74;
 
 use Test::More;
 
-plan( 'tests' => 24 );
+plan( 'tests' => 20 );
 
 use_ok( 'Muldis::Rosetta' );
 is( $Muldis::Rosetta::VERSION, qv('0.11.1'),
@@ -44,15 +44,6 @@ is( $Muldis::Rosetta::Engine::Example::Runtime::VERSION, qv('0.0.0'),
 use_ok( 'Muldis::Rosetta::Engine::Example::Util' );
 is( $Muldis::Rosetta::Engine::Example::Util::VERSION, qv('0.0.0'),
     'Muldis::Rosetta::Engine::Example::Util is the correct version' );
-
-use_ok( 'Muldis::Rosetta::Engine::Example::PlainText' );
-is( $Muldis::Rosetta::Engine::Example::PlainText::VERSION, qv('0.0.0'),
-    'Muldis::Rosetta::Engine::Example::PlainText is the correct version' );
-
-use_ok( 'Muldis::Rosetta::Engine::Example::HostedData' );
-is( $Muldis::Rosetta::Engine::Example::HostedData::VERSION, qv('0.0.0'),
-    'Muldis::Rosetta::Engine::Example::HostedData'
-    . ' is the correct version' );
 
 use_ok( 'Muldis::Rosetta::Engine::Example' );
 is( $Muldis::Rosetta::Engine::Example::VERSION, qv('0.11.1'),
