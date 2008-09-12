@@ -115,26 +115,6 @@ sub value_from_source_code {
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
 
-    use Encode 'is_utf8';
-
-###########################################################################
-
-sub BUILD {
-    my ($self) = @_;
-
-    my $source = $self->_source();
-
-    confess q{new_token_stream(): Bad :$source_code arg; it is not a Perl}
-            . q{ 5 ref and Perl doesn't consider it to be a character str.}
-        if !is_utf8 $source and $source =~ m/[^\x00-\x7F]/xs;
-            # TODO: also use some Encode::foo to check that the actual byte
-            # sequences are valid utf-8, in case the text value came from
-            # some bad source that just flipped the is_utf8 flag without
-            # actually first making the string valid utf8.
-
-    return;
-}
-
 ###########################################################################
 
 sub pull_language {
@@ -169,21 +149,6 @@ sub pull_value {
 
 ###########################################################################
 
-sub BUILD {
-    my ($self) = @_;
-
-    my $source = $self->_source();
-
-    # TODO: validate that the $source filehandle is actually configured to
-    # just return strings that Perl 5 considers to be (Unicode) characters.
-    # Note: binmode LAYER ":encoding(utf8)" validates incoming data as
-    # Unicode while ":utf8" just marks it as characters without checking.
-
-    return;
-}
-
-###########################################################################
-
 sub pull_language {
     my ($self) = @_;
     return undef; # nothing found
@@ -211,18 +176,6 @@ sub pull_value {
     use Moose 0.57;
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
-
-###########################################################################
-
-sub BUILD {
-    my ($self) = @_;
-
-    my $source = $self->_source();
-
-    # TODO: any useful validation of $source doable prior to any pulls.
-
-    return;
-}
 
 ###########################################################################
 

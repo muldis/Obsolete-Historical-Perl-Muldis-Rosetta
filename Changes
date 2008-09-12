@@ -10,6 +10,9 @@
     version incorporates all of said updates, though it may have some of
     them.
 
+    * Updated the README file to indicate that a new public repository at
+    http://github.com/muldis/ is planned for the near future.
+
     * This distribution has gained an external dependency on the Perl 5
     module 'autodie', which is not bundled with Perl 5.8.[0-8] or 5.10.0;
     however, it *is* bundled with Perl 5.8.9+ and 5.10.1+, so if you are
@@ -29,6 +32,19 @@
     * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
     and Example.pm 0.12.0.  The other pre-existing versioned files are
     unchanged.
+
+    * (Interface.pm)  The new_machine routine no longer tries to validate
+    its $engine_name argument as to whether or not Perl 5 considers it to
+    be a valid character string; the argument is now only validated for
+    definedness and non-empty-ness.  It turns out that there isn't really
+    any effective Perl 5 test for whether an arbitrary string argument is
+    text, and it is really just up to the code that exchanges data with the
+    outside world (files, networks, databases, etc) to ensure it is using
+    Encode's decode() and encode() etc when it should be; so for us, worst
+    case is we interpret the string as the wrong characters, due to our
+    caller making a mistake, and it is up to them to fix it.  Note, this
+    all being said, any future routine that expects a binary string
+    argument can still assert that is_utf8() is false as a validation step.
 
     * (Interface.pm, Example.pm, Validator.pm,
     Muldis_Rosetta_50_Validate_Example.t)  The Machine role|class

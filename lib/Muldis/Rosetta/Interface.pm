@@ -11,7 +11,6 @@ use warnings FATAL => 'all';
     # Note: This given version applies to all of this file's packages.
 
     use Carp;
-    use Encode 'is_utf8';
     use Scalar::Util 'blessed';
 
 ###########################################################################
@@ -20,15 +19,9 @@ sub new_machine {
     my ($args) = @_;
     my ($engine_name) = @{$args}{'engine_name'};
 
-    confess q{new_machine(): Bad :$engine_name arg; Perl 5 does not}
-            . q{ consider it to be a character str, or it's the empty str.}
-        if !defined $engine_name or $engine_name eq q{}
-            or (!is_utf8 $engine_name
-                and $engine_name =~ m/[^\x00-\x7F]/xs);
-            # TODO: also use some Encode::foo to check that the actual byte
-            # sequences are valid utf-8, in case the text value came from
-            # some bad source that just flipped the is_utf8 flag without
-            # actually first making the string valid utf8.
+    confess q{new_machine(): Bad :$engine_name arg; it is undefined}
+            . q{ or it is the empty string.}
+        if !defined $engine_name or $engine_name eq q{};
 
     # A module may be loaded due to it being embedded in a non-excl file.
     if (!do {
