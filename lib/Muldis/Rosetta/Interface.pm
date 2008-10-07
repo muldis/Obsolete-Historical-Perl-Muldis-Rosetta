@@ -355,22 +355,17 @@ with the invocant C<Process>; that C<Value> object is initialized using the
 which defines a value literal.  If C<$source_code> is a Perl Str then it is
 treated as being written in a plain-text language; if C<$source_code> is
 any kind of Perl 5 reference or Perl 5 object then it is treated as being
-written in a Perl-hosted-data language.  If C<$source_code> is written in
-Perl Hosted Muldis D, it would typically be a Perl (ordered) Array; but if
-one wants to declare a C<Value> in that language that is just a Muldis D
-C<Cat.Name>, then C<$source_code> must be a Perl 5 scalar reference to a
-Perl Str rather than just being a Perl Str as the Perl Hosted Muldis D spec
-states, in order to disambiguate this kind of Perl-hosted-data code from
-plain-text code.  If the C<$source_code> is in a Perl Hosted Data language,
-then it may consist partially of other C<Value> objects.  If
-C<$source_code> is itself just a C<Value> object, then it will be cloned.
-Because a source code fragment representing a value literal typically
-doesn't embed its own declaration of the plain-text|Perl-hosted-data
-language it is written in, that language must be specified external to the
-fragment, either by giving a defined C<$lang> argument, or by ensuring that
-the invocant C<Process> object has a defined "expected
-plain-text|Perl-hosted-data command language" attribute.  If C<$lang> is
-defined, it must match C<$source_code> in Str vs Array|obj categorization.
+written in a Perl-hosted-data language.  If the C<$source_code> is in a
+Perl Hosted Data language, then it may consist partially of other C<Value>
+objects.  If C<$source_code> is itself just a C<Value> object, then it will
+be cloned.  Because a source code fragment representing a value literal
+typically doesn't embed its own declaration of the
+plain-text|Perl-hosted-data language it is written in, that language must
+be specified external to the fragment, either by giving a defined C<$lang>
+argument, or by ensuring that the invocant C<Process> object has a defined
+"expected plain-text|Perl-hosted-data command language" attribute.  If
+C<$lang> is defined, it must match C<$source_code> in Str vs Array|obj
+categorization.
 
 =item C<func_invo of Muldis::Rosetta::Interface::Value (Str :$function!,
 Hash :$args?, Str :$pt_lang?, Array :$hd_lang?)>

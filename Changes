@@ -30,6 +30,14 @@
     and Example.pm 0.13.0 and SeeAlso.pod 0.5.2.  The other pre-existing
     versioned files are unchanged.
 
+    * (Interface.pm)  Updated the API documentation (specifically for the
+    'new_value' method) so it no longer says that a Perl-hosted-data
+    "Cat.Name" literal requires special handling as a Perl scalar ref; in
+    accordance with the latest Muldis D spec, such a literal is now given
+    as a Perl Array just like all other hosted-data literals.  Technically
+    this detail only concerned the HDMD_Perl_Tiny official Muldis D
+    dialect, and other HD dialects may have their own rules.
+
     * (Tiny.pm)  Created the initial empty shell contents of this file,
     which would Translate Muldis D source code between the 2 official Tiny
     dialects, and is intended to be used by Rosetta Engines to handle the

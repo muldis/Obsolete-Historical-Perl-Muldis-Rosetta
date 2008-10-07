@@ -34,9 +34,9 @@ sub new_token_stream {
             '_source' => $source_code });
     }
 
-    elsif ($ref_kind eq 'ARRAY' or $ref_kind eq 'SCALAR'
-            or blessed $source_code and $source_code->isa(
-            'Moose::Object' ) and $source_code->does(
+    elsif ($ref_kind eq 'ARRAY' or blessed $source_code
+            and $source_code->isa( 'Moose::Object' )
+            and $source_code->does(
             'Muldis::Rosetta::Interface::Value' )) {
         return Muldis::Rosetta::Util::Tiny::TokenStream::FromHDArray->new({
             '_source' => $source_code });
@@ -49,7 +49,7 @@ sub new_token_stream {
             '_source' => $source_code });
     }
 
-    else { # $ref_kind eq 'HASH'|'CODE'|'Regexp'|other-'GLOB'|other-object
+    else { # $ref_kind eq 'HASH'|'SCALAR'|'CODE'|'Regexp'|oth-'GLOB'|ot-obj
         confess q{new_token_stream(): Bad :$source_code arg; a}
             . qq{ '$ref_kind' is not discernable as the root of a source}
             . q{ of any Tiny dialect of Muldis D.};
