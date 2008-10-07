@@ -12,6 +12,7 @@ use Muldis::Rosetta::Interface 0.012000;
     use version 0.74; our $VERSION = qv('0.12.0');
 
     use Test::More;
+#    use Test::Moose 0.58;
     use Test::Moose 0.57;
 
 ###########################################################################
@@ -270,7 +271,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version-0.74|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Test::Moose-0.57|Test::Moose>.
+L<Test::Moose-0.58|Test::Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-0.12.0|Muldis::Rosetta::Interface>.

@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2008-09-xx   Darren Duncan <perl@DarrenDuncan.net>
+2008-10-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.13.0.tar.gz.  Muldis Rosetta version 0.13.0 for Perl 6
@@ -27,8 +27,8 @@
     Muldis_Rosetta_00_Compile.t].
 
     * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
-    and Example.pm 0.13.0.  The other pre-existing versioned files are
-    unchanged.
+    and Example.pm 0.13.0 and SeeAlso.pod 0.5.2.  The other pre-existing
+    versioned files are unchanged.
 
     * (Tiny.pm)  Created the initial empty shell contents of this file,
     which would Translate Muldis D source code between the 2 official Tiny
@@ -55,6 +55,8 @@
     are the 2 ::Machine and ::Process; their initial methods are mostly
     like those in Example.pm, since they are mainly what the ::Machine and
     ::Process classes of Example.pm are wrappers for.
+
+    * (SeeAlso.pod)  Minor updates.
 
 2008-09-19   Darren Duncan <perl@DarrenDuncan.net>
 

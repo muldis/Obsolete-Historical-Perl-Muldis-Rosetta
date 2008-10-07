@@ -71,6 +71,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Machine; # role
+#    use Moose::Role 0.58;
     use Moose::Role 0.57;
 
     requires 'new_process';
@@ -81,6 +82,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Process; # role
+#    use Moose::Role 0.58;
     use Moose::Role 0.57;
 
     requires 'assoc_machine';
@@ -104,6 +106,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Value; # role
+#    use Moose::Role 0.58;
     use Moose::Role 0.57;
 
     requires 'assoc_process';
@@ -500,7 +503,7 @@ Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions: L<version-0.74|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose::Role-0.57|Moose::Role>.
+L<Moose::Role-0.58|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 
