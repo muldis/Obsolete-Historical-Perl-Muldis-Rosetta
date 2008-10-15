@@ -500,7 +500,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_Tiny> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:'http://muldis.com':'0.48.0':'PTMD_Tiny':{...}>.  No other
+C<Muldis_D:'http://muldis.com':'0.49.0':PTMD_Tiny:{...}>.  No other
 version numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -508,7 +508,7 @@ version numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl_Tiny> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.48.0', 'HDMD_Perl_Tiny', {...} ]>.  No
+'Muldis_D', 'http://muldis.com', '0.49.0', 'HDMD_Perl_Tiny', {...} ]>.  No
 other version numbers are currently supported.
 
 =back

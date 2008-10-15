@@ -249,7 +249,7 @@ L<SQL::Statement>, L<SQL::Parser>, L<SQL::Translator>, L<SQL::YASP>,
 L<SQL::Generator>, L<SQL::Schema>, L<SQL::Abstract>, L<SQL::Snippet>,
 L<SQL::Catalog>, L<DBIx::Perlish>, L<DBIx::StORM>, L<Tao::DBI>, L<NTuples>,
 L<DBIx::CopyRecord>, L<DBIx::DataModel>, L<Data::Domain>, L<Fey>,
-L<SQL::Tokenizer>.
+L<SQL::Tokenizer>, L<SQL::DB>.
 
 =head1 AUTHOR
 
