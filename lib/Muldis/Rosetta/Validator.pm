@@ -36,7 +36,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.49.0', 'HDMD_Perl_Tiny', {} ] });
+        'http://muldis.com', '0.50.0', 'HDMD_Perl_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -54,22 +54,22 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # Declare our example literal source data sets.
 
     my $src_suppliers = $process->new_value({
-        'source_code' => [ 'Relation', [ 'farm', 'country', ], [
-            [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ], ],
-            [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ], ],
-            [ [ 'Text', 'Wickets'   ], [ 'Text', 'Canada'  ], ],
+        'source_code' => [ 'Relation', [ 'farm', 'country' ], [
+            [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ] ],
+            [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ] ],
+            [ [ 'Text', 'Wickets'   ], [ 'Text', 'Canada'  ] ],
         ] ],
     });
     pass( 'no death from loading example suppliers data into VM' );
     does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Value' );
 
     my $src_foods = $process->new_value({
-        'source_code' => [ 'Relation', [ 'food', 'colour', ], [
-            [ [ 'Text', 'Bananas' ], [ 'Text', 'yellow' ], ],
-            [ [ 'Text', 'Carrots' ], [ 'Text', 'orange' ], ],
-            [ [ 'Text', 'Oranges' ], [ 'Text', 'orange' ], ],
-            [ [ 'Text', 'Kiwis'   ], [ 'Text', 'green'  ], ],
-            [ [ 'Text', 'Lemons'  ], [ 'Text', 'yellow' ], ],
+        'source_code' => [ 'Relation', [ 'food', 'colour' ], [
+            [ [ 'Text', 'Bananas' ], [ 'Text', 'yellow' ] ],
+            [ [ 'Text', 'Carrots' ], [ 'Text', 'orange' ] ],
+            [ [ 'Text', 'Oranges' ], [ 'Text', 'orange' ] ],
+            [ [ 'Text', 'Kiwis'   ], [ 'Text', 'green'  ] ],
+            [ [ 'Text', 'Lemons'  ], [ 'Text', 'yellow' ] ],
         ] ],
     });
     pass( 'no death from loading example foods data into VM' );
@@ -80,37 +80,37 @@ sub _scenario_foods_suppliers_shipments_v1 {
             {
                 'farm' => [ 'Text', 'Hodgesons' ],
                 'food' => [ 'Text', 'Kiwis' ],
-                'qty'  => [ 'Int', 'perl_int', 100 ],
+                'qty'  => [ 'Int', 100 ],
             },
             {
                 'farm' => [ 'Text', 'Hodgesons' ],
                 'food' => [ 'Text', 'Lemons' ],
-                'qty'  => [ 'Int', 'perl_int', 130 ],
+                'qty'  => [ 'Int', 130 ],
             },
             {
                 'farm' => [ 'Text', 'Hodgesons' ],
                 'food' => [ 'Text', 'Oranges' ],
-                'qty'  => [ 'Int', 'perl_int', 10 ],
+                'qty'  => [ 'Int', 10 ],
             },
             {
                 'farm' => [ 'Text', 'Hodgesons' ],
                 'food' => [ 'Text', 'Carrots' ],
-                'qty'  => [ 'Int', 'perl_int', 50 ],
+                'qty'  => [ 'Int', 50 ],
             },
             {
                 'farm' => [ 'Text', 'Beckers' ],
                 'food' => [ 'Text', 'Carrots' ],
-                'qty'  => [ 'Int', 'perl_int', 90 ],
+                'qty'  => [ 'Int', 90 ],
             },
             {
                 'farm' => [ 'Text', 'Beckers' ],
                 'food' => [ 'Text', 'Bananas' ],
-                'qty'  => [ 'Int', 'perl_int', 120 ],
+                'qty'  => [ 'Int', 120 ],
             },
             {
                 'farm' => [ 'Text', 'Wickets' ],
                 'food' => [ 'Text', 'Lemons' ],
-                'qty'  => [ 'Int', 'perl_int', 30 ],
+                'qty'  => [ 'Int', 30 ],
             },
         ] ],
     });
@@ -149,9 +149,9 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     # Finally, use the result somehow (not done here).
     # The result should be:
-    # [ 'Relation', [ 'farm', 'country', ], [
-    #     [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ], ],
-    #     [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ], ],
+    # [ 'Relation', [ 'farm', 'country' ], [
+    #     [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ] ],
+    #     [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ] ],
     # ] ],
 
     print "# debug: orange food suppliers found:\n";

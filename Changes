@@ -38,6 +38,10 @@
     this detail only concerned the HDMD_Perl_Tiny official Muldis D
     dialect, and other HD dialects may have their own rules.
 
+    * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
+    in accordance with the latest Muldis D spec; removed any 'perl_int'
+    format-specifier elements from value literals.
+
     * (Tiny.pm)  Created the initial empty shell contents of this file,
     which would Translate Muldis D source code between the 2 official Tiny
     dialects, and is intended to be used by Rosetta Engines to handle the

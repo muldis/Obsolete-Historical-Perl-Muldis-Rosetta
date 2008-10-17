@@ -149,20 +149,20 @@ a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.49.0', 'HDMD_Perl_Tiny', {} ] });
+        'http://muldis.com', '0.50.0', 'HDMD_Perl_Tiny', {} ] });
 
     my $r1 = $process->new_value({
-        'source_code' => [ 'Relation', [ 'x', 'y', ], [
-            [ [ 'Int', 'perl_int', 4 ], [ 'Int', 'perl_int', 7 ], ],
-            [ [ 'Int', 'perl_int', 3 ], [ 'Int', 'perl_int', 2 ], ],
+        'source_code' => [ 'Relation', [ 'x', 'y' ], [
+            [ [ 'Int', 4 ], [ 'Int', 7 ] ],
+            [ [ 'Int', 3 ], [ 'Int', 2 ] ],
         ] ]
     });
 
     my $r2 = $process->new_value({
-        'source_code' => [ 'Relation', [ 'y', 'z', ], [
-            [ [ 'Int', 'perl_int', 5 ], [ 'Int', 'perl_int', 6 ], ],
-            [ [ 'Int', 'perl_int', 2 ], [ 'Int', 'perl_int', 1 ], ],
-            [ [ 'Int', 'perl_int', 2 ], [ 'Int', 'perl_int', 4 ], ],
+        'source_code' => [ 'Relation', [ 'y', 'z' ], [
+            [ [ 'Int', 5 ], [ 'Int', 6 ] ],
+            [ [ 'Int', 2 ], [ 'Int', 1 ] ],
+            [ [ 'Int', 2 ], [ 'Int', 4 ] ],
         ] ]
     });
 
@@ -176,17 +176,9 @@ a third Perl variable holding the relation data of the result.
     my $r3_as_perl = $r3->hd_source_code();
 
     # Then $r3_as_perl contains:
-    # [ 'Relation', [
-    #     {
-    #         'x' => [ 'Int', 'perl_int', 3 ],
-    #         'y' => [ 'Int', 'perl_int', 2 ],
-    #         'z' => [ 'Int', 'perl_int', 1 ],
-    #     },
-    #     {
-    #         'x' => [ 'Int', 'perl_int', 3 ],
-    #         'y' => [ 'Int', 'perl_int', 2 ],
-    #         'z' => [ 'Int', 'perl_int', 4 ],
-    #     },
+    # [ 'Relation', [ 'x', 'y', 'z' ], [
+    #     [ [ 'Int', 3 ], [ 'Int', 2 ], [ 'Int', 1 ] ],
+    #     [ [ 'Int', 3 ], [ 'Int', 2 ], [ 'Int', 4 ] ],
     # ] ]
 
 For most examples of using Muldis Rosetta, and tutorials, please see the
