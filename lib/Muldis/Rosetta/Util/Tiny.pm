@@ -87,7 +87,7 @@ sub value_from_source_code {
 ###########################################################################
 
 { package Muldis::Rosetta::Util::Tiny::TokenStream; # role
-    use Moose::Role 0.59;
+    use Moose::Role 0.60;
 
     has '_source' => (
         is       => 'ro', # but some kinds may still mutate when read from
@@ -111,7 +111,7 @@ sub value_from_source_code {
 ###########################################################################
 
 { package Muldis::Rosetta::Util::Tiny::TokenStream::FromPTStr; # class
-    use Moose 0.59;
+    use Moose 0.60;
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
 
@@ -141,7 +141,7 @@ sub pull_value {
 ###########################################################################
 
 { package Muldis::Rosetta::Util::Tiny::TokenStream::FromPTFH; # class
-    use Moose 0.59;
+    use Moose 0.60;
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
 
@@ -173,7 +173,7 @@ sub pull_value {
 ###########################################################################
 
 { package Muldis::Rosetta::Util::Tiny::TokenStream::FromHDArray; # class
-    use Moose 0.59;
+    use Moose 0.60;
 
     with 'Muldis::Rosetta::Util::Tiny::TokenStream';
 
@@ -301,7 +301,7 @@ least 5.10.1, and are also on CPAN for separate installation by users of
 earlier Perl versions: L<autodie-1.994|autodie>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose-0.59|Moose>, L<Moose::Role-0.59|Moose::Role>.
+L<Moose-0.60|Moose>, L<Moose::Role-0.60|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

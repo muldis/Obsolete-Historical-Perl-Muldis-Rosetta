@@ -17,10 +17,10 @@ WriteMakefile(
         # Bundled w Perls 5.10.1+,5.8.9+ but n earlier Perls 5.10.0,5.8.x.
         'autodie' => 1.994,
         # These are not bundled with any version of Perl.
-        'Moose' => 0.59,
-        'Moose::Role' => 0.59,
+        'Moose' => 0.60,
+        'Moose::Role' => 0.60,
         'MooseX::Singleton' => 0.12,
-        'Test::Moose' => 0.59,
+        'Test::Moose' => 0.60,
     },
 );
 
