@@ -3,14 +3,8 @@ Changes
 INSTALL
 lib/Muldis/Rosetta.pm
 lib/Muldis/Rosetta/Engine/Example.pm
-lib/Muldis/Rosetta/Engine/Example/Routines.pm
-lib/Muldis/Rosetta/Engine/Example/Runtime.pm
-lib/Muldis/Rosetta/Engine/Example/Storage.pm
-lib/Muldis/Rosetta/Engine/Example/Util.pm
-lib/Muldis/Rosetta/Engine/Example/Value.pm
 lib/Muldis/Rosetta/Interface.pm
 lib/Muldis/Rosetta/SeeAlso.pod
-lib/Muldis/Rosetta/Util/Tiny.pm
 lib/Muldis/Rosetta/Validator.pm
 LICENSE/GPL
 LICENSE/LGPL

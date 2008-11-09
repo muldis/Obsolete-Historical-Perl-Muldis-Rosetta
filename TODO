@@ -15,6 +15,24 @@ table for these items; they are simply to be done "as soon as possible".
 the progress is non-trivial, so there are regular public snapshots with
 nicely rendered documentation.
 
+* Update Interface.pm to add a few specialized Process methods for loading
+or dumping whole depots.  The first sort of exists already in the form of
+execute() though that'll need to be able to take an entire depot content
+declaratively, catalog plus data at once.  The second would be added and
+would dump a whole depot catalog+schema.  This is different than what
+reading the payload of a Value does, as it could dump a bootloader.  Note
+that this and the next item suggests a bit of Muldis D language
+enhancements are necessary.
+
+* Reorganize the plan for Example.pm so that the same load and dump code is
+used at both ends, both storage and application, since by default Example
+depots are stored on disk as Muldis D source code describing the depot.  So
+Util/Tiny.pm will also go away as it turns out other Engines should stand
+to use something more efficient or dependency-requiring than Example would;
+also, the version for Example is now to be simpler to not be streamable,
+and just work where the source can all be in memory at once so parsing etc
+is just on a normal Perl string variable.
+
 * Implement the Muldis D metamodel, that is, the catalog.  This is the main
 prerequisite for doing anything moderately more complex than what has
 already been done, including the support for user-defined data types,

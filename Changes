@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2008-10-xx   Darren Duncan <perl@DarrenDuncan.net>
+2008-11-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.13.0.tar.gz.  Muldis Rosetta version 0.13.0 for Perl 6
@@ -9,22 +9,6 @@
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
     them.
-
-    * This distribution has gained an external dependency on the Perl 5
-    module 'autodie', which is not bundled with Perl 5.8.[0-8] or 5.10.0;
-    however, it *is* bundled with Perl 5.8.9+ and 5.10.1+, so if you are
-    using those newer Perls, you won't have to install 'autodie' separately
-    from CPAN.
-
-    * Added new utility module lib/Muldis/Rosetta/Util/Tiny.pm, which
-    debuts at version 0.0.0.  The appropriate references were added in
-    other files [README, Muldis_Rosetta_00_Compile.t, Example.pm].
-
-    * Added the following 5 Example Engine internals files in the
-    lib/Muldis/Rosetta/Engine/Example/ namespace: Value.pm, Routines.pm,
-    Storage.pm, Runtime.pm, Util.pm; they all debut at version 0.0.0.  The
-    appropriate references were added in other files [Example.pm,
-    Muldis_Rosetta_00_Compile.t].
 
     * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
     and Example.pm 0.13.0 and SeeAlso.pod 0.5.2.  The other pre-existing
@@ -41,32 +25,6 @@
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
     in accordance with the latest Muldis D spec; removed any 'perl_int'
     format-specifier elements from value literals.
-
-    * (Tiny.pm)  Created the initial empty shell contents of this file,
-    which would Translate Muldis D source code between the 2 official Tiny
-    dialects, and is intended to be used by Rosetta Engines to handle the
-    initial tokenization of Tiny Muldis D source code, saving the Engine's
-    parser some work.  Added this file's initial complement of 1 role and 3
-    classes, all in the "Muldis::Rosetta::Util::Tiny::TokenStream(|::\w+)"
-    namespace, and their initial complement of methods, and the file's
-    namesake module's initial complement of wrapper functions.
-
-    * (Value.pm, Routines.pm, Storage.pm, Runtime.pm, Util.pm)  Created the
-    initial empty shell contents of these files.  Value.pm would provide
-    physical representations of all core data type values.  Routines.pm
-    would provide implementations of all core Muldis D system-defined
-    routines.  Storage.pm would provide a virtual file system for
-    coordinating depot access.  Runtime.pm would provide the main DBMS
-    state manager and event loop.  Util.pm would provide common elements of
-    Muldis D source code parsers/builders and more.
-
-    * (Example.pm)  Removed the commented-out references to PlainText.pm
-    and HostedData.pm, which now aren't expected to exist.
-
-    * (Runtime.pm)  Added this file's initial complement of classes, which
-    are the 2 ::Machine and ::Process; their initial methods are mostly
-    like those in Example.pm, since they are mainly what the ::Machine and
-    ::Process classes of Example.pm are wrappers for.
 
     * (SeeAlso.pod)  Minor updates.
 

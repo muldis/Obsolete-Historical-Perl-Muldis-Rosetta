@@ -4,13 +4,14 @@ use strict;
 use warnings FATAL => 'all';
 
 use Muldis::Rosetta::Interface 0.012000;
-use Muldis::Rosetta::Util::Tiny 0.000000;
 
-use Muldis::Rosetta::Engine::Example::Value 0.000000;
-use Muldis::Rosetta::Engine::Example::Routines 0.000000;
-use Muldis::Rosetta::Engine::Example::Storage 0.000000;
-use Muldis::Rosetta::Engine::Example::Runtime 0.000000;
-use Muldis::Rosetta::Engine::Example::Util 0.000000;
+#use Muldis::Rosetta::Engine::Example::Value 0.000000;
+#use Muldis::Rosetta::Engine::Example::Routines 0.000000;
+#use Muldis::Rosetta::Engine::Example::Storage 0.000000;
+#use Muldis::Rosetta::Engine::Example::Runtime 0.000000;
+#use Muldis::Rosetta::Engine::Example::Util 0.000000;
+#use Muldis::Rosetta::Engine::Example::PlainText 0.000000;
+#use Muldis::Rosetta::Engine::Example::HostedData 0.000000;
 
 ###########################################################################
 ###########################################################################
@@ -40,9 +41,9 @@ sub new_machine {
     has '_inner' => (
         is      => 'rw',
         isa     => 'Muldis::Rosetta::Engine::Example::Runtime::Machine',
-        default => sub {
-            Muldis::Rosetta::Engine::Example::Runtime::Machine->new()
-        },
+#        default => sub {
+#            Muldis::Rosetta::Engine::Example::Runtime::Machine->new()
+#        },
     );
 
 ###########################################################################
@@ -104,11 +105,11 @@ sub BUILD {
         if ref $process_config ne 'HASH';
     # TODO: further input checks on $process_config as applicable.
 
-    $self->_inner( Muldis::Rosetta::Engine::Example::Runtime::Process
-            ->new({
-        'assoc_machine'  => $self->_assoc_machine()->_inner(),
-        'process_config' => $process_config
-    }) );
+#    $self->_inner( Muldis::Rosetta::Engine::Example::Runtime::Process
+#            ->new({
+#        'assoc_machine'  => $self->_assoc_machine()->_inner(),
+#        'process_config' => $process_config
+#    }) );
 
     return;
 }
@@ -163,23 +164,25 @@ sub execute {
 
     my $boot_call_seq; # Perl array of what each boot_call parses into
 
-    if (ref $source_code) {
-        $boot_call_seq = Muldis::Rosetta::Engine::Example::HostedData
-                ->boot_call_seq_from_source_code({
-            'assoc_process' => $self->_inner(),
-            'source_code' => $source_code,
-            'exp_command_lang' => $self->_hd_command_lang(),
-        });
-    }
+    # TODO: parse $source_code into $boot_call_seq
 
-    else {
-        $boot_call_seq = Muldis::Rosetta::Engine::Example::PlainText
-                ->boot_call_seq_from_source_code({
-            'assoc_process' => $self->_inner(),
-            'source_code' => $source_code,
-            'exp_command_lang' => $self->_pt_command_lang(),
-        });
-    }
+#    if (ref $source_code) {
+#        $boot_call_seq = Muldis::Rosetta::Engine::Example::HostedData
+#                ->boot_call_seq_from_source_code({
+#            'assoc_process' => $self->_inner(),
+#            'source_code' => $source_code,
+#            'exp_command_lang' => $self->_hd_command_lang(),
+#        });
+#    }
+
+#    else {
+#        $boot_call_seq = Muldis::Rosetta::Engine::Example::PlainText
+#                ->boot_call_seq_from_source_code({
+#            'assoc_process' => $self->_inner(),
+#            'source_code' => $source_code,
+#            'exp_command_lang' => $self->_pt_command_lang(),
+#        });
+#    }
 
     # TODO: execute $boot_call_seq
 
@@ -500,16 +503,16 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_Tiny> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:'http://muldis.com':'0.50.0':PTMD_Tiny:{...}>.  No other
-version numbers are currently supported.
+C<Muldis_D:'http://muldis.com':'0.50.0':PTMD_Tiny>.  No other version
+numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
 
 See L<Muldis::D::Dialect::HDMD_Perl_Tiny> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.50.0', 'HDMD_Perl_Tiny', {...} ]>.  No
-other version numbers are currently supported.
+'Muldis_D', 'http://muldis.com', '0.50.0', 'HDMD_Perl_Tiny' ]>.  No other
+version numbers are currently supported.
 
 =back
 
