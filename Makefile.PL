@@ -7,7 +7,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     'NAME' => 'Muldis::Rosetta',
-    'VERSION' => '0.12.0',
+    'VERSION' => '0.13.0',
     'ABSTRACT' => 'Full-featured truly relational DBMS in Perl',
     'AUTHOR' => 'Darren Duncan <perl@DarrenDuncan.net>',
     'LICENSE' => 'lgpl',
@@ -15,10 +15,10 @@ WriteMakefile(
         # These are bundled with Perls 5.10.x but not Perls 5.8.x.
         'version' => 0.74,
         # These are not bundled with any version of Perl.
-        'Moose' => 0.60,
-        'Moose::Role' => 0.60,
+        'Moose' => 0.61,
+        'Moose::Role' => 0.61,
         'MooseX::Singleton' => 0.12,
-        'Test::Moose' => 0.60,
+        'Test::Moose' => 0.61,
     },
 );
 

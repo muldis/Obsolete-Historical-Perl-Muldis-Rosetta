@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.012000;
+use Muldis::Rosetta::Interface 0.013000;
 
 #use Muldis::Rosetta::Engine::Example::Value 0.000000;
 #use Muldis::Rosetta::Engine::Example::Routines 0.000000;
@@ -17,7 +17,7 @@ use Muldis::Rosetta::Interface 0.012000;
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    use version 0.74; our $VERSION = qv('0.12.0');
+    use version 0.74; our $VERSION = qv('0.13.0');
     # Note: This given version applies to all of this file's packages.
 
 ###########################################################################
@@ -64,7 +64,7 @@ sub new_process {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use Moose 0.60;
+    use Moose 0.61;
 
     with 'Muldis::Rosetta::Interface::Process';
 
@@ -267,7 +267,7 @@ sub rollback_trans {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use Moose 0.60;
+    use Moose 0.61;
 
     with 'Muldis::Rosetta::Interface::Value';
 
@@ -376,7 +376,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.12.0 for
+This document describes Muldis::Rosetta::Engine::Example version 0.13.0 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -535,14 +535,15 @@ recommends one that is at least 5.10.0.
 
 It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
-installation by users of earlier Perl versions: L<version-0.74|version>.
+installation by users of earlier Perl versions:
+L<version:ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose-0.60|Moose>, L<Moose::Role-0.60|Moose::Role>,
-L<MooseX::Singleton-0.12|MooseX::Singleton>.
+L<Moose:ver(0.61..*)|Moose>, L<Moose::Role:ver(0.61..*)|Moose::Role>,
+L<MooseX::Singleton:ver(0.12..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-0.12.0|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface:ver(0.13.0..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface; # module
-    use version 0.74; our $VERSION = qv('0.12.0');
+    use version 0.74; our $VERSION = qv('0.13.0');
     # Note: This given version applies to all of this file's packages.
 
     use Carp;
@@ -71,7 +71,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Machine; # role
-    use Moose::Role 0.60;
+    use Moose::Role 0.61;
 
     requires 'new_process';
 
@@ -81,7 +81,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Process; # role
-    use Moose::Role 0.60;
+    use Moose::Role 0.61;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -104,7 +104,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Value; # role
-    use Moose::Role 0.60;
+    use Moose::Role 0.61;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -129,7 +129,7 @@ Common public API for Muldis Rosetta Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Interface version 0.12.0 for Perl
+This document describes Muldis::Rosetta::Interface version 0.13.0 for Perl
 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -484,10 +484,11 @@ recommends one that is at least 5.10.0.
 
 It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
-installation by users of earlier Perl versions: L<version-0.74|version>.
+installation by users of earlier Perl versions:
+L<version:ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose::Role-0.60|Moose::Role>.
+L<Moose::Role:ver(0.61..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

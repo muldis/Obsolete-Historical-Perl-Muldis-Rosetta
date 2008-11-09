@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2008-11-xx   Darren Duncan <perl@DarrenDuncan.net>
+2008-11-08   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.13.0.tar.gz.  Muldis Rosetta version 0.13.0 for Perl 6
@@ -25,6 +25,9 @@
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
     in accordance with the latest Muldis D spec; removed any 'perl_int'
     format-specifier elements from value literals.
+
+    * (Interface.pm, Validator.pm, Example.pm)  Updated the formatting of
+    module versions in DEPENDENCIES pod sections to reflect modern Perl 6.
 
     * (SeeAlso.pod)  Minor updates.
 
