@@ -149,7 +149,7 @@ a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.51.0', 'HDMD_Perl_Tiny', {} ] });
+        'http://muldis.com', '0.52.0', 'HDMD_Perl_Tiny', {} ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ 'x', 'y' ], [
