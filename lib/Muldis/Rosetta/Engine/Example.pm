@@ -64,7 +64,7 @@ sub new_process {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use Moose 0.61;
+    use Moose 0.62;
 
     with 'Muldis::Rosetta::Interface::Process';
 
@@ -267,7 +267,7 @@ sub rollback_trans {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use Moose 0.61;
+    use Moose 0.62;
 
     with 'Muldis::Rosetta::Interface::Value';
 
@@ -503,7 +503,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_Tiny> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:'http://muldis.com':'0.50.0':PTMD_Tiny>.  No other version
+C<Muldis_D:'http://muldis.com':'0.51.0':PTMD_Tiny>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -511,7 +511,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl_Tiny> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.50.0', 'HDMD_Perl_Tiny' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.51.0', 'HDMD_Perl_Tiny' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -536,14 +536,14 @@ recommends one that is at least 5.10.0.
 It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions:
-L<version:ver(0.74..*)|version>.
+L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose:ver(0.61..*)|Moose>, L<Moose::Role:ver(0.61..*)|Moose::Role>,
-L<MooseX::Singleton:ver(0.12..*)|MooseX::Singleton>.
+L<Moose-ver(0.62..*)|Moose>, L<Moose::Role-ver(0.62..*)|Moose::Role>,
+L<MooseX::Singleton-ver(0.12..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface:ver(0.13.0..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.13.0..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

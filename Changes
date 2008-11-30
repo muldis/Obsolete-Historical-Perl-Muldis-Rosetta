@@ -1,6 +1,28 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
+2008-11-xx   Darren Duncan <perl@DarrenDuncan.net>
+
+    * Muldis Rosetta version 0.14.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.14.0.tar.gz.  Muldis Rosetta version 0.14.0 for Perl 6
+    is not released at all.  The rest of this Changes entry refers only to
+    the Perl 5 version, and it should not be assumed that the Perl 6
+    version incorporates all of said updates, though it may have some of
+    them.
+
+    * Fixed the version number inside the file SeeAlso.pod; it should have
+    been 0.5.2 in Muldis-Rosetta-0.13.0 but was mistakenly not incremented
+    like the Changes file of that release said it was.
+
+    * New file versions are: Rosetta.pm and Interface.pm and Validator.pm
+    and Example.pm 0.14.0.  The other pre-existing versioned files are
+    unchanged.
+
+    * (Interface.pm, Validator.pm, Example.pm)  Bugfix in the DEPENDENCIES
+    pod sections; replaced any ':ver' with '-ver' in module version labels
+    so that the current HTMLizer of search.cpan.org wouldn't mis-parse a
+    'version:ver...' label as a literal url of protocol 'version'.
+
 2008-11-08   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.0 for Perl 5 is released on CPAN as

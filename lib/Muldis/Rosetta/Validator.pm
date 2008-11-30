@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013000;
     use version 0.74; our $VERSION = qv('0.13.0');
 
     use Test::More;
-    use Test::Moose 0.61;
+    use Test::Moose 0.62;
 
 ###########################################################################
 
@@ -36,7 +36,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.50.0', 'HDMD_Perl_Tiny', {} ] });
+        'http://muldis.com', '0.51.0', 'HDMD_Perl_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -268,13 +268,13 @@ recommends one that is at least 5.10.0.
 It also requires these Perl 5 packages that are bundled with any version of
 Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
 installation by users of earlier Perl versions:
-L<version:ver(0.74..*)|version>.
+L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Test::Moose:ver(0.61..*)|Test::Moose>.
+L<Test::Moose-ver(0.62..*)|Test::Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface:ver(0.13.0..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.13.0..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
