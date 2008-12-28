@@ -175,7 +175,7 @@ Most of the other (near term) third party Engines will likely just map
 Muldis Rosetta's rigorously defined API onto a pre-existing
 quasi-relational database manager (such as SQLite, PostgreSQL, MySQL,
 Firebird, Teradata, Oracle, Sybase, SQL Server, Informix, DB2, OpenBase,
-FrontBase, etc). Given this fact, Muldis Rosetta's most prominent feature
+FrontBase, etc).  Given this fact, Muldis Rosetta's most prominent feature
 is that it provides a common API for access to those databases, each of
 which takes a different SQL or quasi-SQL dialect.  An application written
 to it should easily port to alternative relational database engines with

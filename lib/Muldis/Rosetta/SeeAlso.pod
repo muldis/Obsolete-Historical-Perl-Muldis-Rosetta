@@ -220,9 +220,9 @@ tying up a "good" namespace for them.
 I<This documentation is pending.>
 
 These Perl 5 applications and frameworks are, perhaps, at the front of the
-line to get Muldis Rosetta bindings: L<Jifty>, L<Catalyst>, L<Maypole>,
-L<Bricolage>, L<RT>.  Generally speaking, the more active the development
-or the more popular the project, the higher the priority to support it.
+line to get Muldis Rosetta bindings: L<Jifty>, L<Catalyst>, L<Bricolage>,
+L<RT>.  Generally speaking, the more active the development or the more
+popular the project, the higher the priority to support it.
 
 =head1 DBMS-RELATED PERL MODULES
 
@@ -237,8 +237,8 @@ These other Perl 5 packages also work in the problem domain of managing
 data or data definitions or connections to databases (list not exhaustive):
 
 L<DBI>, L<Tangram>, L<DBIx::Class>, L<HDB>, L<Class::DBI>, L<Pixie>,
-L<Alzabo>, L<DBIx::SQLEngine>, L<Rose::DB>, L<SPOPS>, L<Set::Object>,
-L<Set::Scalar>, L<Object::Relation>, L<Oryx>, L<DBM::Deep>,
+L<KiokuDB>, L<Alzabo>, L<DBIx::SQLEngine>, L<Rose::DB>, L<SPOPS>,
+L<Set::Object>, L<Set::Scalar>, L<Object::Relation>, L<Oryx>, L<DBM::Deep>,
 L<DBIx::SearchBuilder>, L<DBIx::RecordSet>, L<DBIx::Abstract>, L<DBIx::IO>,
 L<DBIx::AnyDBD>, L<DBIx::Browse>, L<DBIx::DBH>, L<MKDoc::SQL>,
 L<Data::Transactional>, L<DBIx::ModelUpdate>, L<DBIx::ProcedureCall>,
@@ -249,7 +249,7 @@ L<SQL::Statement>, L<SQL::Parser>, L<SQL::Translator>, L<SQL::YASP>,
 L<SQL::Generator>, L<SQL::Schema>, L<SQL::Abstract>, L<SQL::Snippet>,
 L<SQL::Catalog>, L<DBIx::Perlish>, L<DBIx::StORM>, L<Tao::DBI>, L<NTuples>,
 L<DBIx::CopyRecord>, L<DBIx::DataModel>, L<Data::Domain>, L<Fey>,
-L<SQL::Tokenizer>, L<SQL::DB>.
+L<SQL::Tokenizer>, L<SQL::DB>, L<MooseX::Storage>, L<LARC::DB>.
 
 =head1 AUTHOR
 

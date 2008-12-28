@@ -34,7 +34,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Machine; # class
-    use MooseX::Singleton 0.12;
+    use MooseX::Singleton 0.13;
 
     with 'Muldis::Rosetta::Interface::Machine';
 
@@ -64,7 +64,7 @@ sub new_process {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use Moose 0.62;
+    use Moose 0.63;
 
     with 'Muldis::Rosetta::Interface::Process';
 
@@ -267,7 +267,7 @@ sub rollback_trans {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use Moose 0.62;
+    use Moose 0.63;
 
     with 'Muldis::Rosetta::Interface::Value';
 
@@ -503,15 +503,15 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_Tiny> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:'http://muldis.com':'0.52.0':PTMD_Tiny>.  No other version
+C<Muldis_D:'http://muldis.com':'0.56.0':PTMD_Tiny>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
 
-See L<Muldis::D::Dialect::HDMD_Perl_Tiny> for details.
+See L<Muldis::D::Dialect::HDMD_Perl5_Tiny> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.52.0', 'HDMD_Perl_Tiny' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.56.0', 'HDMD_Perl5_Tiny' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -539,8 +539,8 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose-ver(0.62..*)|Moose>, L<Moose::Role-ver(0.62..*)|Moose::Role>,
-L<MooseX::Singleton-ver(0.12..*)|MooseX::Singleton>.
+L<Moose-ver(0.63..*)|Moose>, L<Moose::Role-ver(0.63..*)|Moose::Role>,
+L<MooseX::Singleton-ver(0.13..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-ver(0.13.0..*)|Muldis::Rosetta::Interface>.

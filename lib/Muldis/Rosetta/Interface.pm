@@ -71,7 +71,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Machine; # role
-    use Moose::Role 0.62;
+    use Moose::Role 0.63;
 
     requires 'new_process';
 
@@ -81,7 +81,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Process; # role
-    use Moose::Role 0.62;
+    use Moose::Role 0.63;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -104,7 +104,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Value; # role
-    use Moose::Role 0.62;
+    use Moose::Role 0.63;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -149,37 +149,37 @@ a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.52.0', 'HDMD_Perl_Tiny', {} ] });
+        'http://muldis.com', '0.56.0', 'HDMD_Perl5_Tiny', {} ] });
 
     my $r1 = $process->new_value({
-        'source_code' => [ 'Relation', [ 'x', 'y' ], [
+        'source_code' => [ 'Relation', [ [ 'x', 'y' ], [
             [ [ 'Int', 4 ], [ 'Int', 7 ] ],
             [ [ 'Int', 3 ], [ 'Int', 2 ] ],
-        ] ]
+        ] ] ]
     });
 
     my $r2 = $process->new_value({
-        'source_code' => [ 'Relation', [ 'y', 'z' ], [
+        'source_code' => [ 'Relation', [ [ 'y', 'z' ], [
             [ [ 'Int', 5 ], [ 'Int', 6 ] ],
             [ [ 'Int', 2 ], [ 'Int', 1 ] ],
             [ [ 'Int', 2 ], [ 'Int', 4 ] ],
-        ] ]
+        ] ] ]
     });
 
     my $r3 = $process->func_invo({
-        'function' => 'sys.std.Core.Relation.join',
+        'function' => 'sys.std.Core.QRelation.join',
         'args' => {
-            'topic' => [ 'QuasiSet', [ $r1, $r2 ] ],
+            'topic' => [ 'QSet', [ $r1, $r2 ] ],
         }
     });
 
     my $r3_as_perl = $r3->hd_source_code();
 
     # Then $r3_as_perl contains:
-    # [ 'Relation', [ 'x', 'y', 'z' ], [
+    # [ 'Relation', [ [ 'x', 'y', 'z' ], [
     #     [ [ 'Int', 3 ], [ 'Int', 2 ], [ 'Int', 1 ] ],
     #     [ [ 'Int', 3 ], [ 'Int', 2 ], [ 'Int', 4 ] ],
-    # ] ]
+    # ] ] ]
 
 For most examples of using Muldis Rosetta, and tutorials, please see the
 separate L<Muldis::Rosetta::Cookbook> distribution (when that comes to
@@ -488,7 +488,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose::Role-ver(0.62..*)|Moose::Role>.
+L<Moose::Role-ver(0.63..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

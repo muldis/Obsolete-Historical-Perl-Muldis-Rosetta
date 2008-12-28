@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013000;
     use version 0.74; our $VERSION = qv('0.13.0');
 
     use Test::More;
-    use Test::Moose 0.62;
+    use Test::Moose 0.63;
 
 ###########################################################################
 
@@ -36,7 +36,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.52.0', 'HDMD_Perl_Tiny', {} ] });
+        'http://muldis.com', '0.56.0', 'HDMD_Perl5_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -54,23 +54,23 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # Declare our example literal source data sets.
 
     my $src_suppliers = $process->new_value({
-        'source_code' => [ 'Relation', [ 'farm', 'country' ], [
+        'source_code' => [ 'Relation', [ [ 'farm', 'country' ], [
             [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ] ],
             [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ] ],
             [ [ 'Text', 'Wickets'   ], [ 'Text', 'Canada'  ] ],
-        ] ],
+        ] ] ],
     });
     pass( 'no death from loading example suppliers data into VM' );
     does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Value' );
 
     my $src_foods = $process->new_value({
-        'source_code' => [ 'Relation', [ 'food', 'colour' ], [
+        'source_code' => [ 'Relation', [ [ 'food', 'colour' ], [
             [ [ 'Text', 'Bananas' ], [ 'Text', 'yellow' ] ],
             [ [ 'Text', 'Carrots' ], [ 'Text', 'orange' ] ],
             [ [ 'Text', 'Oranges' ], [ 'Text', 'orange' ] ],
             [ [ 'Text', 'Kiwis'   ], [ 'Text', 'green'  ] ],
             [ [ 'Text', 'Lemons'  ], [ 'Text', 'yellow' ] ],
-        ] ],
+        ] ] ],
     });
     pass( 'no death from loading example foods data into VM' );
     does_ok( $src_foods, 'Muldis::Rosetta::Interface::Value' );
@@ -126,13 +126,13 @@ sub _scenario_foods_suppliers_shipments_v1 {
     does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Value' );
 
     my $matched_suppl = $process->func_invo({
-        'function' => 'sys.std.Core.Relation.semijoin',
+        'function' => 'sys.std.Core.QRelation.semijoin',
         'args' => {
             'source' => $src_suppliers,
             'filter' => $process->func_invo({
-                'function' => 'sys.std.Core.Relation.join',
+                'function' => 'sys.std.Core.QRelation.join',
                 'args' => {
-                    'topic' => [ 'QuasiSet', [
+                    'topic' => [ 'QSet', [
                         $src_shipments,
                         $src_foods,
                         [ 'Relation', [ { 'colour' => $desi_colour } ] ],
@@ -149,10 +149,10 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     # Finally, use the result somehow (not done here).
     # The result should be:
-    # [ 'Relation', [ 'farm', 'country' ], [
+    # [ 'Relation', [ [ 'farm', 'country' ], [
     #     [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ] ],
     #     [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ] ],
-    # ] ],
+    # ] ] ],
 
     print "# debug: orange food suppliers found:\n";
 #    print "# " . $matched_suppl_as_perl->as_perl() . "\n";
@@ -271,7 +271,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Test::Moose-ver(0.62..*)|Test::Moose>.
+L<Test::Moose-ver(0.63..*)|Test::Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-ver(0.13.0..*)|Muldis::Rosetta::Interface>.
