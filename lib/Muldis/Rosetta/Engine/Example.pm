@@ -64,7 +64,7 @@ sub new_process {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use Moose 0.63;
+    use Moose 0.64;
 
     with 'Muldis::Rosetta::Interface::Process';
 
@@ -267,7 +267,7 @@ sub rollback_trans {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use Moose 0.63;
+    use Moose 0.64;
 
     with 'Muldis::Rosetta::Interface::Value';
 
@@ -539,7 +539,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose-ver(0.63..*)|Moose>, L<Moose::Role-ver(0.63..*)|Moose::Role>,
+L<Moose-ver(0.64..*)|Moose>, L<Moose::Role-ver(0.64..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.13..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 classes that are in the current distribution:
