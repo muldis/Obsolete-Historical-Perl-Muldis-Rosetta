@@ -259,7 +259,7 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2008, Darren Duncan.
+Muldis Rosetta is Copyright © 2002-2009, Darren Duncan.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 
