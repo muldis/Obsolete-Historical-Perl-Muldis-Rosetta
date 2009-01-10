@@ -29,6 +29,9 @@ NOTE: THE EXISTING CHANGES SO FAR ARE ONLY WORTHY OF A 0.13.1 VERSION.
     literal node element rather than 2; renamed any 'Relation.\w+' routine
     calls to 'QRelation.\w+' and the 'QuasiSet' type name to 'QSet'.
 
+    * (Interface.pm, Example.pm)  As per the latest Muldis D spec, changed
+    any references on 'boot_call' to 'boot_stmt'.
+
     * (Interface.pm, Validator.pm, Example.pm)  Bugfix in the DEPENDENCIES
     pod sections; replaced any ':ver' with '-ver' in module version labels
     so that the current HTMLizer of search.cpan.org wouldn't mis-parse a

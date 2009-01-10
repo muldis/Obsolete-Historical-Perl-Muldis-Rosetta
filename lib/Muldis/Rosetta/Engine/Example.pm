@@ -162,13 +162,13 @@ sub execute {
 
     # TODO: validate $lang.
 
-    my $boot_call_seq; # Perl array of what each boot_call parses into
+    my $boot_stmt_seq; # Perl array of what each boot_stmt parses into
 
-    # TODO: parse $source_code into $boot_call_seq
+    # TODO: parse $source_code into $boot_stmt_seq
 
 #    if (ref $source_code) {
-#        $boot_call_seq = Muldis::Rosetta::Engine::Example::HostedData
-#                ->boot_call_seq_from_source_code({
+#        $boot_stmt_seq = Muldis::Rosetta::Engine::Example::HostedData
+#                ->boot_stmt_seq_from_source_code({
 #            'assoc_process' => $self->_inner(),
 #            'source_code' => $source_code,
 #            'exp_command_lang' => $self->_hd_command_lang(),
@@ -176,15 +176,15 @@ sub execute {
 #    }
 
 #    else {
-#        $boot_call_seq = Muldis::Rosetta::Engine::Example::PlainText
-#                ->boot_call_seq_from_source_code({
+#        $boot_stmt_seq = Muldis::Rosetta::Engine::Example::PlainText
+#                ->boot_stmt_seq_from_source_code({
 #            'assoc_process' => $self->_inner(),
 #            'source_code' => $source_code,
 #            'exp_command_lang' => $self->_pt_command_lang(),
 #        });
 #    }
 
-    # TODO: execute $boot_call_seq
+    # TODO: execute $boot_stmt_seq
 
     return;
 }
@@ -503,7 +503,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_Tiny> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:'http://muldis.com':'0.56.0':PTMD_Tiny>.  No other version
+C<Muldis_D:'http://muldis.com':'0.57.0':PTMD_Tiny>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -511,7 +511,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_Tiny> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.56.0', 'HDMD_Perl5_Tiny' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.57.0', 'HDMD_Perl5_Tiny' ]>.  No other
 version numbers are currently supported.
 
 =back

@@ -149,7 +149,7 @@ a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.56.0', 'HDMD_Perl5_Tiny', {} ] });
+        'http://muldis.com', '0.57.0', 'HDMD_Perl5_Tiny', {} ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ], [
@@ -404,7 +404,7 @@ auto-committing every successful Muldis D statement.  Each call of
 C<start_trans> will increase the nesting level by one, and each
 C<commit_trans> or C<rollback_trans> will decrease it by one (it can't be
 decreased below zero).  Note that all transactions started or ended within
-Muldis D code (except direct boot_call transaction management) are attached
+Muldis D code (except direct boot_stmt transaction management) are attached
 to a particular lexical scope in the Muldis D code (specifically a
 "try/catch" context), and so they will never have any effect on the nest
 level that Perl sees (assuming that a Muldis D host language will never be
