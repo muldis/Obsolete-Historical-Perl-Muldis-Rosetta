@@ -12,6 +12,7 @@
 
 ==========
 NOTE: THE EXISTING CHANGES SO FAR ARE ONLY WORTHY OF A 0.13.1 VERSION.
+YES, EVEN THE MOOSE-RELATED HACK DIFFERENCES.
 ==========
 
     * Fixed the version number inside the file SeeAlso.pod; it should have
@@ -36,6 +37,21 @@ NOTE: THE EXISTING CHANGES SO FAR ARE ONLY WORTHY OF A 0.13.1 VERSION.
     pod sections; replaced any ':ver' with '-ver' in module version labels
     so that the current HTMLizer of search.cpan.org wouldn't mis-parse a
     'version:ver...' label as a literal url of protocol 'version'.
+
+    * (Example.pm)  Applied some simple hacks in a couple Example classes
+    so that various Moose auto-generated methods can be recognized by
+    Moose::Role as satisfying requires-method declarations in Interface.
+    In the ::Process class, moved the '_inner' attr declaration up above
+    the 'with ::Process' declaration; this allowed the 4 delegated /
+    'handles' auto-gen methods to be recognized; so also deleted the
+    explicit 4 delegate methods [trans_nest_level, start_trans,
+    commit_trans, rollback_trans].  Also in ::Process, renamed the
+    '_assoc_machine' attr to 'assoc_machine', removed its init-arg trait,
+    and removed its explicit reader-accessor method; then added a same-name
+    empty routine declaration above the attr decl, which is the hack to
+    help the auto-gen attr accessor be recognized.  Updated with similar
+    hacks the 'pt_command_lang' attr of ::Process and the 'assoc_process'
+    attr of ::Value.
 
     * (SeeAlso.pod)  Minor updates.
 

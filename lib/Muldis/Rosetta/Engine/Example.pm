@@ -66,27 +66,35 @@ sub new_process {
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
     use Moose 0.64;
 
-    with 'Muldis::Rosetta::Interface::Process';
-
-    has '_assoc_machine' => (
-        is       => 'ro',
-        isa      => 'Muldis::Rosetta::Engine::Example::Public::Machine',
-        init_arg => 'assoc_machine',
-        required => 1,
-    );
-
+    # This is placed above 'with' so that the auto-gen methods that are
+    # delegates to _inner methods will satisfy the role's "requires"; this
+    # ordering shouldn't be necessary, but a workaround could be worse.
     has '_inner' => (
         is      => 'rw',
         isa     => 'Muldis::Rosetta::Engine::Example::Runtime::Process',
-# Disabled since Moose::Role's "requires" doesn't recog auto-gen methods.
-#        handles => [qw(
-#            trans_nest_level start_trans commit_trans rollback_trans
-#        )],
+        handles => [qw(
+            trans_nest_level start_trans commit_trans rollback_trans
+        )],
     );
 
+    with 'Muldis::Rosetta::Interface::Process';
+
+    # Needed 'sub' hack since Moose::Role's "requires" doesn't recognize
+    # auto-gen accessor methods.  TODO: remove after Moose is improved.
+    sub assoc_machine;
+    has 'assoc_machine' => (
+        is       => 'ro',
+        isa      => 'Muldis::Rosetta::Engine::Example::Public::Machine',
+        required => 1,
+    );
+
+    # Needed 'sub' hack since Moose::Role's "requires" doesn't recognize
+    # auto-gen accessor methods.  TODO: remove after Moose is improved.
+    sub pt_command_lang;
     has '_pt_command_lang' => (
-        is  => 'rw',
-        isa => 'Maybe[Str]',
+        is     => 'rw',
+        isa    => 'Maybe[Str]',
+        reader => 'pt_command_lang',
     );
     has '_hd_command_lang' => (
         is  => 'rw',
@@ -116,20 +124,6 @@ sub BUILD {
 
 ###########################################################################
 
-# Needed since Moose::Role's "requires" doesn't recognize auto-gen methods.
-
-sub assoc_machine {
-    my ($self) = @_;
-    return $self->_assoc_machine();
-}
-
-###########################################################################
-
-sub pt_command_lang {
-    my ($self) = @_;
-    return $self->_pt_command_lang();
-}
-
 sub update_pt_command_lang {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
@@ -140,13 +134,15 @@ sub update_pt_command_lang {
 
 sub hd_command_lang {
     my ($self) = @_;
+    # TODO: actually, the following line needs to clone
+    # this Maybe[ArrayRef] so caller doesn't get copy of our internals.
     return $self->_hd_command_lang();
 }
 
 sub update_hd_command_lang {
     my ($self, $args) = @_;
     my ($lang) = @{$args}{'lang'};
-    # TODO: validate $lang.
+    # TODO: validate and clone $lang.
     $self->_hd_command_lang( $lang );
     return;
 }
@@ -233,33 +229,6 @@ sub proc_invo {
 
 ###########################################################################
 
-# Needed since Moose::Role's "requires" doesn't recognize auto-gen methods.
-
-sub trans_nest_level {
-    my ($self) = @_;
-    return $self->_inner()->trans_nest_level();
-}
-
-sub start_trans {
-    my ($self) = @_;
-    $self->_inner()->start_trans();
-    return;
-}
-
-sub commit_trans {
-    my ($self) = @_;
-    $self->_inner()->commit_trans();
-    return;
-}
-
-sub rollback_trans {
-    my ($self) = @_;
-    $self->_inner()->rollback_trans();
-    return;
-}
-
-###########################################################################
-
     __PACKAGE__->meta()->make_immutable();
 } # class Muldis::Rosetta::Engine::Example::Public::Process
 
@@ -271,10 +240,12 @@ sub rollback_trans {
 
     with 'Muldis::Rosetta::Interface::Value';
 
-    has '_assoc_process' => (
+    # Needed 'sub' hack since Moose::Role's "requires" doesn't recognize
+    # auto-gen accessor methods.  TODO: remove after Moose is improved.
+    sub assoc_process;
+    has 'assoc_process' => (
         is       => 'ro',
         isa      => 'Muldis::Rosetta::Engine::Example::Public::Process',
-        init_arg => 'assoc_process',
         required => 1,
     );
 
@@ -294,7 +265,7 @@ sub BUILD {
 
     # TODO: validate $lang.
 
-    my $assoc_process = $self->_assoc_process();
+    my $assoc_process = $self->assoc_process();
 
     if (ref $source_code) {
 #        $self->_inner( Muldis::Rosetta::Engine::Example::HostedData
@@ -315,15 +286,6 @@ sub BUILD {
     }
 
     return;
-}
-
-###########################################################################
-
-# Needed since Moose::Role's "requires" doesn't recognize auto-gen methods.
-
-sub assoc_process {
-    my ($self) = @_;
-    return $self->_assoc_process();
 }
 
 ###########################################################################
