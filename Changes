@@ -57,6 +57,9 @@ YES, EVEN THE MOOSE-RELATED HACK DIFFERENCES.
 
     * Incremented all copyright year range-ends to 2009.
 
+    * (README, Rosetta.pm, SeeAlso.pod)  Added mentions of Set::Relation in
+    SUPPORT/FORUMS/"DBMS-RELATED PERL MODULES".
+
 2008-11-08   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.0 for Perl 5 is released on CPAN as
