@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.013000;
+use Muldis::Rosetta::Interface 0.013001;
 
 #use Muldis::Rosetta::Engine::Example::Value 0.000000;
 #use Muldis::Rosetta::Engine::Example::Routines 0.000000;
@@ -17,7 +17,7 @@ use Muldis::Rosetta::Interface 0.013000;
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    use version 0.74; our $VERSION = qv('0.13.0');
+    use version 0.74; our $VERSION = qv('0.13.1');
     # Note: This given version applies to all of this file's packages.
 
 ###########################################################################
@@ -334,7 +334,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.13.0 for
+This document describes Muldis::Rosetta::Engine::Example version 0.13.1 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -501,7 +501,7 @@ L<Moose-ver(0.65..*)|Moose>, L<Moose::Role-ver(0.65..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.14..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-ver(0.13.0..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.13.1..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

@@ -3,13 +3,13 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.013000;
+use Muldis::Rosetta::Interface 0.013001;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    use version 0.74; our $VERSION = qv('0.13.0');
+    use version 0.74; our $VERSION = qv('0.13.1');
 
     use Test::More;
     use Test::Moose 0.65;
@@ -182,7 +182,7 @@ A common comprehensive test suite to run against all Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Validator version 0.13.0 for Perl
+This document describes Muldis::Rosetta::Validator version 0.13.1 for Perl
 5.
 
 =head1 SYNOPSIS
@@ -274,7 +274,7 @@ It also requires these Perl 5 packages that are on CPAN:
 L<Test::Moose-ver(0.65..*)|Test::Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
-L<Muldis::Rosetta::Interface-ver(0.13.0..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.13.1..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
