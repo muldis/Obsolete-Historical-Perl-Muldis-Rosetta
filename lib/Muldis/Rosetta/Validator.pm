@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013000;
     use version 0.74; our $VERSION = qv('0.13.0');
 
     use Test::More;
-    use Test::Moose 0.64;
+    use Test::Moose 0.65;
 
 ###########################################################################
 
@@ -36,7 +36,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.57.0', 'HDMD_Perl5_Tiny', {} ] });
+        'http://muldis.com', '0.58.0', 'HDMD_Perl5_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -271,7 +271,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Test::Moose-ver(0.64..*)|Test::Moose>.
+L<Test::Moose-ver(0.65..*)|Test::Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-ver(0.13.0..*)|Muldis::Rosetta::Interface>.
