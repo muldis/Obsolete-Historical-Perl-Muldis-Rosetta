@@ -140,8 +140,8 @@ Muldis::Rosetta::Interface::Value ("Value").
 =head1 SYNOPSIS
 
 This simple example declares two Perl variables containing relation data,
-then does a (N-ary) relational join (natural inner join) on them, producing
-a third Perl variable holding the relation data of the result.
+then does a (N-adic) relational join (natural inner join) on them,
+producing a third Perl variable holding the relation data of the result.
 
     use Muldis::Rosetta::Interface;
 
