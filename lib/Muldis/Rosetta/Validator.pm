@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013001;
     use version 0.74; our $VERSION = qv('0.13.1');
 
     use Test::More;
-    use Test::Moose 0.65;
+    use Test::Moose 0.68;
 
 ###########################################################################
 
@@ -271,7 +271,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Test::Moose-ver(0.65..*)|Test::Moose>.
+L<Test::Moose-ver(0.68..*)|Test::Moose>.
 
 It also requires these Perl 5 classes that are in the current distribution:
 L<Muldis::Rosetta::Interface-ver(0.13.1..*)|Muldis::Rosetta::Interface>.
@@ -298,7 +298,7 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Darren Duncan.
+Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

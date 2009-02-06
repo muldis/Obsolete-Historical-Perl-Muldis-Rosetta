@@ -71,7 +71,8 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Machine; # role
-    use Moose::Role 0.65;
+
+    use Moose::Role 0.68;
 
     requires 'new_process';
 
@@ -81,7 +82,8 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Process; # role
-    use Moose::Role 0.65;
+
+    use Moose::Role 0.68;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -104,7 +106,8 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Value; # role
-    use Moose::Role 0.65;
+
+    use Moose::Role 0.68;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -488,7 +491,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose::Role-ver(0.65..*)|Moose::Role>.
+L<Moose::Role-ver(0.68..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 
@@ -519,7 +522,7 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Darren Duncan.
+Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

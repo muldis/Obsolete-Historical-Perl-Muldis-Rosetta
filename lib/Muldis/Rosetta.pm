@@ -259,8 +259,9 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Darren Duncan.  All rights
-reserved.
+Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
+
+L<http://www.muldis.com/>
 
 Muldis Rosetta is free software; you can redistribute it and/or modify it
 under the terms of the GNU Lesser General Public License (LGPL) as
@@ -293,10 +294,10 @@ practical way of suggesting improvements to the standard version.
 =head1 TRADEMARK POLICY
 
 MULDIS and MULDIS MULTIVERSE OF DISCOURSE are trademarks of Muldis Data
-Systems Inc. (L<http://www.muldis.com/>), which is wholly owned by Darren
-Duncan.  The trademarks apply to computer database software and related
-services.  See L<http://www.muldis.com/trademark_policy.html> for the full
-written details of Muldis Data Systems' trademark policy.
+Systems, Inc. (L<http://www.muldis.com/>).  The trademarks apply to
+computer database software and related services.  See
+L<http://www.muldis.com/trademark_policy.html> for the full written details
+of Muldis Data Systems' trademark policy.
 
 The word MULDIS is intended to be used as the distinguishing brand name for
 all the products and services of Muldis Data Systems.  So we would greatly

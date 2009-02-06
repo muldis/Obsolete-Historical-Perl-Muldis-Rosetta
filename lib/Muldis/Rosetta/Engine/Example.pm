@@ -34,6 +34,7 @@ sub new_machine {
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Machine; # class
+
     use MooseX::Singleton 0.14;
 
     with 'Muldis::Rosetta::Interface::Machine';
@@ -58,13 +59,15 @@ sub new_process {
 ###########################################################################
 
     __PACKAGE__->meta()->make_immutable();
+
 } # class Muldis::Rosetta::Engine::Example::Public::Machine
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
-    use Moose 0.65;
+
+    use Moose 0.68;
 
     has 'assoc_machine' => (
         is       => 'ro',
@@ -225,13 +228,15 @@ sub proc_invo {
 ###########################################################################
 
     __PACKAGE__->meta()->make_immutable();
+
 } # class Muldis::Rosetta::Engine::Example::Public::Process
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
-    use Moose 0.65;
+
+    use Moose 0.68;
 
     has 'assoc_process' => (
         is       => 'ro',
@@ -315,6 +320,7 @@ sub hd_source_code {
 ###########################################################################
 
     __PACKAGE__->meta()->make_immutable();
+
 } # class Muldis::Rosetta::Engine::Example::Public::Value
 
 ###########################################################################
@@ -497,7 +503,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<Moose-ver(0.65..*)|Moose>, L<Moose::Role-ver(0.65..*)|Moose::Role>,
+L<Moose-ver(0.68..*)|Moose>, L<Moose::Role-ver(0.68..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.14..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 classes that are in the current distribution:
@@ -547,7 +553,7 @@ Darren Duncan (C<perl@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Darren Duncan.
+Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 
