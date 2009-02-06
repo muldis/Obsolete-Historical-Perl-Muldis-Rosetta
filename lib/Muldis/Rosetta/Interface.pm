@@ -13,6 +13,8 @@ use warnings FATAL => 'all';
     use Carp;
     use Scalar::Util 'blessed';
 
+    use namespace::clean;
+
 ###########################################################################
 
 sub new_machine {
@@ -74,6 +76,8 @@ sub new_machine {
 
     use Moose::Role 0.68;
 
+    use namespace::clean -except => 'meta';
+
     requires 'new_process';
 
 } # role Muldis::Rosetta::Interface::Machine
@@ -84,6 +88,8 @@ sub new_machine {
 { package Muldis::Rosetta::Interface::Process; # role
 
     use Moose::Role 0.68;
+
+    use namespace::clean -except => 'meta';
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -108,6 +114,8 @@ sub new_machine {
 { package Muldis::Rosetta::Interface::Value; # role
 
     use Moose::Role 0.68;
+
+    use namespace::clean -except => 'meta';
 
     requires 'assoc_process';
     requires 'pt_source_code';

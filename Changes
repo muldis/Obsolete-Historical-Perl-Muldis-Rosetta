@@ -12,6 +12,19 @@
 
     * Updated external dependencies: Moose/etc to version 0.68.
 
+    * As of this release, Muldis Rosetta for Perl 5 uses the
+    namespace::clean pragma for good hygiene; this distribution has now
+    gained an external dependency on the Perl 5 module 'namespace::clean',
+    which is not bundled with any version of Perl and will need to be
+    installed from CPAN; namespace::clean also has a few not-bundled
+    dependencies of its own.
+
+    * (Interface.pm, Validator.pm, Example.pm)  Added "use
+    namespace::clean" statements inside each package declaration following
+    any other "use" statements, so their exports into our packages don't
+    also become part of our own public API as a side-effect; the only
+    exception is the "meta" method that Moose adds, which is kept.
+
     * (Interface.pm, SeeAlso.pod)  Minor POD updates.
 
     * Updated all files with a "LICENSE AND COPYRIGHT" documentation

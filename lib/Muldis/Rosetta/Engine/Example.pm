@@ -20,6 +20,8 @@ use Muldis::Rosetta::Interface 0.013001;
     use version 0.74; our $VERSION = qv('0.13.1');
     # Note: This given version applies to all of this file's packages.
 
+    use namespace::clean;
+
 ###########################################################################
 
 sub new_machine {
@@ -36,6 +38,8 @@ sub new_machine {
 { package Muldis::Rosetta::Engine::Example::Public::Machine; # class
 
     use MooseX::Singleton 0.14;
+
+    use namespace::clean -except => 'meta';
 
     with 'Muldis::Rosetta::Interface::Machine';
 
@@ -68,6 +72,8 @@ sub new_process {
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
 
     use Moose 0.68;
+
+    use namespace::clean -except => 'meta';
 
     has 'assoc_machine' => (
         is       => 'ro',
@@ -237,6 +243,8 @@ sub proc_invo {
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
 
     use Moose 0.68;
+
+    use namespace::clean -except => 'meta';
 
     has 'assoc_process' => (
         is       => 'ro',

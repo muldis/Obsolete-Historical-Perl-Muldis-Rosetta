@@ -14,6 +14,8 @@ use Muldis::Rosetta::Interface 0.013001;
     use Test::More;
     use Test::Moose 0.68;
 
+    use namespace::clean;
+
 ###########################################################################
 
 sub main {
