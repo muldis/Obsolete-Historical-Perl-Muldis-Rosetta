@@ -499,6 +499,7 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
+L<namespace::clean-ver(0.09..*)|namespace::clean>,
 L<Moose::Role-ver(0.68..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
