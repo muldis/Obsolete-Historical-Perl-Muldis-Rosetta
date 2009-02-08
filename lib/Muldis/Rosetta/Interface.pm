@@ -160,7 +160,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.58.0', 'HDMD_Perl5_Tiny', {} ] });
+        'http://muldis.com', '0.59.1', 'HDMD_Perl5_Tiny', {} ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ], [
@@ -229,16 +229,16 @@ throw an exception; most often this is due to invalid input.  If an invoked
 routine simply returns, you can assume that it has succeeded, even if the
 return value is undefined.
 
-=head2 The Muldis::Rosetta::Interface Module
+=head1 The Muldis::Rosetta::Interface Module
 
 The C<Muldis::Rosetta::Interface> module is the stateless root package by
 way of which you access the whole Muldis Rosetta API.  That is, you use it
 to load engines and instantiate virtual machines, which provide the rest of
 the Muldis Rosetta API.
 
-=over
+=head2 new_machine
 
-=item C<new_machine of Muldis::Rosetta::Interface::Machine (Str
+C<method new_machine of Muldis::Rosetta::Interface::Machine (Str
 :$engine_name!)>
 
 This constructor function selects (first creating if necessary) and returns
@@ -253,9 +253,7 @@ by testing if the root package is already loaded (it may be declared by
 some already-loaded file of another name), and only if not, will it do a
 Perl 'require' of the C<$engine_name>.
 
-=back
-
-=head2 The Muldis::Rosetta::Interface::Machine Role
+=head1 The Muldis::Rosetta::Interface::Machine Role
 
 A C<Machine> object represents a single active Muldis Rosetta virtual
 machine / Muldis D environment, which is the widest scope stateful context
@@ -271,18 +269,16 @@ object is ever garbage collected by Perl while it has any active
 transactions, then those will all be rolled back, and then an exception
 thrown.
 
-=over
+=head2 new_process
 
-=item C<new_process of Muldis::Rosetta::Interface::Process (Hash
+C<sub new_process of Muldis::Rosetta::Interface::Process ($self: Hash
 :$process_config?)>
 
 This method creates and returns a new C<Process> object that is associated
 with the invocant C<Machine>; that C<Process> object is initialized using
 the C<$process_config> argument.
 
-=back
-
-=head2 The Muldis::Rosetta::Interface::Process Role
+=head1 The Muldis::Rosetta::Interface::Process Role
 
 A C<Process> object represents a single Muldis Rosetta in-DBMS process,
 which has its own autonomous transactional context, and for the most part,
@@ -299,28 +295,34 @@ interpreted according to the expected plain-text|Perl-hosted-data language;
 if both the attribute is defined and the command has its own language
 declaration, then the one with the command will override the attribute.
 
-=over
+=head2 assoc_machine
 
-=item C<assoc_machine of Muldis::Rosetta::Interface::Machine ()>
+C<method assoc_machine of Muldis::Rosetta::Interface::Machine ($self:)>
 
 This method returns the C<Machine> object that the invocant C<Process> is
 associated with.
 
-=item C<pt_command_lang of Str ()>
+=head2 pt_command_lang
+
+C<method pt_command_lang of Str ($self:)>
 
 This method returns the fully qualified name of its invocant C<Process>
 object's "expected plain-text command language" attribute, which might be
 undefined; if it is defined, then is a Perl Str that names a Plain Text
 language; these may be Muldis D dialects or some other language.
 
-=item C<update_pt_command_lang (Str :$lang!)>
+=head2 update_pt_command_lang
+
+C<method update_pt_command_lang ($self: Str :$lang!)>
 
 This method assigns a new (possibly undefined) value to its invocant
 C<Process> object's "expected plain-text command language" attribute.  This
 method dies if the specified language is defined and its value isn't one
 that the invocant's Engine knows how to or desires to handle.
 
-=item C<hd_command_lang of Array ()>
+=head2 hd_command_lang
+
+C<method hd_command_lang of Array ($self:)>
 
 This method returns the fully qualified name of its invocant C<Process>
 object's "expected Perl-hosted-data command language" attribute, which
@@ -328,14 +330,18 @@ might be undefined; if it is defined, then is a Perl (ordered) Array that
 names a Perl Hosted Data language; these may be Muldis D dialects or some
 other language.
 
-=item C<update_hd_command_lang (Array :$lang!)>
+=head2 update_hd_command_lang
+
+C<method update_hd_command_lang ($self: Array :$lang!)>
 
 This method assigns a new (possibly undefined) value to its invocant
 C<Process> object's "expected Perl-hosted-data command language" attribute.
 This method dies if the specified language is defined and its value isn't
 one that the invocant's Engine knows how to or desires to handle.
 
-=item C<execute (Any :$source_code!, Any :$lang?)>
+=head2 execute
+
+C<method execute ($self: Any :$source_code!, Any :$lang?)>
 
 This method compiles and executes the (typically Muldis D) source code
 given in its C<$source_code> argument.  If C<$source_code> is a Perl Str
@@ -346,7 +352,9 @@ if the source code fails to compile for some reason, or if the executing
 code has a runtime exception.  If C<$lang> is defined, it must match
 C<$source_code> in Str vs Array|obj categorization.
 
-=item C<new_value of Muldis::Rosetta::Interface::Value (Any
+=head2 new_value
+
+C<method new_value of Muldis::Rosetta::Interface::Value ($self: Any
 :$source_code!, Any :$lang?)>
 
 This method creates and returns a new C<Value> object that is associated
@@ -367,8 +375,10 @@ argument, or by ensuring that the invocant C<Process> object has a defined
 C<$lang> is defined, it must match C<$source_code> in Str vs Array|obj
 categorization.
 
-=item C<func_invo of Muldis::Rosetta::Interface::Value (Str :$function!,
-Hash :$args?, Str :$pt_lang?, Array :$hd_lang?)>
+=head2 func_invo
+
+C<method func_invo of Muldis::Rosetta::Interface::Value ($self: Str
+:$function!, Hash :$args?, Str :$pt_lang?, Array :$hd_lang?)>
 
 This method invokes the Muldis D function named by its C<$function>
 argument, giving it arguments from C<$args>, and then returning the result
@@ -380,8 +390,10 @@ C<$source_code> constructor argument for a new C<Value> object; if
 C<$pt_lang> or C<$hd_lang> are defined, the appropriate one will be given
 as the C<$lang> constructor argument.
 
-=item C<upd_invo (Str :$updater!, Hash :$upd_args!, Hash :$ro_args?, Str
-:$pt_lang?, Array :$hd_lang?)>
+=head2 upd_invo
+
+C<method upd_invo ($self: Str :$updater!, Hash :$upd_args!, Hash
+:$ro_args?, Str :$pt_lang?, Array :$hd_lang?)>
 
 This method invokes the Muldis D updater named by its C<$updater> argument,
 giving it subject-to-update arguments from C<$upd_args> and read-only
@@ -395,8 +407,10 @@ subject-to-update parameter; said Perl variable is then what holds a
 C<Value> object et al prior to the updater's execution, and that may have
 been updated to hold a different C<Value> object as a side-effect.
 
-=item C<proc_invo (Str :$procedure!, Hash :$upd_args?, Hash :$ro_args?, Str
-:$pt_lang?, Array :$hd_lang?)>
+=head2 proc_invo
+
+C<method proc_invo ($self: Str :$procedure!, Hash :$upd_args?, Hash
+:$ro_args?, Str :$pt_lang?, Array :$hd_lang?)>
 
 This method invokes the Muldis D procedure (or system_service) named by its
 C<$procedure> argument, giving it subject-to-update arguments from
@@ -406,7 +420,9 @@ side-effect of the procedure's execution.  The parameters of C<proc_invo>
 are as per those of the C<upd_invo> method, save that only C<upd_invo>
 makes C<$upd_args> mandatory, while C<proc_invo> makes it optional.
 
-=item C<trans_nest_level of Int ()>
+=head2 trans_nest_level
+
+C<method trans_nest_level of Int ($self:)>
 
 This method returns the current transaction nesting level of its invocant's
 virtual machine process.  If no explicit transactions were started, then
@@ -422,24 +438,28 @@ level that Perl sees (assuming that a Muldis D host language will never be
 invoked by Muldis D), regardless of whether the Muldis D code successfully
 returns or throws an exception.
 
-=item C<start_trans ()>
+=head2 start_trans
+
+C<method start_trans ($self:)>
 
 This method starts a new child-most transaction within the invocant's
 virtual machine process.
 
-=item C<commit_trans ()>
+=head2 commit_trans
+
+C<method commit_trans ($self:)>
 
 This method commits the child-most transaction within the invocant's
 virtual machine process; it dies if there isn't one.
 
-=item C<rollback_trans ()>
+=head2 rollback_trans
+
+C<method rollback_trans ($self:)>
 
 This method rolls back the child-most transaction within the invocant's
 virtual machine process; it dies if there isn't one.
 
-=back
-
-=head2 The Muldis::Rosetta::Interface::Value Role
+=head1 The Muldis::Rosetta::Interface::Value Role
 
 A C<Value> object represents a single Muldis Rosetta in-DBMS value, which
 is conceptually immutable, eternal, and not fixed in time or space; the
@@ -452,14 +472,16 @@ Muldis Rosetta DBMS and main Perl environments.  The value that a C<Value>
 object represents is set when the C<Value> object is created, and it can't
 be changed afterwards.
 
-=over
+=head2 assoc_process
 
-=item C<assoc_process of Muldis::Rosetta::Interface::Process ()>
+C<method assoc_process of Muldis::Rosetta::Interface::Process ($self:)>
 
 This method returns the C<Process> object that the invocant C<Value> is
 associated with.
 
-=item C<pt_source_code of Str (Str :$lang?)>
+=head2 pt_source_code
+
+C<method pt_source_code of Str ($self: Str :$lang?)>
 
 This method returns (typically Muldis D) plain-text source code that
 defines a value literal equivalent to the in-DBMS value that the invocant
@@ -468,7 +490,9 @@ must be explicitly specified, either by giving a defined C<$lang> argument,
 or by ensuring that the C<Process> object associated with this C<Value> has
 a defined "expected plain-text command language" attribute.
 
-=item C<hd_source_code of Any (Array :$lang?)>
+=head2 hd_source_code
+
+C<method hd_source_code of Any ($self: Array :$lang?)>
 
 This method returns (typically Muldis D) Perl-hosted-data source code that
 defines a value literal equivalent to the in-DBMS value that the invocant
@@ -477,8 +501,6 @@ return must be explicitly specified, either by giving a defined C<$lang>
 argument, or by ensuring that the C<Process> object associated with this
 C<Value> has a defined "expected Perl-hosted-data command language"
 attribute.
-
-=back
 
 =head1 DIAGNOSTICS
 

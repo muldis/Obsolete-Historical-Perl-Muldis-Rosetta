@@ -3,8 +3,8 @@
 
 2009-02-xx   Darren Duncan <perl@DarrenDuncan.net>
 
-    * Muldis Rosetta version 0.14.0 for Perl 5 is released on CPAN as
-    Muldis-Rosetta-0.14.0.tar.gz.  Muldis Rosetta version 0.14.0 for Perl 6
+    * Muldis Rosetta version 0.13.2 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.13.2.tar.gz.  Muldis Rosetta version 0.13.2 for Perl 6
     is not released at all.  The rest of this Changes entry refers only to
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
@@ -24,6 +24,21 @@
     any other "use" statements, so their exports into our packages don't
     also become part of our own public API as a side-effect; the only
     exception is the "meta" method that Moose adds, which is kept.
+
+    * (Interface.pm)  Some POD reformatting:  Took what used to be the 4
+    level-2 headings under the INTERFACE level-1 heading and changed said 4
+    into level-1 headings, but did not uppercase their text.  Then
+    converted the routine lists from being "=over/=item <routine>/=back" to
+    each routine having its own level-2 heading.  For each routine, the new
+    heading is just the short name of the routine, and the full signature
+    of the routine displays just as its own paragraph.  All these changes
+    combined should look visually like we are faking 3 levels of headings,
+    with top and middle being upcased and mixed case "=head1" respectively.
+
+    * (Interface.pm)  Updated all the routine signatures in the POD to
+    prefix each with the word "method" (or in one case, "sub"), and also to
+    explicitly name the invocant of all methods as "$self:" (or in the
+    sub's case there isn't one).
 
     * (Interface.pm, SeeAlso.pod)  Minor POD updates.
 
