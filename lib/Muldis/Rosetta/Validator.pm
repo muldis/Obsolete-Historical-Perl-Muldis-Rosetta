@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.013001;
+use Muldis::Rosetta::Interface 0.013002;
 
 ###########################################################################
 ###########################################################################
@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013001;
     use version 0.74; our $VERSION = qv('0.13.2');
 
     use Test::More;
-    use Test::Moose 0.68;
+    use Test::Moose 0.70;
 
     use namespace::clean;
 
@@ -274,9 +274,10 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.09..*)|namespace::clean>,
-L<Test::Moose-ver(0.68..*)|Test::Moose>.
+L<Test::Moose-ver(0.70..*)|Test::Moose>.
 
-It also requires these Perl 5 classes that are in the current distribution:
+It also requires these Perl 5 packages that are in the current
+distribution:
 L<Muldis::Rosetta::Interface-ver(0.13.2..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES

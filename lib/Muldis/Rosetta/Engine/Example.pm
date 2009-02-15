@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.013001;
+use Muldis::Rosetta::Interface 0.013002;
 
 #use Muldis::Rosetta::Engine::Example::Value 0.000000;
 #use Muldis::Rosetta::Engine::Example::Routines 0.000000;
@@ -71,7 +71,7 @@ sub new_process {
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
 
-    use Moose 0.68;
+    use Moose 0.70;
 
     use namespace::clean -except => 'meta';
 
@@ -242,7 +242,7 @@ sub proc_invo {
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
 
-    use Moose 0.68;
+    use Moose 0.70;
 
     use namespace::clean -except => 'meta';
 
@@ -512,10 +512,11 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.09..*)|namespace::clean>,
-L<Moose-ver(0.68..*)|Moose>, L<Moose::Role-ver(0.68..*)|Moose::Role>,
+L<Moose-ver(0.70..*)|Moose>, L<Moose::Role-ver(0.70..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.14..*)|MooseX::Singleton>.
 
-It also requires these Perl 5 classes that are in the current distribution:
+It also requires these Perl 5 packages that are in the current
+distribution:
 L<Muldis::Rosetta::Interface-ver(0.13.2..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
