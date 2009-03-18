@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2009-02-xx   Darren Duncan <perl@DarrenDuncan.net>
+2009-03-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.x.x for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.x.x.tar.gz.  Muldis Rosetta version 0.x.x for Perl 6
@@ -10,8 +10,15 @@
     version incorporates all of said updates, though it may have some of
     them.
 
-    * Updated external dependencies: Moose/etc to version 0.70, Class::MOP
-    to version 0.77.
+    * Updated external dependencies: Moose/etc to version 0.72, Class::MOP
+    to version 0.78.
+
+    * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
+    in accordance with the latest Muldis D spec (v0.62.0): simplified all
+    the 'Int' and 'Text' value literals (GCVL / PHMD nodes) to each be
+    plain Perl scalars rather than 2-element Perl arrays, except one
+    because it is a direct 'source_code' argument, so the code is
+    considerably less verbose now.
 
 2009-02-09   Darren Duncan <perl@DarrenDuncan.net>
 

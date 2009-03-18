@@ -16,11 +16,11 @@ WriteMakefile(
         'version' => 0.74,
         # These are not bundled with any version of Perl.
         'namespace::clean' => 0.09,
-        'Moose' => 0.70,
-        'Moose::Role' => 0.70,
+        'Moose' => 0.72,
+        'Moose::Role' => 0.72,
         'MooseX::Singleton' => 0.14,
-        'Test::Moose' => 0.70,
-        'Class::MOP' => 0.77, # req latest indep of Moose
+        'Test::Moose' => 0.72,
+        'Class::MOP' => 0.78, # req latest indep of Moose
     },
 );
 

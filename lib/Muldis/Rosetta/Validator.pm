@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013002;
     use version 0.74; our $VERSION = qv('0.13.2');
 
     use Test::More;
-    use Test::Moose 0.70;
+    use Test::Moose 0.72;
 
     use namespace::clean;
 
@@ -38,7 +38,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.59.1', 'HDMD_Perl5_Tiny', {} ] });
+        'http://muldis.com', '0.62.0', 'HDMD_Perl5_Tiny', {} ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -57,9 +57,9 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     my $src_suppliers = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'farm', 'country' ], [
-            [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ] ],
-            [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ] ],
-            [ [ 'Text', 'Wickets'   ], [ 'Text', 'Canada'  ] ],
+            [ 'Hodgesons', 'Canada'  ],
+            [ 'Beckers'  , 'England' ],
+            [ 'Wickets'  , 'Canada'  ],
         ] ] ],
     });
     pass( 'no death from loading example suppliers data into VM' );
@@ -67,54 +67,26 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     my $src_foods = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'food', 'colour' ], [
-            [ [ 'Text', 'Bananas' ], [ 'Text', 'yellow' ] ],
-            [ [ 'Text', 'Carrots' ], [ 'Text', 'orange' ] ],
-            [ [ 'Text', 'Oranges' ], [ 'Text', 'orange' ] ],
-            [ [ 'Text', 'Kiwis'   ], [ 'Text', 'green'  ] ],
-            [ [ 'Text', 'Lemons'  ], [ 'Text', 'yellow' ] ],
+            [ 'Bananas', 'yellow' ],
+            [ 'Carrots', 'orange' ],
+            [ 'Oranges', 'orange' ],
+            [ 'Kiwis'  , 'green'  ],
+            [ 'Lemons' , 'yellow' ],
         ] ] ],
     });
     pass( 'no death from loading example foods data into VM' );
     does_ok( $src_foods, 'Muldis::Rosetta::Interface::Value' );
 
     my $src_shipments = $process->new_value({
-        'source_code' => [ 'Relation', [
-            {
-                'farm' => [ 'Text', 'Hodgesons' ],
-                'food' => [ 'Text', 'Kiwis' ],
-                'qty'  => [ 'Int', 100 ],
-            },
-            {
-                'farm' => [ 'Text', 'Hodgesons' ],
-                'food' => [ 'Text', 'Lemons' ],
-                'qty'  => [ 'Int', 130 ],
-            },
-            {
-                'farm' => [ 'Text', 'Hodgesons' ],
-                'food' => [ 'Text', 'Oranges' ],
-                'qty'  => [ 'Int', 10 ],
-            },
-            {
-                'farm' => [ 'Text', 'Hodgesons' ],
-                'food' => [ 'Text', 'Carrots' ],
-                'qty'  => [ 'Int', 50 ],
-            },
-            {
-                'farm' => [ 'Text', 'Beckers' ],
-                'food' => [ 'Text', 'Carrots' ],
-                'qty'  => [ 'Int', 90 ],
-            },
-            {
-                'farm' => [ 'Text', 'Beckers' ],
-                'food' => [ 'Text', 'Bananas' ],
-                'qty'  => [ 'Int', 120 ],
-            },
-            {
-                'farm' => [ 'Text', 'Wickets' ],
-                'food' => [ 'Text', 'Lemons' ],
-                'qty'  => [ 'Int', 30 ],
-            },
-        ] ],
+        'source_code' => [ 'Relation', [ [ 'farm', 'food', 'qty' ], [
+            [ 'Hodgesons', 'Kiwis'  , 100 ],
+            [ 'Hodgesons', 'Lemons' , 130 ],
+            [ 'Hodgesons', 'Oranges',  10 ],
+            [ 'Hodgesons', 'Carrots',  50 ],
+            [ 'Beckers'  , 'Carrots',  90 ],
+            [ 'Beckers'  , 'Bananas', 120 ],
+            [ 'Wickets'  , 'Lemons' ,  30 ],
+        ] ] ],
     });
     pass( 'no death from loading example shipments data into VM' );
     does_ok( $src_shipments, 'Muldis::Rosetta::Interface::Value' );
@@ -152,8 +124,8 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # Finally, use the result somehow (not done here).
     # The result should be:
     # [ 'Relation', [ [ 'farm', 'country' ], [
-    #     [ [ 'Text', 'Hodgesons' ], [ 'Text', 'Canada'  ] ],
-    #     [ [ 'Text', 'Beckers'   ], [ 'Text', 'England' ] ],
+    #     [ 'Hodgesons', 'Canada'  ],
+    #     [ 'Beckers'  , 'England' ],
     # ] ] ],
 
     print "# debug: orange food suppliers found:\n";
@@ -274,7 +246,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.09..*)|namespace::clean>,
-L<Test::Moose-ver(0.70..*)|Test::Moose>.
+L<Test::Moose-ver(0.72..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

@@ -74,7 +74,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Machine; # role
 
-    use Moose::Role 0.70;
+    use Moose::Role 0.72;
 
     use namespace::clean -except => 'meta';
 
@@ -87,7 +87,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Process; # role
 
-    use Moose::Role 0.70;
+    use Moose::Role 0.72;
 
     use namespace::clean -except => 'meta';
 
@@ -113,7 +113,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Value; # role
 
-    use Moose::Role 0.70;
+    use Moose::Role 0.72;
 
     use namespace::clean -except => 'meta';
 
@@ -160,20 +160,20 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.59.1', 'HDMD_Perl5_Tiny', {} ] });
+        'http://muldis.com', '0.62.0', 'HDMD_Perl5_Tiny', {} ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ], [
-            [ [ 'Int', 4 ], [ 'Int', 7 ] ],
-            [ [ 'Int', 3 ], [ 'Int', 2 ] ],
+            [ 4, 7 ],
+            [ 3, 2 ],
         ] ] ]
     });
 
     my $r2 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'y', 'z' ], [
-            [ [ 'Int', 5 ], [ 'Int', 6 ] ],
-            [ [ 'Int', 2 ], [ 'Int', 1 ] ],
-            [ [ 'Int', 2 ], [ 'Int', 4 ] ],
+            [ 5, 6 ],
+            [ 2, 1 ],
+            [ 2, 4 ],
         ] ] ]
     });
 
@@ -188,8 +188,8 @@ producing a third Perl variable holding the relation data of the result.
 
     # Then $r3_as_perl contains:
     # [ 'Relation', [ [ 'x', 'y', 'z' ], [
-    #     [ [ 'Int', 3 ], [ 'Int', 2 ], [ 'Int', 1 ] ],
-    #     [ [ 'Int', 3 ], [ 'Int', 2 ], [ 'Int', 4 ] ],
+    #     [ 3, 2, 1 ],
+    #     [ 3, 2, 4 ],
     # ] ] ]
 
 For most examples of using Muldis Rosetta, and tutorials, please see the
@@ -522,7 +522,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.09..*)|namespace::clean>,
-L<Moose::Role-ver(0.70..*)|Moose::Role>.
+L<Moose::Role-ver(0.72..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 
