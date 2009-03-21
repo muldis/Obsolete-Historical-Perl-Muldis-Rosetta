@@ -44,7 +44,7 @@ appropriate.
 
 =over
 
-=item C<Muldis::Rosetta::Cookbook(|::\w+)>
+=item C<Muldis::Rosetta::Cookbook[|::\w+]>
 
 Pod files with a potentially large collection of examples, tutorials, FAQs,
 and so on that help people learn how to employ Muldis Rosetta for the
@@ -69,7 +69,7 @@ public APIs that work without Muldis Rosetta being present on the system.
 If Muldis Rosetta is Genezzo's sole or primary interface, then simply
 C<Genezzo> is probably best for branding.
 
-=item C<Muldis::Rosetta::PHDMD::Refactor(|::\w+)>
+=item C<Muldis::Rosetta::PHDMD::Refactor[|::\w+]>
 
 Utility modules that take Perl Hosted Data Muldis D (PHDMD) code as input
 and derive other PHDMD code as output, such as with the purpose of
@@ -164,7 +164,7 @@ including native Perl routine definitions (L<PPI> would probably be
 employed in the Perl 5 version), and including commonly used third party
 class' objects.
 
-=item C<Muldis::Rosetta::Proxy::(Server|Client|\w+)>
+=item C<Muldis::Rosetta::Proxy::[Server|Client|\w+]>
 
 Implementation(s) of a generic proxy server plus client for the Muldis
 Rosetta API, letting the normal Muldis Rosetta Engine and the user
@@ -174,7 +174,7 @@ or server-extending plugin that sits on top of the Muldis Rosetta API.  Or
 whatever implementers want to do.  This is analogous to proxying modules
 for DBI or other DBMSs.
 
-=item C<Muldis::Rosetta::Engine::(SQLite|Postgres|Oracle|\w+)>
+=item C<Muldis::Rosetta::Engine::[SQLite|Postgres|Oracle|\w+]>
 
 A default (but not mandatory) namespace for Muldis Rosetta Engines to go,
 that provide the C<new_machine> function and do the
@@ -197,7 +197,7 @@ either case, said alternatives can either be bundled with the core distros
 of those other modules, or separately from them, as per their authors'
 preferences.
 
-=item C<Muldis::Rosetta::Emulator::(DBI|JDBC|OCI|\w+)>
+=item C<Muldis::Rosetta::Emulator::[DBI|JDBC|OCI|\w+]>
 
 Emulations of other modules or APIs as wrappers over Muldis Rosetta.  This
 is potentially the easiest way, short of the other modules themselves being

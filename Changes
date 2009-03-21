@@ -14,11 +14,13 @@
     to version 0.78.
 
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
-    in accordance with the latest Muldis D spec (v0.62.0): simplified all
+    in accordance with the latest Muldis D spec (v0.62.3): simplified all
     the 'Int' and 'Text' value literals (GCVL / PHMD nodes) to each be
     plain Perl scalars rather than 2-element Perl arrays, except one
     because it is a direct 'source_code' argument, so the code is
     considerably less verbose now.
+
+    * (SeeAlso.pod)  Minor formatting updates.
 
 2009-02-09   Darren Duncan <perl@DarrenDuncan.net>
 
@@ -113,8 +115,8 @@
     these 7 explicitly defined Example.pm methods were no longer needed and
     so were deleted: [assoc_machine, pt_command_lang, trans_nest_level,
     start_trans, commit_trans, rollback_trans, assoc_process]; also renamed
-    2 class attributes, "_assoc_(machine|process)" to
-    "assoc_(machine|process)", and added a "reader" trait to the
+    2 class attributes, "_assoc_[machine|process]" to
+    "assoc_[machine|process]", and added a "reader" trait to the
     "_pt_command_lang" attribute.
 
     * (README, Rosetta.pm, SeeAlso.pod)  Added mentions of Set::Relation in
@@ -217,7 +219,7 @@
     * (Interface.pm, Example.pm)  Updated the Process|Value role|class so
     that all routines with a 'source_code' parameter (that is, 'execute',
     'new_value', the 3 'invo') now have an extra 1 or 2 optional parameters
-    named 'lang' or '(pt|hd)_lang'.  In the case of all Interface::Value
+    named 'lang' or '[pt|hd]_lang'.  In the case of all Interface::Value
     construction, either direct ('new_value') or indirect (from ro-args of
     the 3 'invo'), it turns out that 'source_code' typically can't embed a
     language declaration after all (what the previous API assumed), and so
@@ -297,11 +299,11 @@
     plain-text|perl-hosted-data command language", so now the plain-text
     and Perl-hosted-data language groupings each have their default which
     can be unset or set that just affects work with that language group.
-    Split up the Process role|class' 2 "(|update_)command_lang" methods
-    into the 4 "(|update_)(pt|hd)_command_lang" methods; also updated the
+    Split up the Process role|class' 2 "[|update_]command_lang" methods
+    into the 4 "[|update_][pt|hd]_command_lang" methods; also updated the
     "pt" versions to return/take a Perl Str, and the "hd" to return/take a
     Perl Array, rather than return/take Any.  Similarly split up the Value
-    role|class' 1 "source_code" method into the 2 "(pt|hd)_source_code"
+    role|class' 1 "source_code" method into the 2 "[pt|hd]_source_code"
     methods; the return/take data types were similarly changed except that
     the "hd" still results in Any.
 
@@ -326,7 +328,7 @@
     types are of classes that would be declared in either Runtime or Value;
     the ::Public classes in Example.pm would then be serving as
     public-facing wrappers for said.  Removed the private attributes
-    "_(machine|process)_config", "_trans_nest_level", since the "inner"
+    "_[machine|process]_config", "_trans_nest_level", since the "inner"
     Machine|Process will have those instead.  Stripped down the 4
     "trans"-named methods of Process so they now simply delegate to the
     "inner" Process object's same methods, which would then do the work
@@ -354,7 +356,7 @@
 
     * (Engine.pm)  Renamed Process|Value attr 'machine'|'process' to prefix
     'assoc_', and the corresponding Process|Value constructor parameter was
-    likewise renamed; corresponding updates to new_(process|value) methods.
+    likewise renamed; corresponding updates to new_[process|value] methods.
 
     * (Engine.pm)  Renamed all attributes of all classes to prepend an
     underscore to their names.  Fleshed out all the Moose 'has'
@@ -429,13 +431,13 @@
     also that they both typically take multiple language dialects.
 
     * (Interface.pm, Example.pm)  Removed the API roles|classes named
-    "(Func|Proc)Binding", thereby majorly simplifying the public API of a
+    "[Func|Proc]Binding", thereby majorly simplifying the public API of a
     Rosetta Engine; also removed the associated attributes|accessors of the
     "Process" role|class.  You now simply invoke a Muldis D routine
     directly using a "Process" method.
 
     * (Interface.pm, Example.pm, Validator.pm)  Renamed the Process
-    role|class' "call_(func|proc)" methods to "(func|proc)_invo", and split
+    role|class' "call_[func|proc]" methods to "[func|proc]_invo", and split
     the latter into itself and "upd_invo"; also renamed each method's
     primary argument.  A result of these changes is that these 3 methods
     are now direct counterparts to certain Muldis D system-defined routines
@@ -501,9 +503,9 @@
     * What was Muldis-DB at version 0.6.2 has been renamed to
     Muldis-Rosetta.  This is the first release of the Muldis-Rosetta
     distribution, and the first release of any distribution to contain Perl
-    5 package names like Muldis::Rosetta(|::\w+).  All of the files in this
+    5 package names like Muldis::Rosetta[|::\w+].  All of the files in this
     distribution are as identical as possible to how they were when last
-    released under the names Muldis::DB(|::\w+) but for the name changes.
+    released under the names Muldis::DB[|::\w+] but for the name changes.
     All lib/ files were renamed appropriately, and also the 2
     t/Muldis_DB_\w+ were renamed to t/Muldis_Rosetta_\w+.
 
@@ -759,13 +761,13 @@
     validation on behalf of, and then invoke, the Engines, but rather the
     Engines must do their own input validation now, and user applications
     are now invoking the public Engine classes directly.  The
-    ::Engine::Role(|::\w+) roles that used to be in Interface.pm are now
+    ::Engine::Role[|::\w+] roles that used to be in Interface.pm are now
     gone, as they are now redundant; the new ::Interface::\w+ are like what
     they used to be.  The new Interface.pm do not declare constructor
     interfaces, since users should now only be making objects indirectly by
     way of methods of another class.  The ::HostGateVar class/role was
     renamed to ::Var, the ::HostGateRtn was renamed to ::ProcBinding, and a
-    similar ::FuncBinding was added.  The ::(DBMS|Var|(Func|Proc)Binding)
+    similar ::FuncBinding was added.  The ::[DBMS|Var|[Func|Proc]Binding]
     roles were further substantially altered, with some methods renamed and
     others added.  Perhaps the most substantial difference of the new API
     for actual functionality is that there is no distinct "prepare" method
@@ -776,8 +778,8 @@
     routine.  In a related fashion, if you just want to invoke existing
     system or (already loaded / in-mounted-database) user-defined routines,
     you can just call() them like they were Perl routines, with no separate
-    DDL/prepare step.  The (Func|Proc)Binding roles aren't actually needed
-    for anything, as the DBMS role provides call_(func|proc) methods, which
+    DDL/prepare step.  The [Func|Proc]Binding roles aren't actually needed
+    for anything, as the DBMS role provides call_[func|proc] methods, which
     in either case just alias to an already compiled routine, but the 2
     Binding roles are provided for now in case they may add some efficiency
     due to less repeated input validation or such.
@@ -791,7 +793,7 @@
 
     * (Example.pm)  Rewrote the Example.pm code to conform to the changed
     API declared by Interface.pm.  The new version implements the root
-    module, the ::DBMS and ::Var classes, but not the ::(Func|Proc)Binding
+    module, the ::DBMS and ::Var classes, but not the ::[Func|Proc]Binding
     classes.  Also, the interface-role implementing classes were all
     renamed aside from interface-conformity, specifically "::Public" was
     added to all their names, that signifying that these are the only
@@ -963,12 +965,12 @@
 
     * Updated Literal.pm to remove all exported functions that trivially
     wrap an object constructor, updated any uses in other files to call
-    constructors directly.  Also renamed ::(Bool|Order|Int|Blob|Text)Lit to
-    remove the "Lit", and ::(|Quasi)(Tuple|Relation)Sel to remove the
+    constructors directly.  Also renamed ::[Bool|Order|Int|Blob|Text]Lit to
+    remove the "Lit", and ::[|Quasi][Tuple|Relation]Sel to remove the
     "Sel", and likewise updated any refs to said.
 
     * In both Literal.pm and PhysType.pm, renamed any classes named
-    (TypeInvo|TypeDict|ExprDict|ValueDict)(|NQ|AQ) to (_\1|\1|Quasi\1)
+    [TypeInvo|TypeDict|ExprDict|ValueDict][|NQ|AQ] to [_\1|\1|Quasi\1]
     respectively, and refs to said.
 
 2007-07-11   Darren Duncan <perl@DarrenDuncan.net>
