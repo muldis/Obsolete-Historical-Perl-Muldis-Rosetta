@@ -15,12 +15,12 @@ WriteMakefile(
         # These are bundled with Perls 5.10.x but not Perls 5.8.x.
         'version' => 0.74,
         # These are not bundled with any version of Perl.
-        'namespace::clean' => 0.09,
-        'Moose' => 0.72,
-        'Moose::Role' => 0.72,
+        'namespace::clean' => 0.11,
+        'Moose' => 0.73,
+        'Moose::Role' => 0.73,
         'MooseX::Singleton' => 0.14,
-        'Test::Moose' => 0.72,
-        'Class::MOP' => 0.78, # req latest indep of Moose
+        'Test::Moose' => 0.73,
+        'Class::MOP' => 0.79, # req latest indep of Moose
     },
 );
 

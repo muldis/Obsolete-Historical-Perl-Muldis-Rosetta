@@ -71,7 +71,7 @@ sub new_process {
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
 
-    use Moose 0.72;
+    use Moose 0.73;
 
     use namespace::clean -except => 'meta';
 
@@ -242,7 +242,7 @@ sub proc_invo {
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
 
-    use Moose 0.72;
+    use Moose 0.73;
 
     use namespace::clean -except => 'meta';
 
@@ -511,8 +511,8 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<namespace::clean-ver(0.09..*)|namespace::clean>,
-L<Moose-ver(0.72..*)|Moose>, L<Moose::Role-ver(0.72..*)|Moose::Role>,
+L<namespace::clean-ver(0.11..*)|namespace::clean>,
+L<Moose-ver(0.73..*)|Moose>, L<Moose::Role-ver(0.73..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.14..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
