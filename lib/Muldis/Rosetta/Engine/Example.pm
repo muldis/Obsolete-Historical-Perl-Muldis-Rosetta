@@ -37,7 +37,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Engine::Example::Public::Machine; # class
 
-    use MooseX::Singleton 0.14;
+    use MooseX::Singleton 0.17;
 
     use namespace::clean -except => 'meta';
 
@@ -71,7 +71,7 @@ sub new_process {
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
 
-    use Moose 0.73;
+    use Moose 0.79;
 
     use namespace::clean -except => 'meta';
 
@@ -242,7 +242,7 @@ sub proc_invo {
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
 
-    use Moose 0.73;
+    use Moose 0.79;
 
     use namespace::clean -except => 'meta';
 
@@ -368,7 +368,7 @@ implementation of Muldis Rosetta.  It is included in the Muldis Rosetta
 core distribution to allow the core to be completely testable on its own.
 
 Example is coded intentionally in a simple fashion so that it is easy to
-maintain and and easy for developers to study.  As a result, while it
+maintain and easy for developers to study.  As a result, while it
 performs correctly and reliably, it also performs quite slowly; you should
 only use Example for testing, development, and study; you should not use it
 in production.  (See the L<Muldis::Rosetta::SeeAlso> file for a list of
@@ -472,18 +472,18 @@ Example written in any of the following:
 
 =item B<Tiny Plain Text Muldis D>
 
-See L<Muldis::D::Dialect::PTMD_Tiny> for details.
+See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:'http://muldis.com':'0.62.3':PTMD_Tiny>.  No other version
+C<Muldis_D:"http://muldis.com":"0.75.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
 
-See L<Muldis::D::Dialect::HDMD_Perl5_Tiny> for details.
+See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.62.3', 'HDMD_Perl5_Tiny' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.75.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -512,8 +512,8 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Moose-ver(0.73..*)|Moose>, L<Moose::Role-ver(0.73..*)|Moose::Role>,
-L<MooseX::Singleton-ver(0.14..*)|MooseX::Singleton>.
+L<Moose-ver(0.79..*)|Moose>, L<Moose::Role-ver(0.79..*)|Moose::Role>,
+L<MooseX::Singleton-ver(0.17..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

@@ -74,7 +74,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Machine; # role
 
-    use Moose::Role 0.73;
+    use Moose::Role 0.79;
 
     use namespace::clean -except => 'meta';
 
@@ -87,7 +87,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Process; # role
 
-    use Moose::Role 0.73;
+    use Moose::Role 0.79;
 
     use namespace::clean -except => 'meta';
 
@@ -113,7 +113,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Value; # role
 
-    use Moose::Role 0.73;
+    use Moose::Role 0.79;
 
     use namespace::clean -except => 'meta';
 
@@ -160,17 +160,17 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.62.3', 'HDMD_Perl5_Tiny', {} ] });
+        'http://muldis.com', '0.75.0', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
-        'source_code' => [ 'Relation', [ [ 'x', 'y' ], [
+        'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
             [ 4, 7 ],
             [ 3, 2 ],
         ] ] ]
     });
 
     my $r2 = $process->new_value({
-        'source_code' => [ 'Relation', [ [ 'y', 'z' ], [
+        'source_code' => [ 'Relation', [ [ 'y', 'z' ] => [
             [ 5, 6 ],
             [ 2, 1 ],
             [ 2, 4 ],
@@ -178,7 +178,7 @@ producing a third Perl variable holding the relation data of the result.
     });
 
     my $r3 = $process->func_invo({
-        'function' => 'sys.std.Core.QRelation.join',
+        'function' => 'join',
         'args' => {
             'topic' => [ 'QSet', [ $r1, $r2 ] ],
         }
@@ -187,7 +187,7 @@ producing a third Perl variable holding the relation data of the result.
     my $r3_as_perl = $r3->hd_source_code();
 
     # Then $r3_as_perl contains:
-    # [ 'Relation', [ [ 'x', 'y', 'z' ], [
+    # [ 'Relation', [ [ 'x', 'y', 'z' ] => [
     #     [ 3, 2, 1 ],
     #     [ 3, 2, 4 ],
     # ] ] ]
@@ -522,7 +522,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Moose::Role-ver(0.73..*)|Moose::Role>.
+L<Moose::Role-ver(0.79..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

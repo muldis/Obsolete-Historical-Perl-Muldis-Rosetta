@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2009-03-xx   Darren Duncan <perl@DarrenDuncan.net>
+2009-06-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.x.x for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.x.x.tar.gz.  Muldis Rosetta version 0.x.x for Perl 6
@@ -11,14 +11,19 @@
     them.
 
     * Updated external dependencies: namespace::clean to version 0.11,
-    Moose/etc to version 0.73, Class::MOP to version 0.79.
+    Moose/etc to version 0.79, MooseX::Singleton to version 0.17,
+    Class::MOP to version 0.84.
 
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
-    in accordance with the latest Muldis D spec (v0.62.3): simplified all
-    the 'Int' and 'Text' value literals (GCVL / PHMD nodes) to each be
-    plain Perl scalars rather than 2-element Perl arrays, except one
-    because it is a direct 'source_code' argument, so the code is
-    considerably less verbose now.
+    in accordance with the latest Muldis D spec (v0.75.0): simplified all
+    the 'Int' and 'Text' generic context value literals to each be plain
+    Perl scalars rather than 2-element Perl arrays, except one because it
+    is a direct 'source_code' argument, so the code is considerably less
+    verbose now; removed any empty 5th (extensions) parts of Muldis D
+    language names, which are now optional; renamed the 4th (dialect) parts
+    of Muldis D language names from "_Tiny" to "_STD"; abbreviated any
+    invocations of Muldis D system-defined routines since auto-expansion of
+    such into their fully-qualified "sys.std.*" names is now normal.
 
     * (SeeAlso.pod)  Minor formatting updates.
 

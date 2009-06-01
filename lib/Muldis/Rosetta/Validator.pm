@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013002;
     use version 0.74; our $VERSION = qv('0.13.2');
 
     use Test::More;
-    use Test::Moose 0.73;
+    use Test::Moose 0.79;
 
     use namespace::clean;
 
@@ -38,7 +38,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.62.3', 'HDMD_Perl5_Tiny', {} ] });
+        'http://muldis.com', '0.75.0', 'HDMD_Perl5_STD' ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -56,7 +56,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     # Declare our example literal source data sets.
 
     my $src_suppliers = $process->new_value({
-        'source_code' => [ 'Relation', [ [ 'farm', 'country' ], [
+        'source_code' => [ 'Relation', [ [ 'farm', 'country' ] => [
             [ 'Hodgesons', 'Canada'  ],
             [ 'Beckers'  , 'England' ],
             [ 'Wickets'  , 'Canada'  ],
@@ -66,7 +66,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     does_ok( $src_suppliers, 'Muldis::Rosetta::Interface::Value' );
 
     my $src_foods = $process->new_value({
-        'source_code' => [ 'Relation', [ [ 'food', 'colour' ], [
+        'source_code' => [ 'Relation', [ [ 'food', 'colour' ] => [
             [ 'Bananas', 'yellow' ],
             [ 'Carrots', 'orange' ],
             [ 'Oranges', 'orange' ],
@@ -78,7 +78,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
     does_ok( $src_foods, 'Muldis::Rosetta::Interface::Value' );
 
     my $src_shipments = $process->new_value({
-        'source_code' => [ 'Relation', [ [ 'farm', 'food', 'qty' ], [
+        'source_code' => [ 'Relation', [ [ 'farm', 'food', 'qty' ] => [
             [ 'Hodgesons', 'Kiwis'  , 100 ],
             [ 'Hodgesons', 'Lemons' , 130 ],
             [ 'Hodgesons', 'Oranges',  10 ],
@@ -100,11 +100,11 @@ sub _scenario_foods_suppliers_shipments_v1 {
     does_ok( $desi_colour, 'Muldis::Rosetta::Interface::Value' );
 
     my $matched_suppl = $process->func_invo({
-        'function' => 'sys.std.Core.QRelation.semijoin',
+        'function' => 'semijoin',
         'args' => {
             'source' => $src_suppliers,
             'filter' => $process->func_invo({
-                'function' => 'sys.std.Core.QRelation.join',
+                'function' => 'join',
                 'args' => {
                     'topic' => [ 'QSet', [
                         $src_shipments,
@@ -123,7 +123,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
 
     # Finally, use the result somehow (not done here).
     # The result should be:
-    # [ 'Relation', [ [ 'farm', 'country' ], [
+    # [ 'Relation', [ [ 'farm', 'country' ] => [
     #     [ 'Hodgesons', 'Canada'  ],
     #     [ 'Beckers'  , 'England' ],
     # ] ] ],
@@ -246,7 +246,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Test::Moose-ver(0.73..*)|Test::Moose>.
+L<Test::Moose-ver(0.79..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
