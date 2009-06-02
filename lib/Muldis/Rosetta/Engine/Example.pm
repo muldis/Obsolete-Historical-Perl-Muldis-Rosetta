@@ -3,21 +3,21 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.013002;
+use Muldis::Rosetta::Interface 0.013003;
 
-#use Muldis::Rosetta::Engine::Example::Value 0.000000;
-#use Muldis::Rosetta::Engine::Example::Routines 0.000000;
-#use Muldis::Rosetta::Engine::Example::Storage 0.000000;
-#use Muldis::Rosetta::Engine::Example::Runtime 0.000000;
-#use Muldis::Rosetta::Engine::Example::Util 0.000000;
-#use Muldis::Rosetta::Engine::Example::PlainText 0.000000;
-#use Muldis::Rosetta::Engine::Example::HostedData 0.000000;
+#use Muldis::Rosetta::Engine::Example::Value 0.013003;
+#use Muldis::Rosetta::Engine::Example::Routines 0.013003;
+#use Muldis::Rosetta::Engine::Example::Storage 0.013003;
+#use Muldis::Rosetta::Engine::Example::Runtime 0.013003;
+#use Muldis::Rosetta::Engine::Example::Util 0.013003;
+#use Muldis::Rosetta::Engine::Example::PlainText 0.013003;
+#use Muldis::Rosetta::Engine::Example::HostedData 0.013003;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    use version 0.74; our $VERSION = qv('0.13.2');
+    use version 0.74; our $VERSION = qv('0.13.3');
     # Note: This given version applies to all of this file's packages.
 
     use namespace::clean;
@@ -348,7 +348,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.13.2 for
+This document describes Muldis::Rosetta::Engine::Example version 0.13.3 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -517,7 +517,7 @@ L<MooseX::Singleton-ver(0.17..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
-L<Muldis::Rosetta::Interface-ver(0.13.2..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.13.3..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
