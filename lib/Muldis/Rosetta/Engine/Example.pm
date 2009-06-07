@@ -71,7 +71,7 @@ sub new_process {
 
 { package Muldis::Rosetta::Engine::Example::Public::Process; # class
 
-    use Moose 0.79;
+    use Moose 0.80;
 
     use namespace::clean -except => 'meta';
 
@@ -242,7 +242,7 @@ sub proc_invo {
 
 { package Muldis::Rosetta::Engine::Example::Public::Value; # class
 
-    use Moose 0.79;
+    use Moose 0.80;
 
     use namespace::clean -except => 'meta';
 
@@ -475,7 +475,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.75.0":PTMD_STD>.  No other version
+C<Muldis_D:"http://muldis.com":"0.77.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -483,7 +483,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.75.0', 'HDMD_Perl5_STD' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.77.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -512,7 +512,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Moose-ver(0.79..*)|Moose>, L<Moose::Role-ver(0.79..*)|Moose::Role>,
+L<Moose-ver(0.80..*)|Moose>, L<Moose::Role-ver(0.80..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.17..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current

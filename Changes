@@ -1,6 +1,22 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
+2009-06-xx   Darren Duncan <perl@DarrenDuncan.net>
+
+    * Muldis Rosetta version 0.x.x for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.x.x.tar.gz.  Muldis Rosetta version 0.x.x for Perl 6
+    is not released at all.  The rest of this Changes entry refers only to
+    the Perl 5 version, and it should not be assumed that the Perl 6
+    version incorporates all of said updates, though it may have some of
+    them.
+
+    * Updated external dependencies: Moose/etc to version 0.80, Class::MOP
+    to version 0.85.
+
+    * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
+    in accordance with the latest Muldis D spec (v0.77.0): The 'QSet' value
+    kind has been renamed to 'Set'.
+
 2009-06-01   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.3 for Perl 5 is released on CPAN as

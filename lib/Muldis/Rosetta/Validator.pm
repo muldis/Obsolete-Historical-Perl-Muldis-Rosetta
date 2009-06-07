@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013003;
     use version 0.74; our $VERSION = qv('0.13.3');
 
     use Test::More;
-    use Test::Moose 0.79;
+    use Test::Moose 0.80;
 
     use namespace::clean;
 
@@ -38,7 +38,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.75.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.77.0', 'HDMD_Perl5_STD' ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -106,7 +106,7 @@ sub _scenario_foods_suppliers_shipments_v1 {
             'filter' => $process->func_invo({
                 'function' => 'join',
                 'args' => {
-                    'topic' => [ 'QSet', [
+                    'topic' => [ 'Set', [
                         $src_shipments,
                         $src_foods,
                         [ 'Relation', [ { 'colour' => $desi_colour } ] ],
@@ -246,7 +246,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Test::Moose-ver(0.79..*)|Test::Moose>.
+L<Test::Moose-ver(0.80..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
