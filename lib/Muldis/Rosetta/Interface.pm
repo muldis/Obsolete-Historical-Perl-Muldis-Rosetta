@@ -74,7 +74,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Machine; # role
 
-    use Moose::Role 0.80;
+    use Moose::Role 0.81;
 
     use namespace::clean -except => 'meta';
 
@@ -87,7 +87,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Process; # role
 
-    use Moose::Role 0.80;
+    use Moose::Role 0.81;
 
     use namespace::clean -except => 'meta';
 
@@ -113,7 +113,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Value; # role
 
-    use Moose::Role 0.80;
+    use Moose::Role 0.81;
 
     use namespace::clean -except => 'meta';
 
@@ -522,7 +522,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Moose::Role-ver(0.80..*)|Moose::Role>.
+L<Moose::Role-ver(0.81..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

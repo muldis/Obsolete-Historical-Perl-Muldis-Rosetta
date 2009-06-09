@@ -12,7 +12,7 @@ use Muldis::Rosetta::Interface 0.013003;
     use version 0.74; our $VERSION = qv('0.13.3');
 
     use Test::More;
-    use Test::Moose 0.80;
+    use Test::Moose 0.81;
 
     use namespace::clean;
 
@@ -246,7 +246,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Test::Moose-ver(0.80..*)|Test::Moose>.
+L<Test::Moose-ver(0.81..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
