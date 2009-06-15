@@ -221,10 +221,10 @@ sub upd_invo {
     return;
 }
 
-sub proc_invo {
+sub imp_invo {
     my ($self, $args) = @_;
-    my ($procedure, $upd_args, $ro_args, $pt_lang, $hd_lang) = @{$args}{
-        'procedure', 'upd_args', 'ro_args', 'pt_lang', 'hd_lang'};
+    my ($imperative, $upd_args, $ro_args, $pt_lang, $hd_lang) = @{$args}{
+        'imperative', 'upd_args', 'ro_args', 'pt_lang', 'hd_lang'};
 
     # TODO, the real work
 
@@ -475,7 +475,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.77.0":PTMD_STD>.  No other version
+C<Muldis_D:"http://muldis.com":"0.79.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -483,7 +483,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.77.0', 'HDMD_Perl5_STD' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.79.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back

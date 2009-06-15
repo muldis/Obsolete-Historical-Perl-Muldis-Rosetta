@@ -100,7 +100,7 @@ sub new_machine {
     requires 'new_value';
     requires 'func_invo';
     requires 'upd_invo';
-    requires 'proc_invo';
+    requires 'imp_invo';
     requires 'trans_nest_level';
     requires 'start_trans';
     requires 'commit_trans';
@@ -160,7 +160,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.77.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.79.0', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
@@ -407,18 +407,19 @@ subject-to-update parameter; said Perl variable is then what holds a
 C<Value> object et al prior to the updater's execution, and that may have
 been updated to hold a different C<Value> object as a side-effect.
 
-=head2 proc_invo
+=head2 imp_invo
 
-C<method proc_invo ($self: Str :$procedure!, Hash :$upd_args?, Hash
+C<method imp_invo ($self: Str :$imperative!, Hash :$upd_args?, Hash
 :$ro_args?, Str :$pt_lang?, Array :$hd_lang?)>
 
-This method invokes the Muldis D procedure (or system_service) named by its
-C<$procedure> argument, giving it subject-to-update arguments from
-C<$upd_args> and read-only arguments from C<$ro_args>; the C<Value> objects
-in C<$upd_args> are possibly substituted for other C<Value> objects as a
-side-effect of the procedure's execution.  The parameters of C<proc_invo>
-are as per those of the C<upd_invo> method, save that only C<upd_invo>
-makes C<$upd_args> mandatory, while C<proc_invo> makes it optional.
+This method invokes the Muldis D imperative routine (procedure, system
+service, or updater) named by its C<$imperative> argument, giving it
+subject-to-update arguments from C<$upd_args> and read-only arguments from
+C<$ro_args>; the C<Value> objects in C<$upd_args> are possibly substituted
+for other C<Value> objects as a side-effect of the routine's execution.
+The parameters of C<imp_invo> are as per those of the C<upd_invo> method,
+save that only C<upd_invo> makes C<$upd_args> mandatory, while C<imp_invo>
+makes it optional.
 
 =head2 trans_nest_level
 

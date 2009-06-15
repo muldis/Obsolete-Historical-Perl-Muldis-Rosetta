@@ -3,8 +3,8 @@
 
 2009-06-xx   Darren Duncan <perl@DarrenDuncan.net>
 
-    * Muldis Rosetta version 0.x.x for Perl 5 is released on CPAN as
-    Muldis-Rosetta-0.x.x.tar.gz.  Muldis Rosetta version 0.x.x for Perl 6
+    * Muldis Rosetta version 0.14.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.14.0.tar.gz.  Muldis Rosetta version 0.14.0 for Perl 6
     is not released at all.  The rest of this Changes entry refers only to
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
@@ -13,8 +13,14 @@
     * Updated external dependencies: Moose/etc to version 0.81, Class::MOP
     to version 0.85.
 
+    * (Interface.pm, Engine.pm)  In accordance with the latest Muldis D
+    spec (v0.79.0), with the ::Process role/class, renamed its public
+    method "proc_invo" to "imp_invo" and renamed that method's "procedure"
+    parameter to "imperative"; this method may now invoke any imperative
+    (non-function) Muldis D routine at all, including updaters.
+
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
-    in accordance with the latest Muldis D spec (v0.77.0): The 'QSet' value
+    in accordance with the latest Muldis D spec (v0.79.0): The 'QSet' value
     kind has been renamed to 'Set'.
 
     * (SeeAlso.pod)  Minor updates.
