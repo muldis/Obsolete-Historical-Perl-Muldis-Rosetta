@@ -74,7 +74,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Machine; # role
 
-    use Moose::Role 0.81;
+    use Moose::Role 0.82;
 
     use namespace::clean -except => 'meta';
 
@@ -87,7 +87,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Process; # role
 
-    use Moose::Role 0.81;
+    use Moose::Role 0.82;
 
     use namespace::clean -except => 'meta';
 
@@ -113,7 +113,7 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Value; # role
 
-    use Moose::Role 0.81;
+    use Moose::Role 0.82;
 
     use namespace::clean -except => 'meta';
 
@@ -160,7 +160,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.79.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.79.1', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
@@ -523,7 +523,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Moose::Role-ver(0.81..*)|Moose::Role>.
+L<Moose::Role-ver(0.82..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

@@ -10,17 +10,17 @@
     version incorporates all of said updates, though it may have some of
     them.
 
-    * Updated external dependencies: Moose/etc to version 0.81, Class::MOP
-    to version 0.85.
+    * Updated external dependencies: Moose/etc to version 0.82,
+    MooseX::Singleton to version 0.18, Class::MOP to version 0.87.
 
     * (Interface.pm, Engine.pm)  In accordance with the latest Muldis D
-    spec (v0.79.0), with the ::Process role/class, renamed its public
+    spec (v0.79.1), with the ::Process role/class, renamed its public
     method "proc_invo" to "imp_invo" and renamed that method's "procedure"
     parameter to "imperative"; this method may now invoke any imperative
     (non-function) Muldis D routine at all, including updaters.
 
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
-    in accordance with the latest Muldis D spec (v0.79.0): The 'QSet' value
+    in accordance with the latest Muldis D spec (v0.79.1): The 'QSet' value
     kind has been renamed to 'Set'.
 
     * (SeeAlso.pod)  Minor updates.
