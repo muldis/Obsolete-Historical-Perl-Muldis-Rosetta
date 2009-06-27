@@ -10,8 +10,16 @@
     version incorporates all of said updates, though it may have some of
     them.
 
-    * Updated external dependencies: Moose/etc to version 0.82,
-    MooseX::Singleton to version 0.18, Class::MOP to version 0.87.
+    * As of this release, Muldis Rosetta for Perl 5 uses the
+    namespace::autoclean pragma instead of the namespace::clean pragma,
+    because it is easier to use and not so contrived in how it works and is
+    a generally recommended upgrade by savvy people.  Note that the newer
+    dependency has a larger not-bundled dependency chain, including
+    Class::MOP, but this isn't a problem because Muldis Rosetta for Perl 5
+    already uses Moose anyway.
+
+    * Updated external dependencies: Moose/etc to version 0.85,
+    MooseX::Singleton to version 0.18, Class::MOP to version 0.88.
 
     * (Interface.pm, Engine.pm)  In accordance with the latest Muldis D
     spec (v0.79.1), with the ::Process role/class, renamed its public

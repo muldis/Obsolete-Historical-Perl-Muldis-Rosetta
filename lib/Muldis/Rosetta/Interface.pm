@@ -10,10 +10,10 @@ use warnings FATAL => 'all';
     use version 0.74; our $VERSION = qv('0.13.3');
     # Note: This given version applies to all of this file's packages.
 
+    use namespace::autoclean 0.08;
+
     use Carp;
     use Scalar::Util 'blessed';
-
-    use namespace::clean;
 
 ###########################################################################
 
@@ -74,9 +74,9 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Machine; # role
 
-    use Moose::Role 0.82;
+    use namespace::autoclean 0.08;
 
-    use namespace::clean -except => 'meta';
+    use Moose::Role 0.85;
 
     requires 'new_process';
 
@@ -87,9 +87,9 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Process; # role
 
-    use Moose::Role 0.82;
+    use namespace::autoclean 0.08;
 
-    use namespace::clean -except => 'meta';
+    use Moose::Role 0.85;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -113,9 +113,9 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Value; # role
 
-    use Moose::Role 0.82;
+    use namespace::autoclean 0.08;
 
-    use namespace::clean -except => 'meta';
+    use Moose::Role 0.85;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -522,8 +522,8 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Moose::Role-ver(0.82..*)|Moose::Role>.
+L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
+L<Moose::Role-ver(0.85..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

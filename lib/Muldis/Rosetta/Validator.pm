@@ -11,10 +11,10 @@ use Muldis::Rosetta::Interface 0.013003;
 { package Muldis::Rosetta::Validator; # module
     use version 0.74; our $VERSION = qv('0.13.3');
 
-    use Test::More;
-    use Test::Moose 0.82;
+    use namespace::autoclean 0.08;
 
-    use namespace::clean;
+    use Test::More;
+    use Test::Moose 0.85;
 
 ###########################################################################
 
@@ -245,8 +245,8 @@ installation by users of earlier Perl versions:
 L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<namespace::clean-ver(0.11..*)|namespace::clean>,
-L<Test::Moose-ver(0.82..*)|Test::Moose>.
+L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
+L<Test::Moose-ver(0.85..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
