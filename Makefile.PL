@@ -21,6 +21,8 @@ WriteMakefile(
         'MooseX::Singleton' => 0.18,
         'Test::Moose' => 0.85,
         'Class::MOP' => 0.88, # req latest indep of Moose
+        # These are only used by the tests, are not bundled with any Perl.
+        'Carp::Always' => 0.09,
     },
 );
 
