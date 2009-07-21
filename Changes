@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2009-06-xx   Darren Duncan <perl@DarrenDuncan.net>
+2009-07-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.14.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.14.0.tar.gz.  Muldis Rosetta version 0.14.0 for Perl 6
@@ -21,17 +21,27 @@
     * This distribution has gained a new direct external dependency on the
     Carp::Always module, which currently is only used by the 2 test files.
 
-    * Updated external dependencies: Moose/etc to version 0.85,
-    MooseX::Singleton to version 0.18, Class::MOP to version 0.88.
+    * Updated external dependency on Test::More to version 0.88, which
+    currently is only used by Validator.pm and a test file, same as what
+    used previous versions.  While earlier versions of Test::More are
+    bundled with Perl 5, only the impending Perl 5.10.1 will bundle a
+    version not earlier than 0.88, so meanwhile you must update Test::More
+    from CPAN.  The tests were updated to no longer declare a planned
+    number of tests at the start, but instead to declare "done_testing()"
+    at the finish. This change should help make further simultaneous
+    development and merging by multiple developers less error prone.
+
+    * Updated external dependencies: Moose/etc to version 0.87,
+    MooseX::Singleton to version 0.18, Class::MOP to version 0.89.
 
     * (Interface.pm, Engine.pm)  In accordance with the latest Muldis D
-    spec (v0.79.1), with the ::Process role/class, renamed its public
+    spec (v0.81.0), with the ::Process role/class, renamed its public
     method "proc_invo" to "imp_invo" and renamed that method's "procedure"
     parameter to "imperative"; this method may now invoke any imperative
     (non-function) Muldis D routine at all, including updaters.
 
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
-    in accordance with the latest Muldis D spec (v0.79.1): The 'QSet' value
+    in accordance with the latest Muldis D spec (v0.81.0): The 'QSet' value
     kind has been renamed to 'Set'.
 
     * (SeeAlso.pod)  Minor updates.

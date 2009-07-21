@@ -76,7 +76,7 @@ sub new_machine {
 
     use namespace::autoclean 0.08;
 
-    use Moose::Role 0.85;
+    use Moose::Role 0.87;
 
     requires 'new_process';
 
@@ -89,7 +89,7 @@ sub new_machine {
 
     use namespace::autoclean 0.08;
 
-    use Moose::Role 0.85;
+    use Moose::Role 0.87;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -115,7 +115,7 @@ sub new_machine {
 
     use namespace::autoclean 0.08;
 
-    use Moose::Role 0.85;
+    use Moose::Role 0.87;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -160,7 +160,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.79.1', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.81.0', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
@@ -523,7 +523,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
-L<Moose::Role-ver(0.85..*)|Moose::Role>.
+L<Moose::Role-ver(0.87..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

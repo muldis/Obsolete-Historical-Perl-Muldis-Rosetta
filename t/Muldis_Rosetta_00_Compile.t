@@ -6,9 +6,7 @@ use Carp::Always 0.09;
 
 use version 0.74;
 
-use Test::More;
-
-plan( 'tests' => 8 );
+use Test::More 0.88;
 
 use_ok( 'Muldis::Rosetta' );
 is( $Muldis::Rosetta::VERSION, qv('0.13.3'),
@@ -25,5 +23,7 @@ is( $Muldis::Rosetta::Validator::VERSION, qv('0.13.3'),
 use_ok( 'Muldis::Rosetta::Engine::Example' );
 is( $Muldis::Rosetta::Engine::Example::VERSION, qv('0.13.3'),
     'Muldis::Rosetta::Engine::Example is the correct version' );
+
+done_testing();
 
 1; # Magic true value required at end of a reusable file's code.
