@@ -73,7 +73,7 @@ sub new_process {
 
     use namespace::autoclean 0.08;
 
-    use Moose 0.87;
+    use Moose 0.88;
 
     has 'assoc_machine' => (
         is       => 'ro',
@@ -244,7 +244,7 @@ sub imp_invo {
 
     use namespace::autoclean 0.08;
 
-    use Moose 0.87;
+    use Moose 0.88;
 
     has 'assoc_process' => (
         is       => 'ro',
@@ -512,7 +512,7 @@ L<version-ver(0.74..*)|version>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
-L<Moose-ver(0.87..*)|Moose>, L<Moose::Role-ver(0.87..*)|Moose::Role>,
+L<Moose-ver(0.88..*)|Moose>, L<Moose::Role-ver(0.88..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.18..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current

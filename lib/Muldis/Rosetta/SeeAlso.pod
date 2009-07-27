@@ -251,7 +251,7 @@ L<SQL::Abstract>, L<SQL::Snippet>, L<SQL::Catalog>, L<DBIx::Perlish>,
 L<DBIx::StORM>, L<Tao::DBI>, L<NTuples>, L<DBIx::CopyRecord>,
 L<DBIx::DataModel>, L<Data::Domain>, L<Fey>, L<SQL::Tokenizer>, L<SQL::DB>,
 L<MooseX::Storage>, L<LARC::DB>, L<Migraine>, L<DBIx::Declare>,
-L<Test::Database>.
+L<Test::Database>, L<UR>.
 
 These Perl 5 packages in that problem domain used to exist on CPAN, but no
 longer do except on backpan:

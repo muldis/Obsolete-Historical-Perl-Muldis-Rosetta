@@ -31,8 +31,8 @@
     at the finish. This change should help make further simultaneous
     development and merging by multiple developers less error prone.
 
-    * Updated external dependencies: Moose/etc to version 0.87,
-    MooseX::Singleton to version 0.18, Class::MOP to version 0.89.
+    * Updated external dependencies: Moose/etc to version 0.88,
+    MooseX::Singleton to version 0.18, Class::MOP to version 0.90.
 
     * (Interface.pm, Engine.pm)  In accordance with the latest Muldis D
     spec (v0.81.0), with the ::Process role/class, renamed its public

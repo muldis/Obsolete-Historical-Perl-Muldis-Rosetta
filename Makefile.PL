@@ -16,13 +16,13 @@ WriteMakefile(
         'version' => 0.74,
         # These are not bundled with any version of Perl.
         'namespace::autoclean' => 0.08,
-        'Moose' => 0.87,
-        'Moose::Role' => 0.87,
+        'Moose' => 0.88,
+        'Moose::Role' => 0.88,
         'MooseX::Singleton' => 0.18,
-        'Class::MOP' => 0.89, # req latest indep of Moose
+        'Class::MOP' => 0.90, # req latest indep of Moose
         # These r only used by Validator / th tests, are n bndl w any Perl.
         'Test::More' => 0.88, # but upd later to v that perl 5.10.1 bundles
-        'Test::Moose' => 0.87,
+        'Test::Moose' => 0.88,
         'Carp::Always' => 0.09,
     },
 );

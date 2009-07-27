@@ -14,7 +14,7 @@ use Muldis::Rosetta::Interface 0.013003;
     use namespace::autoclean 0.08;
 
     use Test::More 0.88;
-    use Test::Moose 0.87;
+    use Test::Moose 0.88;
 
 ###########################################################################
 
@@ -247,7 +247,7 @@ L<version-ver(0.74..*)|version>.
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
 L<Test::More-ver(0.88..*)|Test::More>,
-L<Test::Moose-ver(0.87..*)|Test::Moose>.
+L<Test::Moose-ver(0.88..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
