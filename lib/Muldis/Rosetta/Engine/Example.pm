@@ -17,7 +17,8 @@ use Muldis::Rosetta::Interface 0.013003;
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    use version 0.74; our $VERSION = qv('0.13.3');
+    our $VERSION = '0.013003';
+    $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 
     use namespace::autoclean 0.08;
@@ -73,7 +74,7 @@ sub new_process {
 
     use namespace::autoclean 0.08;
 
-    use Moose 0.88;
+    use Moose 0.89;
 
     has 'assoc_machine' => (
         is       => 'ro',
@@ -244,7 +245,7 @@ sub imp_invo {
 
     use namespace::autoclean 0.08;
 
-    use Moose 0.88;
+    use Moose 0.89;
 
     has 'assoc_process' => (
         is       => 'ro',
@@ -475,7 +476,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.81.0":PTMD_STD>.  No other version
+C<Muldis_D:"http://muldis.com":"0.84.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -483,7 +484,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.81.0', 'HDMD_Perl5_STD' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.84.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -503,16 +504,11 @@ I<This documentation is pending.>
 The Muldis Rosetta Example Engine, meaning the collection of files that
 includes this file and all other C<Muldis::Rosetta::Engine::Example::\w+>
 files, requires any version of Perl 5.x.y that is at least 5.8.1, and
-recommends one that is at least 5.10.0.
-
-It also requires these Perl 5 packages that are bundled with any version of
-Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
-installation by users of earlier Perl versions:
-L<version-ver(0.74..*)|version>.
+recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
-L<Moose-ver(0.88..*)|Moose>, L<Moose::Role-ver(0.88..*)|Moose::Role>,
+L<Moose-ver(0.89..*)|Moose>, L<Moose::Role-ver(0.89..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.18..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current

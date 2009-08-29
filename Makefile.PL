@@ -12,17 +12,25 @@ WriteMakefile(
     'AUTHOR' => 'Darren Duncan <perl@DarrenDuncan.net>',
     'LICENSE' => 'lgpl',
     'PREREQ_PM' => {
-        # These are bundled with Perls 5.10.x but not Perls 5.8.x.
-        'version' => 0.74,
+        # ALWAYS REQUIRES:
+
         # These are not bundled with any version of Perl.
         'namespace::autoclean' => 0.08,
-        'Moose' => 0.88,
-        'Moose::Role' => 0.88,
+        'Moose' => 0.89,
+        'Moose::Role' => 0.89,
         'MooseX::Singleton' => 0.18,
-        'Class::MOP' => 0.90, # req latest indep of Moose
-        # These r only used by Validator / th tests, are n bndl w any Perl.
-        'Test::More' => 0.88, # but upd later to v that perl 5.10.1 bundles
-        'Test::Moose' => 0.88,
+        'Class::MOP' => 0.92, # req latest indep of Moose
+
+        # VALIDATOR MODULE REQUIRES:
+
+        # These are bundled with Perls 5.10.1+ but not earlier Perls.
+        'Test::More' => 0.92,
+        # These are not bundled with any version of Perl.
+        'Test::Moose' => 0.89,
+
+        # BUILD REQUIRES:
+
+        # These are not bundled with any version of Perl.
         'Carp::Always' => 0.09,
     },
 );

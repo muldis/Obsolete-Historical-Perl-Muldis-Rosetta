@@ -9,12 +9,13 @@ use Muldis::Rosetta::Interface 0.013003;
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    use version 0.74; our $VERSION = qv('0.13.3');
+    our $VERSION = '0.013003';
+    $VERSION = eval $VERSION;
 
     use namespace::autoclean 0.08;
 
-    use Test::More 0.88;
-    use Test::Moose 0.88;
+    use Test::More 0.92;
+    use Test::Moose 0.89;
 
 ###########################################################################
 
@@ -36,7 +37,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.81.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.84.0', 'HDMD_Perl5_STD' ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -237,17 +238,16 @@ I<This documentation is pending.>
 =head1 DEPENDENCIES
 
 This file requires any version of Perl 5.x.y that is at least 5.8.1, and
-recommends one that is at least 5.10.0.
+recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are bundled with any version of
-Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
+Perl 5.x.y that is at least 5.10.1, and are also on CPAN for separate
 installation by users of earlier Perl versions:
-L<version-ver(0.74..*)|version>.
+L<Test::More-ver(0.92..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
-L<Test::More-ver(0.88..*)|Test::More>,
-L<Test::Moose-ver(0.88..*)|Test::Moose>.
+L<Test::Moose-ver(0.89..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

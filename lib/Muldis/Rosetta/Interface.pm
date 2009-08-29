@@ -7,7 +7,8 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface; # module
-    use version 0.74; our $VERSION = qv('0.13.3');
+    our $VERSION = '0.013003';
+    $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 
     use namespace::autoclean 0.08;
@@ -76,7 +77,7 @@ sub new_machine {
 
     use namespace::autoclean 0.08;
 
-    use Moose::Role 0.88;
+    use Moose::Role 0.89;
 
     requires 'new_process';
 
@@ -89,7 +90,7 @@ sub new_machine {
 
     use namespace::autoclean 0.08;
 
-    use Moose::Role 0.88;
+    use Moose::Role 0.89;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -115,7 +116,7 @@ sub new_machine {
 
     use namespace::autoclean 0.08;
 
-    use Moose::Role 0.88;
+    use Moose::Role 0.89;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -160,7 +161,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.81.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.84.0', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
@@ -514,16 +515,11 @@ I<This documentation is pending.>
 =head1 DEPENDENCIES
 
 This file requires any version of Perl 5.x.y that is at least 5.8.1, and
-recommends one that is at least 5.10.0.
-
-It also requires these Perl 5 packages that are bundled with any version of
-Perl 5.x.y that is at least 5.10.0, and are also on CPAN for separate
-installation by users of earlier Perl versions:
-L<version-ver(0.74..*)|version>.
+recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
-L<Moose::Role-ver(0.88..*)|Moose::Role>.
+L<Moose::Role-ver(0.89..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

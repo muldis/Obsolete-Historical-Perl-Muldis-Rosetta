@@ -81,10 +81,7 @@ we won't have to manually check our arguments as much as we do, or at all.
 
 * Applicable to the Perl 5 version only:  Consider adding dependencies on
 Module::Build and/or some better exception handling module.  Consider
-raising the Perl version dependency to 5.10 from 5.8.1, to simplify further
-dependencies.
-
-* Applicable to the Perl 5 version only:  Consider lowering the Perl
-version dependency to 5.8.0 from 5.8.1 ... or maybe not.
+raising the Perl version dependency to 5.10.1 from 5.8.1, to simplify
+further dependencies.
 
 * Whatever else needs doing, such as, fixing bugs.

@@ -7,7 +7,8 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta; # package
-    use version 0.74; our $VERSION = qv('0.13.3');
+    our $VERSION = '0.013003';
+    $VERSION = eval $VERSION;
     # Note that Perl code only exists at all in this file in order to help
     # the CPAN indexer handle the distribution properly.
 } # package Muldis::Rosetta

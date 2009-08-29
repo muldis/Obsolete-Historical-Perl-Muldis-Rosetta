@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2009-07-xx   Darren Duncan <perl@DarrenDuncan.net>
+2009-08-xx   Darren Duncan <perl@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.14.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.14.0.tar.gz.  Muldis Rosetta version 0.14.0 for Perl 6
@@ -9,6 +9,15 @@
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
     them.
+
+    * This distribution has excised its direct external dependency on the
+    "version" module (bundled with Perl versions 5.10.0+), which was used
+    in all .pm files and a .t file.  And so, the modules in this
+    distribution now declare floating point version numbers of format
+    X.00Y00Z in their code (0.014000 for example); however, all module
+    documentation, and the distribution itself, still uses 3-part version
+    numbers of format X.Y.Z (0.14.0 for example) as before.  The main
+    reason for this change is to gain simplicity and reduce possible bugs.
 
     * As of this release, Muldis Rosetta for Perl 5 uses the
     namespace::autoclean pragma instead of the namespace::clean pragma,
@@ -21,27 +30,28 @@
     * This distribution has gained a new direct external dependency on the
     Carp::Always module, which currently is only used by the 2 test files.
 
-    * Updated external dependency on Test::More to version 0.88, which
+    * Updated external dependency on Test::More to version 0.92, which
     currently is only used by Validator.pm and a test file, same as what
     used previous versions.  While earlier versions of Test::More are
-    bundled with Perl 5, only the impending Perl 5.10.1 will bundle a
-    version not earlier than 0.88, so meanwhile you must update Test::More
-    from CPAN.  The tests were updated to no longer declare a planned
-    number of tests at the start, but instead to declare "done_testing()"
-    at the finish. This change should help make further simultaneous
-    development and merging by multiple developers less error prone.
+    bundled with Perl 5, only Perl 5.10.1+ bundles version 0.92, so if
+    you're using an older Perl then you must update Test::More from CPAN.
+    The tests were updated to no longer declare a planned number of tests
+    at the start, but instead to declare "done_testing()" at the finish (a
+    feature added by Test::More 0.88).  This change should help make
+    further simultaneous development and merging by multiple developers
+    less error prone.
 
-    * Updated external dependencies: Moose/etc to version 0.88,
-    MooseX::Singleton to version 0.18, Class::MOP to version 0.90.
+    * Updated external dependencies: Moose/etc to version 0.89,
+    MooseX::Singleton to version 0.18, Class::MOP to version 0.92.
 
     * (Interface.pm, Engine.pm)  In accordance with the latest Muldis D
-    spec (v0.81.0), with the ::Process role/class, renamed its public
+    spec (v0.84.0), with the ::Process role/class, renamed its public
     method "proc_invo" to "imp_invo" and renamed that method's "procedure"
     parameter to "imperative"; this method may now invoke any imperative
     (non-function) Muldis D routine at all, including updaters.
 
     * (Interface.pm, Validator.pm)  Updated the example|test Muldis D code,
-    in accordance with the latest Muldis D spec (v0.81.0): The 'QSet' value
+    in accordance with the latest Muldis D spec (v0.84.0): The 'QSet' value
     kind has been renamed to 'Set'.
 
     * (SeeAlso.pod)  Minor updates.
