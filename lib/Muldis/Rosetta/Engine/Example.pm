@@ -3,21 +3,21 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.013003;
+use Muldis::Rosetta::Interface 0.014000;
 
-#use Muldis::Rosetta::Engine::Example::Value 0.013003;
-#use Muldis::Rosetta::Engine::Example::Routines 0.013003;
-#use Muldis::Rosetta::Engine::Example::Storage 0.013003;
-#use Muldis::Rosetta::Engine::Example::Runtime 0.013003;
-#use Muldis::Rosetta::Engine::Example::Util 0.013003;
-#use Muldis::Rosetta::Engine::Example::PlainText 0.013003;
-#use Muldis::Rosetta::Engine::Example::HostedData 0.013003;
+#use Muldis::Rosetta::Engine::Example::Value 0.014000;
+#use Muldis::Rosetta::Engine::Example::Routines 0.014000;
+#use Muldis::Rosetta::Engine::Example::Storage 0.014000;
+#use Muldis::Rosetta::Engine::Example::Runtime 0.014000;
+#use Muldis::Rosetta::Engine::Example::Util 0.014000;
+#use Muldis::Rosetta::Engine::Example::PlainText 0.014000;
+#use Muldis::Rosetta::Engine::Example::HostedData 0.014000;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    our $VERSION = '0.013003';
+    our $VERSION = '0.014000';
     $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 
@@ -349,7 +349,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.13.3 for
+This document describes Muldis::Rosetta::Engine::Example version 0.14.0 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -476,7 +476,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.84.0":PTMD_STD>.  No other version
+C<Muldis_D:"http://muldis.com":"0.85.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -484,7 +484,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.84.0', 'HDMD_Perl5_STD' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.85.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -513,7 +513,7 @@ L<MooseX::Singleton-ver(0.18..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
-L<Muldis::Rosetta::Interface-ver(0.13.3..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.14.0..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

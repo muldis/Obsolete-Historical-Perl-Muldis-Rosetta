@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface; # module
-    our $VERSION = '0.013003';
+    our $VERSION = '0.014000';
     $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 
@@ -141,7 +141,7 @@ Common public API for Muldis Rosetta Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Interface version 0.13.3 for Perl
+This document describes Muldis::Rosetta::Interface version 0.14.0 for Perl
 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -161,7 +161,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.84.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.85.0', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
