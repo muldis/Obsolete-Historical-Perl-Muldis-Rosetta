@@ -15,7 +15,13 @@ table for these items; they are simply to be done "as soon as possible".
 the progress is non-trivial, so there are regular public snapshots with
 nicely rendered documentation.
 
-* Update Interface.pm to add a few specialized Process methods for loading
+* Consider using Yuval Kogman's Try::Tiny module rather than direct
+block-eval, for both nicer syntax, doing the right thing with edge cases.
+
+* Update Interface.pm and Engine.pm concerning that Muldis D no longer has
+a bootloader concept, and regular Muldis D depots are used instead.
+THE FIRST SENTENCE AFFECTS THE REST OF THIS TODO ITEM, WHICH IS OUTDATED.
+Update Interface.pm to add a few specialized Process methods for loading
 or dumping whole depots.  The first sort of exists already in the form of
 execute() though that'll need to be able to take an entire depot content
 declaratively, catalog plus data at once.  The second would be added and

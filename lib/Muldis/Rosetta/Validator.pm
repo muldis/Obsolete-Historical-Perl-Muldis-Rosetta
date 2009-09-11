@@ -37,7 +37,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.85.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.87.0', 'HDMD_Perl5_STD' ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 

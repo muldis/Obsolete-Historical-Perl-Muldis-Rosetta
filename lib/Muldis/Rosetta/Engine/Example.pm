@@ -40,7 +40,8 @@ sub new_machine {
 
     use namespace::autoclean 0.08;
 
-    use MooseX::Singleton 0.18;
+    use Moose 0.89;
+    use MooseX::Singleton 0.20;
 
     with 'Muldis::Rosetta::Interface::Machine';
 
@@ -476,7 +477,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.85.0":PTMD_STD>.  No other version
+C<Muldis_D:"http://muldis.com":"0.87.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -484,7 +485,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.85.0', 'HDMD_Perl5_STD' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.87.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -509,7 +510,7 @@ recommends one that is at least 5.10.1.
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
 L<Moose-ver(0.89..*)|Moose>, L<Moose::Role-ver(0.89..*)|Moose::Role>,
-L<MooseX::Singleton-ver(0.18..*)|MooseX::Singleton>.
+L<MooseX::Singleton-ver(0.20..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

@@ -252,13 +252,13 @@ L<DBIx::StORM>, L<Tao::DBI>, L<NTuples>, L<DBIx::CopyRecord>,
 L<DBIx::DataModel>, L<Data::Domain>, L<Fey>, L<SQL::Tokenizer>, L<SQL::DB>,
 L<MooseX::Storage>, L<LARC::DB>, L<Migraine>, L<DBIx::Declare>, L<EZDBI>,
 L<Test::Database>, L<UR>, L<OP>, L<Data::Schema>, L<SQL::Filter>, L<DBR>,
-L<Data::Visitor>, L<DataCube>, L<DBIx::Simple::Procedure>, L<DBIx::Skinny>,
+L<Data::Visitor>, L<DBIx::Simple::Procedure>, L<DBIx::Skinny>,
 L<Data::Couplet>, L<SQL::Preproc>.
 
 These Perl 5 packages in that problem domain used to exist on CPAN, but no
 longer do except on backpan:
 
-Object::Relation, DBIx::Namespace, SQL::YASP, DBD::Trini.
+Object::Relation, DBIx::Namespace, SQL::YASP, DBD::Trini, DataCube.
 
 =head1 AUTHOR
 

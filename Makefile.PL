@@ -18,7 +18,7 @@ WriteMakefile(
         'namespace::autoclean' => 0.08,
         'Moose' => 0.89,
         'Moose::Role' => 0.89,
-        'MooseX::Singleton' => 0.18,
+        'MooseX::Singleton' => 0.20,
         'Class::MOP' => 0.92, # req latest indep of Moose
 
         # VALIDATOR MODULE REQUIRES:
