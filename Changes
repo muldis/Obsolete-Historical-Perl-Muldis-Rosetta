@@ -10,7 +10,7 @@
     version incorporates all of said updates, though it may have some of
     them.
 
-    * Updated external dependencies: MooseX::Singleton to version 0.20.
+    * Updated external dependencies: MooseX::Singleton to version 0.21.
 
     * (SeeAlso.pod)  Minor updates.
 

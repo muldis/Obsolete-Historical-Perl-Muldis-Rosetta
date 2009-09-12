@@ -41,7 +41,7 @@ sub new_machine {
     use namespace::autoclean 0.08;
 
     use Moose 0.89;
-    use MooseX::Singleton 0.20;
+    use MooseX::Singleton 0.21;
 
     with 'Muldis::Rosetta::Interface::Machine';
 
@@ -510,7 +510,7 @@ recommends one that is at least 5.10.1.
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
 L<Moose-ver(0.89..*)|Moose>, L<Moose::Role-ver(0.89..*)|Moose::Role>,
-L<MooseX::Singleton-ver(0.20..*)|MooseX::Singleton>.
+L<MooseX::Singleton-ver(0.21..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
