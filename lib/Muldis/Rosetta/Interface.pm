@@ -11,7 +11,7 @@ use warnings FATAL => 'all';
     $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 
-    use namespace::autoclean 0.08;
+    use namespace::autoclean 0.09;
 
     use Carp;
     use Scalar::Util 'blessed';
@@ -75,9 +75,9 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Machine; # role
 
-    use namespace::autoclean 0.08;
+    use namespace::autoclean 0.09;
 
-    use Moose::Role 0.89;
+    use Moose::Role 0.90;
 
     requires 'new_process';
 
@@ -88,9 +88,9 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Process; # role
 
-    use namespace::autoclean 0.08;
+    use namespace::autoclean 0.09;
 
-    use Moose::Role 0.89;
+    use Moose::Role 0.90;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -114,9 +114,9 @@ sub new_machine {
 
 { package Muldis::Rosetta::Interface::Value; # role
 
-    use namespace::autoclean 0.08;
+    use namespace::autoclean 0.09;
 
-    use Moose::Role 0.89;
+    use Moose::Role 0.90;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -161,7 +161,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.87.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.89.0', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
@@ -518,8 +518,8 @@ This file requires any version of Perl 5.x.y that is at least 5.8.1, and
 recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<namespace::autoclean-ver(0.08..*)|namespace::autoclean>,
-L<Moose::Role-ver(0.89..*)|Moose::Role>.
+L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
+L<Moose::Role-ver(0.90..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

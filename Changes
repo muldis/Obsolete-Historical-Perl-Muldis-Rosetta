@@ -10,7 +10,9 @@
     version incorporates all of said updates, though it may have some of
     them.
 
-    * Updated external dependencies: MooseX::Singleton to version 0.21.
+    * Updated external dependencies: namespace::autoclean to version 0.09,
+    Moose/etc to version 0.90, MooseX::Singleton to version 0.21,
+    Class::MOP to version 0.93.
 
     * (SeeAlso.pod)  Minor updates.
 
