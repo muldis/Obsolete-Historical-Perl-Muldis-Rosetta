@@ -16,8 +16,8 @@ WriteMakefile(
 
         # These are not bundled with any version of Perl.
         'namespace::autoclean' => 0.09,
-        'Moose' => 0.90,
-        'Moose::Role' => 0.90,
+        'Moose' => 0.91,
+        'Moose::Role' => 0.91,
         'MooseX::Singleton' => 0.21,
         'Class::MOP' => 0.93, # req latest indep of Moose
 
@@ -26,7 +26,7 @@ WriteMakefile(
         # These are bundled with Perls 5.10.1+ but not earlier Perls.
         'Test::More' => 0.92,
         # These are not bundled with any version of Perl.
-        'Test::Moose' => 0.90,
+        'Test::Moose' => 0.91,
 
         # BUILD REQUIRES:
 

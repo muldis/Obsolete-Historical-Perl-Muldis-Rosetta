@@ -15,7 +15,7 @@ use Muldis::Rosetta::Interface 0.014000;
     use namespace::autoclean 0.09;
 
     use Test::More 0.92;
-    use Test::Moose 0.90;
+    use Test::Moose 0.91;
 
 ###########################################################################
 
@@ -37,7 +37,7 @@ sub main {
     });
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.89.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.91.0', 'HDMD_Perl5_STD' ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -247,7 +247,7 @@ L<Test::More-ver(0.92..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Test::Moose-ver(0.90..*)|Test::Moose>.
+L<Test::Moose-ver(0.91..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

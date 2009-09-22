@@ -11,7 +11,7 @@
     them.
 
     * Updated external dependencies: namespace::autoclean to version 0.09,
-    Moose/etc to version 0.90, MooseX::Singleton to version 0.21,
+    Moose/etc to version 0.91, MooseX::Singleton to version 0.21,
     Class::MOP to version 0.93.
 
     * (SeeAlso.pod)  Minor updates.
