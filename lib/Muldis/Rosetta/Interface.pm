@@ -77,7 +77,7 @@ sub new_machine {
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.91;
+    use Moose::Role 0.92;
 
     requires 'new_process';
 
@@ -90,7 +90,7 @@ sub new_machine {
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.91;
+    use Moose::Role 0.92;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -116,7 +116,7 @@ sub new_machine {
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.91;
+    use Moose::Role 0.92;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -161,7 +161,7 @@ producing a third Perl variable holding the relation data of the result.
         'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.91.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.92.0', 'HDMD_Perl5_STD' ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
@@ -194,8 +194,7 @@ producing a third Perl variable holding the relation data of the result.
     # ] ] ]
 
 For most examples of using Muldis Rosetta, and tutorials, please see the
-separate L<Muldis::Rosetta::Cookbook> distribution (when that comes to
-exist).
+separate L<Muldis::D::Manual>.
 
 =head1 DESCRIPTION
 
@@ -519,7 +518,7 @@ recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Moose::Role-ver(0.91..*)|Moose::Role>.
+L<Moose::Role-ver(0.92..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

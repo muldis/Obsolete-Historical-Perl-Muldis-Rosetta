@@ -11,10 +11,22 @@
     them.
 
     * Updated external dependencies: namespace::autoclean to version 0.09,
-    Moose/etc to version 0.91, MooseX::Singleton to version 0.21,
-    Class::MOP to version 0.93.
+    Moose/etc to version 0.92, MooseX::Singleton to version 0.21,
+    Class::MOP to version 0.94.
 
-    * (SeeAlso.pod)  Minor updates.
+    * Transferred the supplementary file
+    archives/OSCON2005LightningTalk.txt out of the Muldis-Rosetta
+    distribution and into the new Muldis-D-Manual distribution; and so
+    Muldis-Rosetta no longer has an archives/ folder.
+
+    * (SeeAlso.pod)  Added new main pod section "FURTHER DOCUMENTATION"
+    which refers to the new Muldis::D::Manual distro, just below the
+    "FORMAL SPECIFICATION" main pod section.  Also removed the pod
+    sub-section "Muldis::Rosetta::Cookbook" of "PROSPECTIVE MULDIS ROSETTA
+    EXTENSIONS" because the new section replaces it.
+
+    * (Interface.pm, README)  Replaced a ref to a possible future
+    "Cookbook" distro with a ref to the existing new Muldis-D-Manual dist.
 
 2009-08-29   Darren Duncan <perl@DarrenDuncan.net>
 

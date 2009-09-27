@@ -28,6 +28,15 @@ document of the Muldis D spec for links to various things comprising and
 related to I<The Third Manifesto>, which Muldis Rosetta is a formal
 implementation of by way of Muldis D.
 
+=head1 FURTHER DOCUMENTATION
+
+Please see the separately distributed L<Muldis::D::Manual> distribution for
+Pod files with a potentially large collection of examples, tutorials, FAQs,
+and so on that help people learn how to employ Muldis D and its
+implementations for the things they need to do.  In particular, there
+should be a lot of help given for people migrating from other systems that
+use different paradigms than Muldis D does, for example SQL-using systems.
+
 =head1 LIST OF PUBLIC MULDIS ROSETTA ENGINES
 
 I<This documentation is pending.>
@@ -36,25 +45,12 @@ L<Muldis::Rosetta::Engine::Example>.
 
 =head1 PROSPECTIVE MULDIS ROSETTA EXTENSIONS
 
-These are some theoretical examples of other Perl modules or documentation
-that could be created to work with Muldis Rosetta, but if so would most
-likely be distributed independently from it.  The given package names are
-examples, and the examples in question could have other names if
-appropriate.
+These are some theoretical examples of other Perl modules that could be
+created to work with Muldis Rosetta, but if so would most likely be
+distributed independently from it.  The given package names are examples,
+and the examples in question could have other names if appropriate.
 
 =over
-
-=item C<Muldis::Rosetta::Cookbook[|::\w+]>
-
-Pod files with a potentially large collection of examples, tutorials, FAQs,
-and so on that help people learn how to employ Muldis Rosetta for the
-things they need to do.  In particular, there should be a lot of help given
-for people migrating from other systems that use different paradigms than
-Muldis Rosetta does, for example SQL-using systems.
-
-The Cookbook distro may also be the main repository of executing code that
-would otherwise go in the /examples directory of the Muldis Rosetta core
-distro.
 
 =item C<Genezzo> or C<Genezzo::Muldis_Rosetta> or
 C<Muldis::Rosetta::Engine::Genezzo> etc
