@@ -15,6 +15,8 @@ table for these items; they are simply to be done "as soon as possible".
 the progress is non-trivial, so there are regular public snapshots with
 nicely rendered documentation.
 
+* Consider using Carp::Clan module, if it would be useful.
+
 * Consider using Yuval Kogman's Try::Tiny module rather than direct
 block-eval, for both nicer syntax, doing the right thing with edge cases.
 

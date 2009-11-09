@@ -223,10 +223,10 @@ sub upd_invo {
     return;
 }
 
-sub imp_invo {
+sub proc_invo {
     my ($self, $args) = @_;
-    my ($imperative, $upd_args, $ro_args, $pt_lang, $hd_lang) = @{$args}{
-        'imperative', 'upd_args', 'ro_args', 'pt_lang', 'hd_lang'};
+    my ($procedure, $upd_args, $ro_args, $pt_lang, $hd_lang) = @{$args}{
+        'procedure', 'upd_args', 'ro_args', 'pt_lang', 'hd_lang'};
 
     # TODO, the real work
 
@@ -477,7 +477,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.92.0":PTMD_STD>.  No other version
+C<Muldis_D:"http://muldis.com":"0.99.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -485,7 +485,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.92.0', 'HDMD_Perl5_STD' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.99.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -554,7 +554,7 @@ this file, then they are expected to be addressed in the short term.
 
 =head1 AUTHOR
 
-Darren Duncan (C<perl@DarrenDuncan.net>)
+Darren Duncan (C<darren@DarrenDuncan.net>)
 
 =head1 LICENSE AND COPYRIGHT
 

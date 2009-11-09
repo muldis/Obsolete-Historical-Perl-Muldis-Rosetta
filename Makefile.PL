@@ -9,7 +9,7 @@ WriteMakefile(
     'NAME' => 'Muldis::Rosetta',
     'VERSION' => '0.14.0',
     'ABSTRACT' => 'Full-featured truly relational DBMS in Perl',
-    'AUTHOR' => 'Darren Duncan <perl@DarrenDuncan.net>',
+    'AUTHOR' => 'Darren Duncan <darren@DarrenDuncan.net>',
     'LICENSE' => 'lgpl',
     'PREREQ_PM' => {
         # ALWAYS REQUIRES:

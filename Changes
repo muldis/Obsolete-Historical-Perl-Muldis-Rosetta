@@ -1,10 +1,10 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2009-09-xx   Darren Duncan <perl@DarrenDuncan.net>
+2009-11-xx   Darren Duncan <darren@DarrenDuncan.net>
 
-    * Muldis Rosetta version 0.14.1 for Perl 5 is released on CPAN as
-    Muldis-Rosetta-0.14.1.tar.gz.  Muldis Rosetta version 0.14.1 for Perl 6
+    * Muldis Rosetta version 0.15.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.15.0.tar.gz.  Muldis Rosetta version 0.15.0 for Perl 6
     is not released at all.  The rest of this Changes entry refers only to
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
@@ -17,6 +17,13 @@
     Moose/etc to version 0.92, MooseX::Singleton to version 0.21,
     Class::MOP to version 0.94.
 
+    * (Interface.pm, Engine.pm)  In a reversal of part of release 0.14.0,
+    and corresponding to changes introduced in Muldis D spec v0.97.0:  With
+    the ::Process role/class, renamed its public method "imp_invo" to
+    "proc_invo" and renamed that method's "imperative" parameter to
+    "procedure"; this method may now only invoke a Muldis D procedure (or
+    system-service), and it may no longer invoke an updater.
+
     * Transferred the supplementary file
     archives/OSCON2005LightningTalk.txt out of the Muldis-Rosetta
     distribution and into the new Muldis-D-Manual distribution; and so
@@ -26,12 +33,15 @@
     which refers to the new Muldis::D::Manual distro, just below the
     "FORMAL SPECIFICATION" main pod section.  Also removed the pod
     sub-section "Muldis::Rosetta::Cookbook" of "PROSPECTIVE MULDIS ROSETTA
-    EXTENSIONS" because the new section replaces it.
+    EXTENSIONS" because the new section replaces it.  Also minor oth upds.
 
     * (Interface.pm, README)  Replaced a ref to a possible future
     "Cookbook" distro with a ref to the existing new Muldis-D-Manual dist.
 
-2009-08-29   Darren Duncan <perl@DarrenDuncan.net>
+    * Updated all author references to change Darren Duncan's stated email
+    address from "perl@DarrenDuncan.net" to "darren@DarrenDuncan.net".
+
+2009-08-29   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.14.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.14.0.tar.gz.  Muldis Rosetta version 0.14.0 for Perl 6
@@ -86,7 +96,7 @@
 
     * (SeeAlso.pod)  Minor updates.
 
-2009-06-01   Darren Duncan <perl@DarrenDuncan.net>
+2009-06-01   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.3 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.13.3.tar.gz.  Muldis Rosetta version 0.13.3 for Perl 6
@@ -112,7 +122,7 @@
 
     * (SeeAlso.pod)  Minor formatting updates.
 
-2009-02-09   Darren Duncan <perl@DarrenDuncan.net>
+2009-02-09   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.2 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.13.2.tar.gz.  Muldis Rosetta version 0.13.2 for Perl 6
@@ -157,7 +167,7 @@
     section to change the Copyright declaration from "Darren Duncan" to
     "Muldis Data Systems, Inc." (which is wholly owned by Darren Duncan).
 
-2009-01-24   Darren Duncan <perl@DarrenDuncan.net>
+2009-01-24   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.1 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.13.1.tar.gz.  Muldis Rosetta version 0.13.1 for Perl 6
@@ -216,7 +226,7 @@
 
     * Incremented all copyright year range-ends to 2009.
 
-2008-11-08   Darren Duncan <perl@DarrenDuncan.net>
+2008-11-08   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.13.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.13.0.tar.gz.  Muldis Rosetta version 0.13.0 for Perl 6
@@ -246,7 +256,7 @@
 
     * (SeeAlso.pod)  Minor updates.
 
-2008-09-19   Darren Duncan <perl@DarrenDuncan.net>
+2008-09-19   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.12.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.12.0.tar.gz.  Muldis Rosetta version 0.12.0 for Perl 6
@@ -329,7 +339,7 @@
     initial something to the BUGS AND LIMITATIONS main pod section, and
     updated the INTERFACE section.
 
-2008-09-03   Darren Duncan <perl@DarrenDuncan.net>
+2008-09-03   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.11.1 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.11.1.tar.gz.  Muldis Rosetta version 0.11.1 for Perl 6
@@ -349,7 +359,7 @@
     modified clone of Test::More's isa_ok().  Instead, added dependency on
     Test::Moose, which provides routines to complement Test::More.
 
-2008-08-30   Darren Duncan <perl@DarrenDuncan.net>
+2008-08-30   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.11.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.11.0.tar.gz.  Muldis Rosetta version 0.11.0 for Perl 6
@@ -427,7 +437,7 @@
     Muldis D source code parsers or builders that PlainText|HostedData
     provide, by which the outside world interacts with the "inner" Value.
 
-2008-08-19   Darren Duncan <perl@DarrenDuncan.net>
+2008-08-19   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.10.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.10.0.tar.gz.  Muldis Rosetta version 0.10.0 for Perl 6
@@ -461,7 +471,7 @@
     replaced by the 'has'.  Some of the more complicated input checking and
     post-processing remains in the BUILD though.
 
-2008-08-04   Darren Duncan <perl@DarrenDuncan.net>
+2008-08-04   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.9.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.9.0.tar.gz.  Muldis Rosetta version 0.9.0 for Perl 6
@@ -503,7 +513,7 @@
     still manually specify everything with BUILD, DEMOLISH, and explicit
     accessor methods; this is expected to change in a future release.
 
-2008-08-02   Darren Duncan <perl@DarrenDuncan.net>
+2008-08-02   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.8.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.8.0.tar.gz.  Muldis Rosetta version 0.8.0 for Perl 6
@@ -582,7 +592,7 @@
     wasn't a particularly good proposal; I decided there is little benefit
     in keeping this one-pager proposal, so away it goes.
 
-2008-04-12   Darren Duncan <perl@DarrenDuncan.net>
+2008-04-12   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.7.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.7.0.tar.gz.  Muldis Rosetta version 0.7.0 for Perl 6
@@ -642,7 +652,7 @@
         t/Muldis_Rosetta_50_Validate_Example.t
         TODO
 
-2008-04-11   Darren Duncan <perl@DarrenDuncan.net>
+2008-04-11   Darren Duncan <darren@DarrenDuncan.net>
 
     The next version of the Module List will list the following module:
 
@@ -659,7 +669,7 @@
     Muldis::
     ::Rosetta    cmpOl Full-featured truly relational DBMS in Perl  DUNCAND
 
-2008-04-10   Darren Duncan <perl@DarrenDuncan.net>
+2008-04-10   Darren Duncan <darren@DarrenDuncan.net>
 
     Record update in the PAUSE modules database:
 
@@ -674,7 +684,7 @@
        chapterid: [7]
         mlstatus: [delete] was [list]
 
-2008-03-23   Darren Duncan <perl@DarrenDuncan.net>
+2008-03-23   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB version 0.6.2 for Perl 5 is released on CPAN as
     Muldis-DB-0.6.2.tar.gz.  Muldis DB version 0.6.2 for Perl 6 is not
@@ -704,7 +714,7 @@
     Muldis DB's reflection of the Muldis D language were out of date, but
     now they were updated to resync.
 
-2008-03-10   Darren Duncan <perl@DarrenDuncan.net>
+2008-03-10   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB version 0.6.1 for Perl 5 is released on CPAN as
     Muldis-DB-0.6.1.tar.gz.  Muldis DB version 0.6.1 for Perl 6 is not
@@ -726,7 +736,7 @@
     also be given elsewhere); this is likely the most succinct description
     yet of what the projects are and why one would want to use them.
 
-2008-03-10   Darren Duncan <perl@DarrenDuncan.net>
+2008-03-10   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB for Perl 6 has suspended development temporarily while
     resources are focused on just Muldis DB for Perl 5 in the short term;
@@ -736,7 +746,7 @@
     version may still be made, but it should not be interpreted that these
     are keeping the whole project in feature parity with the Perl 5 one.
 
-2007-12-09   Darren Duncan <perl@DarrenDuncan.net>
+2007-12-09   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB version 0.6.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.6.0.tar.gz.  Muldis DB version 0.6.0 for Perl 6 is not
@@ -769,7 +779,7 @@
     parameters; nearly all of the Machine methods went to Process.  As part
     of the split, 2 methods were added to Machine, and 1 to Process.
 
-2007-10-20   Darren Duncan <perl@DarrenDuncan.net>
+2007-10-20   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB version 0.5.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.5.0.tar.gz.  Muldis DB version 0.5.0 for Perl 6 is not
@@ -803,7 +813,7 @@
     * Fleshed out the tail of this Changes file with a summary pre-release
     (rel. 2007 June) history of Muldis DB; going from mid-2002 to mid-2007.
 
-2007-09-22   Darren Duncan <perl@DarrenDuncan.net>
+2007-09-22   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB version 0.4.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.4.0.tar.gz.  Muldis DB version 0.4.0 for Perl 6 is not
@@ -923,7 +933,7 @@
 
     * Updated the TODO file.
 
-2007-09-14   Darren Duncan <perl@DarrenDuncan.net>
+2007-09-14   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB version 0.3.2 for Perl 5 is released on CPAN as
     Muldis-DB-0.3.2.tar.gz.  Muldis DB version 0.3.2 for Perl 6 is not
@@ -944,7 +954,7 @@
     tutorials/cookbooks; or some extensions would be under other
     GPLv3-compatible licenses.
 
-2007-08-18   Darren Duncan <perl@DarrenDuncan.net>
+2007-08-18   Darren Duncan <darren@DarrenDuncan.net>
 
     Record update in the PAUSE modules database:
 
@@ -959,7 +969,7 @@
        chapterid: [7]
         mlstatus: [list]
 
-2007-08-18   Darren Duncan <perl@DarrenDuncan.net>
+2007-08-18   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis DB version 0.3.1 for Perl 5 is released on CPAN as
     Muldis-DB-0.3.1.tar.gz.  Muldis DB version 0.3.1 for Perl 6 is not
@@ -991,7 +1001,7 @@
     the Muldis DB framework.  Accordingly, the file LICENSE/LGPL was added
     to this distro, which contains the text of the LGPL version 3.0.
 
-2007-07-24   Darren Duncan <perl@DarrenDuncan.net>
+2007-07-24   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis::DB version 0.3.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.3.0.tar.gz.  Muldis::DB version 0.3.0 for Perl 6 is not
@@ -1035,7 +1045,7 @@
         t/MDB_50_Validate_Example.t
         TODO
 
-2007-07-20   Darren Duncan <perl@DarrenDuncan.net>
+2007-07-20   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis::DB version 0.2.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.2.0.tar.gz.  Muldis::DB version 0.2.0 for Perl 6 is not
@@ -1063,7 +1073,7 @@
     [TypeInvo|TypeDict|ExprDict|ValueDict][|NQ|AQ] to [_\1|\1|Quasi\1]
     respectively, and refs to said.
 
-2007-07-11   Darren Duncan <perl@DarrenDuncan.net>
+2007-07-11   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis::DB version 0.1.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.1.0.tar.gz.  Muldis::DB version 0.1.0 for Perl 6 is not
@@ -1102,7 +1112,7 @@
     the likes of less|greater-than or min|max or sorting operations.  Both
     AST.pm and PhysType.pm were updated to include this type.
 
-2007-06-29   Darren Duncan <perl@DarrenDuncan.net>
+2007-06-29   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis::DB version 0.0.1 for Perl 5 is released on CPAN as
     Muldis-DB-0.0.1.tar.gz.  Muldis::DB version 0.0.1 for Perl 6 is not
@@ -1129,7 +1139,7 @@
     notice to the Changes file.  Updated parts of DB.pm and Copying.pod
     concerning licensing matters.  This release has no code changes.
 
-2007-06-20   Darren Duncan <perl@DarrenDuncan.net>
+2007-06-20   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis::DB version 0.0.0 for Perl 5 is released on CPAN as
     Muldis-DB-0.0.0.tar.gz.  Muldis::DB version 0.0.0 for Perl 6 is not
@@ -1180,7 +1190,7 @@
     is fleshed out.  Also, it should be possible now to start writing code
     that uses or extends it.
 
-2007-06-04   Darren Duncan <perl@DarrenDuncan.net>
+2007-06-04   Darren Duncan <darren@DarrenDuncan.net>
 
     The next version of the Module List will list the following module:
 
