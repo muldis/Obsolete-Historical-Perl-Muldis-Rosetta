@@ -79,6 +79,16 @@
     * (Interface.pm, README)  Replaced a ref to a possible future
     "Cookbook" distro with a ref to the existing new Muldis-D-Manual dist.
 
+    * Major update to the Makefile.PL (and META.yml) to make its format
+    more modern, in particular by distinguishing between dependencies that
+    are needed to use the Muldis::Rosetta modules and those needed only for
+    testing them or for configuring the distribution; previously, the
+    dependencies needed only for testing were treated as if necessary to
+    use Muldis::Rosetta itself; also added a list of "resources" urls.
+
+    * (Rosetta.pm)  Simplified the boilerplate Perl code that exists in
+    this file for the sole purpose of helping the CPAN indexer.
+
     * Updated all author references to change Darren Duncan's stated email
     address from "perl@DarrenDuncan.net" to "darren@DarrenDuncan.net".
 
