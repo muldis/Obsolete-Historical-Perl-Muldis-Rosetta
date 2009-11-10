@@ -3,6 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
+use Class::MOP 0.94;
 use Muldis::Rosetta::Interface 0.014000;
 
 ###########################################################################
@@ -14,6 +15,8 @@ use Muldis::Rosetta::Interface 0.014000;
 
     use namespace::autoclean 0.09;
 
+    use Try::Tiny 0.02;
+
     use Test::More 0.92;
     use Test::Moose 0.92;
 
@@ -24,25 +27,57 @@ sub main {
     my ($engine_name, $process_config)
         = @{$args}{'engine_name', 'process_config'};
 
-    print "#### Muldis::Rosetta::Validator"
-        . " starting test of $engine_name ####\n";
+    if (!defined $engine_name or $engine_name eq q{}) {
+        BAIL_OUT( q{Muldis::Rosetta::Validator: Bad :$engine_name arg;}
+            . q{ it is undefined or it is the empty string.} );
+        return;
+    }
+
+    diag( "Muldis::Rosetta::Validator starting test of $engine_name." );
+
+    # Load Perl module implementing the Muldis Rosetta Engine.
+    my $is_bailing_now = 0;
+    try {
+        Class::MOP::load_class( $engine_name );
+    }
+    catch {
+        BAIL_OUT( q{Muldis::Rosetta::Validator: Could not load}
+            . qq{ Muldis Rosetta Engine module '$engine_name': $_.} );
+        $is_bailing_now = 1;
+    };
+    return
+        if $is_bailing_now;
+    if (!Class::MOP::is_class_loaded( $engine_name )) {
+        BAIL_OUT( q{Muldis::Rosetta::Validator:}
+            . q{ Could not load Muldis Rosetta Engine module}
+            . qq{ '$engine_name': while that file did compile without}
+            . q{ errors, it did not declare the same-named module.} );
+        return;
+    }
+    if (!$engine_name->can( 'new_machine' )) {
+        BAIL_OUT( q{Muldis::Rosetta::Validator:}
+            . q{ The Muldis Rosetta Engine module '$engine_name' does not}
+            . q{ provide the new_machine() constructor function.} );
+        return;
+    }
+    diag( "$engine_name loads and declares new_machine() constructor." );
+    pass( 'Engine module loads and declares new_machine() constructor' );
 
     # Instantiate a Muldis Rosetta DBMS / virtual machine.
-    my $machine = Muldis::Rosetta::Interface::new_machine({
-        'engine_name' => $engine_name,
-    });
+    my $machine = &{$engine_name->can( 'new_machine' )}();
+    pass( 'no death from instantiating new/singleton virtual machine' );
     does_ok( $machine, 'Muldis::Rosetta::Interface::Machine' );
     my $process = $machine->new_process({
         'process_config' => $process_config,
     });
+    pass( 'no death from instantiating new VM process' );
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
         'http://muldis.com', '0.99.0', 'HDMD_Perl5_STD' ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
-    print "#### Muldis::Rosetta::Validator"
-        . " finished test of $engine_name ####\n";
+    diag( "Muldis::Rosetta::Validator finished test of $engine_name." );
 
     done_testing();
 
@@ -129,9 +164,9 @@ sub _scenario_foods_suppliers_shipments_v1 {
     #     [ 'Beckers'  , 'England' ],
     # ] ] ],
 
-    print "# debug: orange food suppliers found:\n";
-#    print "# " . $matched_suppl_as_perl->as_perl() . "\n";
-    print "#  TODO, as_perl()\n";
+    diag( 'debug: orange food suppliers found:' );
+#    diag( $matched_suppl_as_perl->as_perl() );
+    diag( ' TODO, as_perl()' );
 
     return;
 }
@@ -247,6 +282,7 @@ L<Test::More-ver(0.92..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
+L<Try::Tiny-ver(0.02..*)|Try::Tiny>, L<Class::MOP-ver(0.94..*)|Class::MOP>,
 L<Test::Moose-ver(0.92..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current

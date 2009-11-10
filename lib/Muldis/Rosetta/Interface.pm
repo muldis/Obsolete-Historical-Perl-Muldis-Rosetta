@@ -6,69 +6,11 @@ use warnings FATAL => 'all';
 ###########################################################################
 ###########################################################################
 
-{ package Muldis::Rosetta::Interface; # module
+{ package Muldis::Rosetta::Interface; # package
     our $VERSION = '0.014000';
     $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
-
-    use namespace::autoclean 0.09;
-
-    use Carp;
-    use Scalar::Util 'blessed';
-
-###########################################################################
-
-sub new_machine {
-    my ($args) = @_;
-    my ($engine_name) = @{$args}{'engine_name'};
-
-    confess q{new_machine(): Bad :$engine_name arg; it is undefined}
-            . q{ or it is the empty string.}
-        if !defined $engine_name or $engine_name eq q{};
-
-    # A module may be loaded due to it being embedded in a non-excl file.
-    if (!do {
-            no strict 'refs';
-            defined %{$engine_name . '::'};
-        }) {
-        # Note: We have to invoke this 'require' in an eval string
-        # because we need the bareword semantics, where 'require'
-        # will munge the module name into file system paths.
-        eval "require $engine_name;";
-        if (my $err = $@) {
-            confess q{new_machine(): Could not load Muldis Rosetta Engine}
-                . qq{ module '$engine_name': $err};
-        }
-        confess qq{new_machine(): Could not load Muldis Rosetta Engine mod}
-                . qq{ '$engine_name': while that file did compile without}
-                . q{ errors, it did not declare the same-named module.}
-            if !do {
-                no strict 'refs';
-                defined %{$engine_name . '::'};
-            };
-    }
-    confess qq{new_machine(): The Muldis Rosetta Engine mod '$engine_name'}
-            . q{ does not provide the new_machine() constructor function.}
-        if !$engine_name->can( 'new_machine' );
-    my $machine = eval {
-        &{$engine_name->can( 'new_machine' )}();
-    };
-    if (my $err = $@) {
-        confess qq{new_machine(): Th Muldis Rosetta Eng mod '$engine_name'}
-            . qq{ threw an exception during its new_machine() exec: $err};
-    }
-    confess q{new_machine(): The new_machine() constructor function of the}
-            . qq{ Muldis Rosetta Engine mod '$engine_name' did not ret an}
-            . q{ obj of a Muldis::Rosetta::Interface::Machine-doing class.}
-        if !blessed $machine or !$machine->isa( 'Moose::Object' )
-            or !$machine->does( 'Muldis::Rosetta::Interface::Machine' );
-
-    return $machine;
-}
-
-###########################################################################
-
-} # module Muldis::Rosetta::Interface
+} # package Muldis::Rosetta::Interface
 
 ###########################################################################
 ###########################################################################
@@ -155,10 +97,9 @@ This simple example declares two Perl variables containing relation data,
 then does a (N-adic) relational join (natural inner join) on them,
 producing a third Perl variable holding the relation data of the result.
 
-    use Muldis::Rosetta::Interface;
+    use Muldis::Rosetta::Engine::Example;
+    my $machine = Muldis::Rosetta::Engine::Example::new_machine();
 
-    my $machine = Muldis::Rosetta::Interface::new_machine({
-        'engine_name' => 'Muldis::Rosetta::Engine::Example' });
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
         'http://muldis.com', '0.99.0', 'HDMD_Perl5_STD' ] });
@@ -193,6 +134,14 @@ producing a third Perl variable holding the relation data of the result.
     #     [ 3, 2, 4 ],
     # ] ] ]
 
+If the name of the Muldis Rosetta Engine to use is being read from a config
+file, as C<$engine_name>, rather than being hard-coded into the
+application, then these next 2 lines can be used instead of the first 2
+lines above, assuming the Class::MOP module is already loaded:
+
+    Class::MOP::load_class( $engine_name );
+    my $machine = &{$engine_name->can( 'new_machine' )}();
+
 For most examples of using Muldis Rosetta, and tutorials, please see the
 separate L<Muldis::D::Manual>.
 
@@ -220,38 +169,44 @@ constructor-wrapping method of some other object that would provide context
 for it; since you generally don't have to directly invoke any package
 names, you don't need to change your code when the package names change due
 to switching the Engine.  You only refer to some Engine's root package name
-once, as a C<Muldis::Rosetta::Interface::new_machine> argument, and even
-that can be read from a config file rather than being hard-coded in your
-application.
+once, as the namespace on which you invoke the C<new_machine> constructor
+function, and even that can be read from a config file rather than being
+hard-coded in your application.
 
 The usual way that Muldis::Rosetta::Interface indicates a failure is to
 throw an exception; most often this is due to invalid input.  If an invoked
 routine simply returns, you can assume that it has succeeded, even if the
 return value is undefined.
 
-=head1 The Muldis::Rosetta::Interface Module
+=head1 The Root Package of a Muldis Rosetta Engine
 
-The C<Muldis::Rosetta::Interface> module is the stateless root package by
-way of which you access the whole Muldis Rosetta API.  That is, you use it
-to load engines and instantiate virtual machines, which provide the rest of
-the Muldis Rosetta API.
+A Perl module that is a Muldis Rosetta Engine is expected to be implemented
+with a public API consisting of one stateless root package plus several
+classes.  The stateless root package is what by way of which you access the
+whole Muldis Rosetta API; that is, you use it to instantiate virtual
+machines, which provide the rest of the Muldis Rosetta API.  The root
+package is expected to have the same Perl package name as the conceptual
+Perl package name of the whole Engine; for example, the Engine named
+C<Muldis::Rosetta::Engine::Example> is expected to declare a package named
+C<Muldis::Rosetta::Engine::Example> as its root package. There is no strict
+requirement on what the other API-providing classes of the Engine are
+named, especially since in general any users of the Engine would never be
+referencing objects of theirs by name; however, best practice would have
+them living in child namespaces of the Engine root package, for example
+C<Muldis::Rosetta::Engine::Example::Public::Machine>.
+
+The root package of a Muldis Rosetta Engine is expected to declare a
+C<new_machine> constructor function, as described next.
 
 =head2 new_machine
 
-C<method new_machine of Muldis::Rosetta::Interface::Machine (Str
-:$engine_name!)>
+C<sub new_machine of Muldis::Rosetta::Interface::Machine ()>
 
 This constructor function selects (first creating if necessary) and returns
 the singleton C<Machine> object that is implemented by the Muldis Rosetta
-Engine named by its named argument C<$engine_name>.  The named argument
-C<$engine_name> is the name of a Perl module that is expected to be the
-root package of a Muldis Rosetta Engine, and which is expected to declare a
-C<new_machine> subroutine with zero parameters; invoking this subroutine is
-expected to return an object of some class of the same Engine which does
-the C<Muldis::Rosetta::Interface::Machine> role.  This function will start
-by testing if the root package is already loaded (it may be declared by
-some already-loaded file of another name), and only if not, will it do a
-Perl 'require' of the C<$engine_name>.
+Engine whose stateless root package name it is invoked on.  This
+constructor function is expected to return an object of some class of the
+same Engine which does the C<Muldis::Rosetta::Interface::Machine> role.
 
 =head1 The Muldis::Rosetta::Interface::Machine Role
 
@@ -271,8 +226,8 @@ thrown.
 
 =head2 new_process
 
-C<sub new_process of Muldis::Rosetta::Interface::Process ($self: Hash
-:$process_config?)>
+C<method new_process of Muldis::Rosetta::Interface::Process ($self:
+Hash :$process_config?)>
 
 This method creates and returns a new C<Process> object that is associated
 with the invocant C<Machine>; that C<Process> object is initialized using
@@ -354,8 +309,8 @@ C<$source_code> in Str vs Array|obj categorization.
 
 =head2 new_value
 
-C<method new_value of Muldis::Rosetta::Interface::Value ($self: Any
-:$source_code!, Any :$lang?)>
+C<method new_value of Muldis::Rosetta::Interface::Value ($self:
+Any :$source_code!, Any :$lang?)>
 
 This method creates and returns a new C<Value> object that is associated
 with the invocant C<Process>; that C<Value> object is initialized using the
@@ -377,8 +332,8 @@ categorization.
 
 =head2 func_invo
 
-C<method func_invo of Muldis::Rosetta::Interface::Value ($self: Str
-:$function!, Hash :$args?, Str :$pt_lang?, Array :$hd_lang?)>
+C<method func_invo of Muldis::Rosetta::Interface::Value ($self:
+Str :$function!, Hash :$args?, Str :$pt_lang?, Array :$hd_lang?)>
 
 This method invokes the Muldis D function named by its C<$function>
 argument, giving it arguments from C<$args>, and then returning the result
@@ -392,8 +347,8 @@ as the C<$lang> constructor argument.
 
 =head2 upd_invo
 
-C<method upd_invo ($self: Str :$updater!, Hash :$upd_args!, Hash
-:$ro_args?, Str :$pt_lang?, Array :$hd_lang?)>
+C<method upd_invo ($self: Str :$updater!, Hash :$upd_args!,
+Hash :$ro_args?, Str :$pt_lang?, Array :$hd_lang?)>
 
 This method invokes the Muldis D updater named by its C<$updater> argument,
 giving it subject-to-update arguments from C<$upd_args> and read-only
@@ -409,8 +364,8 @@ been updated to hold a different C<Value> object as a side-effect.
 
 =head2 proc_invo
 
-C<method proc_invo ($self: Str :$procedure!, Hash :$upd_args?, Hash
-:$ro_args?, Str :$pt_lang?, Array :$hd_lang?)>
+C<method proc_invo ($self: Str :$procedure!, Hash :$upd_args?,
+Hash :$ro_args?, Str :$pt_lang?, Array :$hd_lang?)>
 
 This method invokes the Muldis D procedure (or system-service)
 named by its C<$procedure> argument, giving it

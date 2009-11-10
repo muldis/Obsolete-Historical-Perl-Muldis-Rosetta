@@ -13,9 +13,50 @@
     * Updated the README file to indicate that this distribution now has 2
     public Git repositories, one on GitHub.com and one on utsl.gen.nz.
 
+    * As of this release, Muldis Rosetta for Perl 5 uses Try::Tiny for
+    cleaner and less error-prone exception handling versus plain 'eval';
+    this distribution has now gained an external dependency on the Perl 5
+    module 'Try::Tiny', which is not bundled with any version of Perl and
+    will need to be installed from CPAN; Try::Tiny has no dependencies of
+    its own besides Perl itself.
+
     * Updated external dependencies: namespace::autoclean to version 0.09,
     Moose/etc to version 0.92, MooseX::Singleton to version 0.21,
     Class::MOP to version 0.94.
+
+    * This release features a significant update to the public API paradigm
+    used by the Muldis Rosetta framework.  There are no longer any wrappers
+    at all provided by the "Interface", and so users of a Muldis Rosetta
+    "Engine" now interact with it directly in every respect; the initial
+    work of loading an Engine and invoking its "new_machine" is no longer
+    wrapped by an "Interface" routine, and users now do that directly.
+    Note that all of the relevant changes were to Interface.pm and
+    Validator.pm; Engine/Example.pm had zero related changes.
+
+    * (Interface.pm)  Demoted "Muldis::Rosetta::Interface" from a "module"
+    to a "package" and removed its "new_machine" subroutine; so now the
+    only thing this package does is declare a module version number to
+    apply to all the other packages in the file.  As a side-effect of this
+    change, all of this distribution's direct usages of either the "Carp"
+    or "Scalar::Util" modules have been eliminated.  Also renamed the main
+    pod section "The Muldis::Rosetta::Interface Module" to "The Root
+    Package of a Muldis Rosetta Engine" and rewrote its content; the
+    signature of the "new_machine" constructor function was also updated to
+    remove the "engine_name" parameter, as it now reflects the API that an
+    Engine root package must have, rather than the now-removed Interface
+    sub.  Also updated the "SYNOPSIS" main pod section as appropriate, to
+    illustrate direct interaction with an Engine for loading etc.
+
+    * (Validator.pm)  Partially rewrote the "main" subroutine to add
+    adaptions of much of the code that was deleted from Interface.pm in the
+    previous change item.  So "main" now tests individual stages of loading
+    an Engine module and checking that it seems to be correct: that the
+    module file exists and compiles, that it declares a package of the same
+    name as the module, that it declares a "new_machine" subroutine.  Now
+    "main" explicitly traps any errors that might occur prior to trying to
+    invoke "new_machine" and will "BAIL_OUT" cleanly; only when trying to
+    invoke an Engine that passed the prior-mentioned validations will
+    Validator simply let any exceptions go on to kill the test.
 
     * (Interface.pm, Engine.pm)  In a reversal of part of release 0.14.0,
     and corresponding to changes introduced in Muldis D spec v0.97.0:  With

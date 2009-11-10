@@ -17,9 +17,6 @@ nicely rendered documentation.
 
 * Consider using Carp::Clan module, if it would be useful.
 
-* Consider using Yuval Kogman's Try::Tiny module rather than direct
-block-eval, for both nicer syntax, doing the right thing with edge cases.
-
 * Update Interface.pm and Engine.pm concerning that Muldis D no longer has
 a bootloader concept, and regular Muldis D depots are used instead.
 THE FIRST SENTENCE AFFECTS THE REST OF THIS TODO ITEM, WHICH IS OUTDATED.

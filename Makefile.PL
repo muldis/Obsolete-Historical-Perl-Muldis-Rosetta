@@ -20,6 +20,7 @@ WriteMakefile(
         'Moose::Role' => 0.92,
         'MooseX::Singleton' => 0.21,
         'Class::MOP' => 0.94, # req latest indep of Moose
+        'Try::Tiny' => 0.02,
 
         # VALIDATOR MODULE REQUIRES:
 
