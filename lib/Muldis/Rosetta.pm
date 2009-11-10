@@ -21,7 +21,7 @@ Full-featured truly relational DBMS in Perl
 
 =head1 VERSION
 
-This document is Muldis::Rosetta version 0.14.0.
+This document is Muldis::Rosetta version 0.15.0.
 
 =head1 DESCRIPTION
 

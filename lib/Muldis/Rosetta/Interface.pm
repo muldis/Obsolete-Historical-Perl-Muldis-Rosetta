@@ -83,7 +83,7 @@ Common public API for Muldis Rosetta Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Interface version 0.14.0 for Perl
+This document describes Muldis::Rosetta::Interface version 0.15.0 for Perl
 5.
 
 It also describes the same-number versions for Perl 5 of

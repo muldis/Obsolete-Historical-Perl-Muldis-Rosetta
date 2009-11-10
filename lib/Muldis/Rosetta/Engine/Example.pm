@@ -350,7 +350,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.14.0 for
+This document describes Muldis::Rosetta::Engine::Example version 0.15.0 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -514,7 +514,7 @@ L<MooseX::Singleton-ver(0.21..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
-L<Muldis::Rosetta::Interface-ver(0.14.0..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.15.0..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
