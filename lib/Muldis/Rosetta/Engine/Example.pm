@@ -3,21 +3,21 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.014000;
+use Muldis::Rosetta::Interface 0.015000;
 
-#use Muldis::Rosetta::Engine::Example::Value 0.014000;
-#use Muldis::Rosetta::Engine::Example::Routines 0.014000;
-#use Muldis::Rosetta::Engine::Example::Storage 0.014000;
-#use Muldis::Rosetta::Engine::Example::Runtime 0.014000;
-#use Muldis::Rosetta::Engine::Example::Util 0.014000;
-#use Muldis::Rosetta::Engine::Example::PlainText 0.014000;
-#use Muldis::Rosetta::Engine::Example::HostedData 0.014000;
+#use Muldis::Rosetta::Engine::Example::Value 0.015000;
+#use Muldis::Rosetta::Engine::Example::Routines 0.015000;
+#use Muldis::Rosetta::Engine::Example::Storage 0.015000;
+#use Muldis::Rosetta::Engine::Example::Runtime 0.015000;
+#use Muldis::Rosetta::Engine::Example::Util 0.015000;
+#use Muldis::Rosetta::Engine::Example::PlainText 0.015000;
+#use Muldis::Rosetta::Engine::Example::HostedData 0.015000;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    our $VERSION = '0.014000';
+    our $VERSION = '0.015000';
     $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 
@@ -40,7 +40,7 @@ sub new_machine {
 
     use namespace::autoclean 0.09;
 
-    use Moose 0.92;
+    use Moose 0.93;
     use MooseX::Singleton 0.21;
 
     with 'Muldis::Rosetta::Interface::Machine';
@@ -75,7 +75,7 @@ sub new_process {
 
     use namespace::autoclean 0.09;
 
-    use Moose 0.92;
+    use Moose 0.93;
 
     has 'assoc_machine' => (
         is       => 'ro',
@@ -246,7 +246,7 @@ sub proc_invo {
 
     use namespace::autoclean 0.09;
 
-    use Moose 0.92;
+    use Moose 0.93;
 
     has 'assoc_process' => (
         is       => 'ro',
@@ -509,7 +509,7 @@ recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Moose-ver(0.92..*)|Moose>, L<Moose::Role-ver(0.92..*)|Moose::Role>,
+L<Moose-ver(0.93..*)|Moose>, L<Moose::Role-ver(0.93..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.21..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current

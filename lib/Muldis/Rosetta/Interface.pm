@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface; # package
-    our $VERSION = '0.014000';
+    our $VERSION = '0.015000';
     $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 } # package Muldis::Rosetta::Interface
@@ -19,7 +19,7 @@ use warnings FATAL => 'all';
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.92;
+    use Moose::Role 0.93;
 
     requires 'new_process';
 
@@ -32,7 +32,7 @@ use warnings FATAL => 'all';
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.92;
+    use Moose::Role 0.93;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -58,7 +58,7 @@ use warnings FATAL => 'all';
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.92;
+    use Moose::Role 0.93;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -473,7 +473,7 @@ recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Moose::Role-ver(0.92..*)|Moose::Role>.
+L<Moose::Role-ver(0.93..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 

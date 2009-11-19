@@ -3,14 +3,14 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Class::MOP 0.94;
-use Muldis::Rosetta::Interface 0.014000;
+use Class::MOP 0.95;
+use Muldis::Rosetta::Interface 0.015000;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    our $VERSION = '0.014000';
+    our $VERSION = '0.015000';
     $VERSION = eval $VERSION;
 
     use namespace::autoclean 0.09;
@@ -18,7 +18,7 @@ use Muldis::Rosetta::Interface 0.014000;
     use Try::Tiny 0.02;
 
     use Test::More 0.92;
-    use Test::Moose 0.92;
+    use Test::Moose 0.93;
 
 ###########################################################################
 
@@ -282,8 +282,8 @@ L<Test::More-ver(0.92..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Try::Tiny-ver(0.02..*)|Try::Tiny>, L<Class::MOP-ver(0.94..*)|Class::MOP>,
-L<Test::Moose-ver(0.92..*)|Test::Moose>.
+L<Try::Tiny-ver(0.02..*)|Try::Tiny>, L<Class::MOP-ver(0.95..*)|Class::MOP>,
+L<Test::Moose-ver(0.93..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

@@ -22,13 +22,13 @@ WriteMakefile(
       # itself, which in general wouldn't see the info in the other lists,
       # as the other lists are primarily used when generating the META.yml.
       'Carp::Always' => '0.09',
-      'Class::MOP' => '0.94',
+      'Class::MOP' => '0.95',
       'ExtUtils::MakeMaker' => '6.48',
-      'Moose' => '0.92',
-      'Moose::Role' => '0.92',
+      'Moose' => '0.93',
+      'Moose::Role' => '0.93',
       'MooseX::Singleton' => '0.21',
       'namespace::autoclean' => '0.09',
-      'Test::Moose' => '0.92',
+      'Test::Moose' => '0.93',
       'Test::More' => '0.92',
       'Try::Tiny' => '0.02',
    },
@@ -58,9 +58,9 @@ WriteMakefile(
 
             'perl' => '5.008001', # as MIN_PERL_VERSION no affect META.yml
             # These are not bundled with any version of Perl.
-            'Class::MOP' => '0.94', # req latest indep of Moose
-            'Moose' => '0.92',
-            'Moose::Role' => '0.92',
+            'Class::MOP' => '0.95', # req latest indep of Moose
+            'Moose' => '0.93',
+            'Moose::Role' => '0.93',
             'MooseX::Singleton' => '0.21',
             'namespace::autoclean' => '0.09',
             'Try::Tiny' => '0.02',
@@ -70,7 +70,7 @@ WriteMakefile(
             # These are bundled with Perls 5.10.1+ but not earlier Perls.
             'Test::More' => '0.92',
             # These are not bundled with any version of Perl.
-            'Test::Moose' => '0.92',
+            'Test::Moose' => '0.93',
          },
          resources => {
             homepage => 'http://www.muldis.com/',
