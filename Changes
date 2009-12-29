@@ -1,10 +1,10 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2009-11-xx   Darren Duncan <darren@DarrenDuncan.net>
+2009-12-xx   Darren Duncan <darren@DarrenDuncan.net>
 
-    * Muldis Rosetta version 0.15.1 for Perl 5 is released on CPAN as
-    Muldis-Rosetta-0.15.1.tar.gz.  Muldis Rosetta version 0.15.1 for Perl 6
+    * Muldis Rosetta version 0.16.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.16.0.tar.gz.  Muldis Rosetta version 0.16.0 for Perl 6
     is not released at all.  The rest of this Changes entry refers only to
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
@@ -13,8 +13,27 @@
     * Oops, the previous release 0.15.0 shipped with code all declared as
     version 0.014000 rather than 0.015000; the metadata was correct though.
 
-    * Updated external dependencies: Moose/etc to version 0.93, Class::MOP
-    to version 0.95.
+    * Updated external dependencies: Moose/etc to version 0.93,
+    MooseX::Singleton to version 0.22, Class::MOP to version 0.97.
+
+    * (Example.pm)  Corresponding to changes introduced in the
+    documentation of MooseX::Singleton v0.22:  Updated the new_machine()
+    subroutine of the "::Example" module to invoke the "::Machine" class'
+    constructor submethod under the name "instance()" rather than "new()",
+    because MXS now encourages the use of "instance" over "new", and the
+    latter may be deprecated in a future MXS release.
+
+    * (Interface.pm, Example.pm, Validator.pm, SeeAlso.pod)  In
+    Interface.pm, updated the Muldis Rosetta public API so that the
+    "::Machine"-constructor subroutine which the root module of a Muldis
+    Rosetta Engine must provide is now named "select_machine" rather than
+    "new_machine", because the new name is more descriptive as to what it
+    actually does, being that each "::Machine"-doing class is a singleton.
+    In Example.pm, made that change in its "::Example" module.  In
+    Validator.pm and SeeAlso.pod, updated any refs to renamed sub's old
+    name to use the new name.
+
+    * (SeeAlso.pod)  Other minor updates.
 
 2009-11-09   Darren Duncan <darren@DarrenDuncan.net>
 

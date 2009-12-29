@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Class::MOP 0.95;
+use Class::MOP 0.97;
 use Muldis::Rosetta::Interface 0.015000;
 
 ###########################################################################
@@ -54,17 +54,17 @@ sub main {
             . q{ errors, it did not declare the same-named module.} );
         return;
     }
-    if (!$engine_name->can( 'new_machine' )) {
+    if (!$engine_name->can( 'select_machine' )) {
         BAIL_OUT( q{Muldis::Rosetta::Validator:}
             . q{ The Muldis Rosetta Engine module '$engine_name' does not}
-            . q{ provide the new_machine() constructor function.} );
+            . q{ provide the select_machine() constructor function.} );
         return;
     }
-    diag( "$engine_name loads and declares new_machine() constructor." );
-    pass( 'Engine module loads and declares new_machine() constructor' );
+    diag( "$engine_name loads + declares select_machine() constructor." );
+    pass( 'Engine module loads + declares select_machine() constructor' );
 
     # Instantiate a Muldis Rosetta DBMS / virtual machine.
-    my $machine = &{$engine_name->can( 'new_machine' )}();
+    my $machine = &{$engine_name->can( 'select_machine' )}();
     pass( 'no death from instantiating new/singleton virtual machine' );
     does_ok( $machine, 'Muldis::Rosetta::Interface::Machine' );
     my $process = $machine->new_process({
@@ -73,7 +73,7 @@ sub main {
     pass( 'no death from instantiating new VM process' );
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.99.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.104.0', 'HDMD_Perl5_STD' ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -282,7 +282,7 @@ L<Test::More-ver(0.92..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Try::Tiny-ver(0.02..*)|Try::Tiny>, L<Class::MOP-ver(0.95..*)|Class::MOP>,
+L<Try::Tiny-ver(0.02..*)|Try::Tiny>, L<Class::MOP-ver(0.97..*)|Class::MOP>,
 L<Test::Moose-ver(0.93..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current

@@ -56,7 +56,7 @@ and the examples in question could have other names if appropriate.
 C<Muldis::Rosetta::Engine::Genezzo> etc
 
 A Muldis Rosetta Engine built around Jeffrey Cohen's L<Genezzo> DBMS, or
-specifically the root module that provides the C<new_machine> function,
+specifically the root module that provides the C<select_machine> function,
 could conceivably have either of the above file or package names, depending
 on what its author prefers, or something else yet.  A strong name influence
 could be whether Muldis Rosetta forms the sole public interface for Genezzo
@@ -173,7 +173,7 @@ for DBI or other DBMSs.
 =item C<Muldis::Rosetta::Engine::[SQLite|Postgres|Oracle|\w+]>
 
 A default (but not mandatory) namespace for Muldis Rosetta Engines to go,
-that provide the C<new_machine> function and do the
+that provide the C<select_machine> function and do the
 C<Muldis::Rosetta::Interface::\w+> roles.  A lot of these would likely be
 implemented over existing DBMSs, which results in Muldis Rosetta being an
 alternative API for them.
@@ -235,7 +235,7 @@ data or data definitions or connections to databases (list not exhaustive):
 
 L<Set::Relation>, L<DBI>, L<Tangram>, L<DBIx::Class>, L<HDB>, L<KiokuDB>,
 L<Class::DBI>, L<Pixie>, L<Alzabo>, L<DBIx::SQLEngine>, L<Rose::DB>,
-L<SPOPS>, L<Set::Object>, L<Set::Scalar>, L<Oryx>, L<DBM::Deep>,
+L<SPOPS>, L<Set::Object>, L<Set::Scalar>, L<Oryx>, L<DBM::Deep>, L<PLUTO>,
 L<DBIx::SearchBuilder>, L<DBIx::Recordset>, L<DBIx::Abstract>, L<DBIx::IO>,
 L<DBIx::AnyDBD>, L<DBIx::Browse>, L<DBIx::DBH>, L<MKDoc::SQL>,
 L<Data::Transactional>, L<DBIx::ModelUpdate>, L<DBIx::ProcedureCall>,
@@ -249,7 +249,7 @@ L<DBIx::DataModel>, L<Data::Domain>, L<Fey>, L<SQL::Tokenizer>, L<SQL::DB>,
 L<MooseX::Storage>, L<LARC::DB>, L<Migraine>, L<DBIx::Declare>, L<EZDBI>,
 L<Test::Database>, L<UR>, L<OP>, L<Data::Schema>, L<SQL::Filter>, L<DBR>,
 L<Data::Visitor>, L<DBIx::Simple::Procedure>, L<DBIx::Skinny>,
-L<Data::Couplet>, L<SQL::Preproc>, L<DBIx::QueryByName>.
+L<Data::Couplet>, L<SQL::Preproc>, L<DBIx::QueryByName>, L<Data::Schema>.
 
 These Perl 5 packages in that problem domain used to exist on CPAN, but no
 longer do except on backpan:

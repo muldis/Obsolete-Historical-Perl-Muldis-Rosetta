@@ -25,8 +25,8 @@ use Muldis::Rosetta::Interface 0.015000;
 
 ###########################################################################
 
-sub new_machine {
-    return Muldis::Rosetta::Engine::Example::Public::Machine->new();
+sub select_machine {
+    return Muldis::Rosetta::Engine::Example::Public::Machine->instance();
 }
 
 ###########################################################################
@@ -41,7 +41,7 @@ sub new_machine {
     use namespace::autoclean 0.09;
 
     use Moose 0.93;
-    use MooseX::Singleton 0.21;
+    use MooseX::Singleton 0.22;
 
     with 'Muldis::Rosetta::Interface::Machine';
 
@@ -477,7 +477,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.99.0":PTMD_STD>.  No other version
+C<Muldis_D:"http://muldis.com":"0.104.0":PTMD_STD>.  No other version
 numbers are currently supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
@@ -485,7 +485,7 @@ numbers are currently supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.99.0', 'HDMD_Perl5_STD' ]>.  No other
+'Muldis_D', 'http://muldis.com', '0.104.0', 'HDMD_Perl5_STD' ]>.  No other
 version numbers are currently supported.
 
 =back
@@ -510,7 +510,7 @@ recommends one that is at least 5.10.1.
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
 L<Moose-ver(0.93..*)|Moose>, L<Moose::Role-ver(0.93..*)|Moose::Role>,
-L<MooseX::Singleton-ver(0.21..*)|MooseX::Singleton>.
+L<MooseX::Singleton-ver(0.22..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
