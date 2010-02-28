@@ -40,7 +40,7 @@ sub select_machine {
 
     use namespace::autoclean 0.09;
 
-    use Moose 0.93;
+    use Moose 0.98;
     use MooseX::Singleton 0.22;
 
     with 'Muldis::Rosetta::Interface::Machine';
@@ -75,7 +75,7 @@ sub new_process {
 
     use namespace::autoclean 0.09;
 
-    use Moose 0.93;
+    use Moose 0.98;
 
     has 'assoc_machine' => (
         is       => 'ro',
@@ -246,7 +246,7 @@ sub proc_invo {
 
     use namespace::autoclean 0.09;
 
-    use Moose 0.93;
+    use Moose 0.98;
 
     has 'assoc_process' => (
         is       => 'ro',
@@ -477,16 +477,18 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":"0.104.0":PTMD_STD>.  No other version
-numbers are currently supported.
+C<Muldis_D:"http://muldis.com":0.109.0:PTMD_STD:{...}>.  No other version
+numbers are currently supported.  All options defined by B<PTMD_STD> for
+its C<ln_extensions> 5th name element are supported.
 
 =item B<Tiny Perl Hosted Data Muldis D>
 
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
-The language name is specified either as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.104.0', 'HDMD_Perl5_STD' ]>.  No other
-version numbers are currently supported.
+The language name is specified as a Perl array whose value is C<[
+'Muldis_D', 'http://muldis.com', '0.109.0', 'HDMD_Perl5_STD', {...} ]>.  No
+other version numbers are currently supported.  All options defined by
+B<HDMD_Perl5_STD> for its C<ln_extensions> 5th name element are supported.
 
 =back
 
@@ -509,7 +511,7 @@ recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Moose-ver(0.93..*)|Moose>, L<Moose::Role-ver(0.93..*)|Moose::Role>,
+L<Moose-ver(0.98..*)|Moose>, L<Moose::Role-ver(0.98..*)|Moose::Role>,
 L<MooseX::Singleton-ver(0.22..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
@@ -560,7 +562,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

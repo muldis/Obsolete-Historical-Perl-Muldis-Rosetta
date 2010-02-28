@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Class::MOP 0.97;
+use Class::MOP 0.98;
 use Muldis::Rosetta::Interface 0.015000;
 
 ###########################################################################
@@ -15,10 +15,10 @@ use Muldis::Rosetta::Interface 0.015000;
 
     use namespace::autoclean 0.09;
 
-    use Try::Tiny 0.02;
+    use Try::Tiny 0.04;
 
     use Test::More 0.92;
-    use Test::Moose 0.93;
+    use Test::Moose 0.98;
 
 ###########################################################################
 
@@ -73,7 +73,8 @@ sub main {
     pass( 'no death from instantiating new VM process' );
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.104.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.109.0', 'HDMD_Perl5_STD',
+        { catalog_abstraction_level => 'rtn_inv_alt_syn' } ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 
@@ -282,8 +283,8 @@ L<Test::More-ver(0.92..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Try::Tiny-ver(0.02..*)|Try::Tiny>, L<Class::MOP-ver(0.97..*)|Class::MOP>,
-L<Test::Moose-ver(0.93..*)|Test::Moose>.
+L<Try::Tiny-ver(0.04..*)|Try::Tiny>, L<Class::MOP-ver(0.98..*)|Class::MOP>,
+L<Test::Moose-ver(0.98..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
@@ -311,7 +312,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

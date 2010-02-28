@@ -19,7 +19,7 @@ use warnings FATAL => 'all';
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.93;
+    use Moose::Role 0.98;
 
     requires 'new_process';
 
@@ -32,7 +32,7 @@ use warnings FATAL => 'all';
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.93;
+    use Moose::Role 0.98;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -58,7 +58,7 @@ use warnings FATAL => 'all';
 
     use namespace::autoclean 0.09;
 
-    use Moose::Role 0.93;
+    use Moose::Role 0.98;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -102,7 +102,8 @@ producing a third Perl variable holding the relation data of the result.
 
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.104.0', 'HDMD_Perl5_STD' ] });
+        'http://muldis.com', '0.109.0', 'HDMD_Perl5_STD',
+        { catalog_abstraction_level => 'rtn_inv_alt_syn' } ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
@@ -387,9 +388,8 @@ auto-committing every successful Muldis D statement.  Each call of
 C<start_trans> will increase the nesting level by one, and each
 C<commit_trans> or C<rollback_trans> will decrease it by one (it can't be
 decreased below zero).  Note that all transactions started or ended within
-Muldis D code (except direct boot_stmt transaction management) are attached
-to a particular lexical scope in the Muldis D code (specifically a
-"try/catch" context), and so they will never have any effect on the nest
+Muldis D code are attached to a particular lexical scope in the Muldis D
+code, and so they will never have any effect on the nest
 level that Perl sees (assuming that a Muldis D host language will never be
 invoked by Muldis D), regardless of whether the Muldis D code successfully
 returns or throws an exception.
@@ -473,7 +473,7 @@ recommends one that is at least 5.10.1.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Moose::Role-ver(0.93..*)|Moose::Role>.
+L<Moose::Role-ver(0.98..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 
@@ -504,7 +504,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

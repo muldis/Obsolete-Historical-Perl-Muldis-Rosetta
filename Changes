@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2009-12-xx   Darren Duncan <darren@DarrenDuncan.net>
+2010-02-xx   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.16.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.16.0.tar.gz.  Muldis Rosetta version 0.16.0 for Perl 6
@@ -13,8 +13,9 @@
     * Oops, the previous release 0.15.0 shipped with code all declared as
     version 0.014000 rather than 0.015000; the metadata was correct though.
 
-    * Updated external dependencies: Moose/etc to version 0.93,
-    MooseX::Singleton to version 0.22, Class::MOP to version 0.97.
+    * Updated external dependencies: Try::Tiny to version 0.04, Moose/etc
+    to version 0.98, MooseX::Singleton to version 0.22, Class::MOP to
+    version 0.98.
 
     * (Example.pm)  Corresponding to changes introduced in the
     documentation of MooseX::Singleton v0.22:  Updated the new_machine()
@@ -33,7 +34,26 @@
     Validator.pm and SeeAlso.pod, updated any refs to renamed sub's old
     name to use the new name.
 
+    * (Interface.pm, Example.pm, Validator.pm)  Corresponding to changes
+    introduced in Muldis D spec v0.96.0:  Updated all 4-element Muldis D
+    language names to add the once-again-mandatory 5th (ln_extensions)
+    element.  In some documentation, the details of that element are left
+    as "...", but in all code or code examples it specifies just the
+    mandatory "catalog_abstraction_level" pragma with "rtn_inv_alt_syn".
+
+    * (Interface.pm)  Corresponding to changes introduced in Muldis D spec
+    v0.88.0 and v0.108.0:  Update the description of the "trans_nest_level"
+    method to omit mentions of "direct boot_stmt transaction management", a
+    concept that no longer exists, and also to omit mentions of
+    transactions in Muldis D sometimes being tied to "a try/catch context",
+    also a concept that no longer exists; now, the *only* way to have a
+    transaction start or end in Muldis D code is to for that transaction to
+    be attached to the lexical scope of a Muldis D routine, so all
+    invocations of that routine are main/nested transactions.
+
     * (SeeAlso.pod)  Other minor updates.
+
+    * Incremented all copyright year range-ends to 2010.
 
 2009-11-09   Darren Duncan <darren@DarrenDuncan.net>
 
@@ -631,7 +651,7 @@
     * (Interface.pm, Example.pm, Validator.pm)  Made the "machine_config"
     parameter of the Machine constructor function and its wrapper function
     optional.  Added an optional "process_config" parameter for the Process
-    constructor and its wrapper method that is analagous to this.  Added a
+    constructor and its wrapper method that is analogous to this.  Added a
     "process_config" parameter to Validator.pm's "main" procedure, and
     updated Muldis_Rosetta_50_Validate_Example.t to pass it an argument.
 

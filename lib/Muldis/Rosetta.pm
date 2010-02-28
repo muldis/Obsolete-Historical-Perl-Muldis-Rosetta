@@ -251,7 +251,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
 
 L<http://www.muldis.com/>
 

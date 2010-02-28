@@ -237,19 +237,20 @@ L<Set::Relation>, L<DBI>, L<Tangram>, L<DBIx::Class>, L<HDB>, L<KiokuDB>,
 L<Class::DBI>, L<Pixie>, L<Alzabo>, L<DBIx::SQLEngine>, L<Rose::DB>,
 L<SPOPS>, L<Set::Object>, L<Set::Scalar>, L<Oryx>, L<DBM::Deep>, L<PLUTO>,
 L<DBIx::SearchBuilder>, L<DBIx::Recordset>, L<DBIx::Abstract>, L<DBIx::IO>,
-L<DBIx::AnyDBD>, L<DBIx::Browse>, L<DBIx::DBH>, L<MKDoc::SQL>,
+L<DBIx::AnyDBD>, L<DBIx::Browse>, L<DBIx::DBH>, L<MKDoc::SQL>, L<ObjectDB>,
 L<Data::Transactional>, L<DBIx::ModelUpdate>, L<DBIx::ProcedureCall>,
 L<DB::Ent>, L<DBIx::Romani>, L<DBIx::DBSchema>, L<TripleStore>,
 L<Data::Table>, L<ORM>, L<OOPS>, L<Object::Transaction>, L<Relations>,
 L<DBIx::SimplePerl>, L<DBIx::YAWM>, L<Class::Entity>, L<SQL::Statement>,
 L<SQL::Parser>, L<SQL::Translator>, L<SQL::Generator>, L<SQL::Schema>,
 L<SQL::Abstract>, L<SQL::Snippet>, L<SQL::Catalog>, L<DBIx::Perlish>,
-L<DBIx::StORM>, L<Tao::DBI>, L<NTuples>, L<DBIx::CopyRecord>,
+L<DBIx::StORM>, L<Tao::DBI>, L<NTuples>, L<DBIx::CopyRecord>, L<DBIx::DBO>,
 L<DBIx::DataModel>, L<Data::Domain>, L<Fey>, L<SQL::Tokenizer>, L<SQL::DB>,
 L<MooseX::Storage>, L<LARC::DB>, L<Migraine>, L<DBIx::Declare>, L<EZDBI>,
 L<Test::Database>, L<UR>, L<OP>, L<Data::Schema>, L<SQL::Filter>, L<DBR>,
 L<Data::Visitor>, L<DBIx::Simple::Procedure>, L<DBIx::Skinny>,
-L<Data::Couplet>, L<SQL::Preproc>, L<DBIx::QueryByName>, L<Data::Schema>.
+L<Data::Couplet>, L<SQL::Preproc>, L<DBIx::QueryByName>, L<Data::Schema>,
+L<Devel::Ladybug>, L<Class::AutoDB>.
 
 These Perl 5 packages in that problem domain used to exist on CPAN, but no
 longer do except on backpan:
@@ -264,7 +265,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2009, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 
