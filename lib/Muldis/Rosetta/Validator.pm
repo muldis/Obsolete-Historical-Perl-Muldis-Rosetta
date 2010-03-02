@@ -4,13 +4,13 @@ use strict;
 use warnings FATAL => 'all';
 
 use Class::MOP 0.98;
-use Muldis::Rosetta::Interface 0.015000;
+use Muldis::Rosetta::Interface 0.016000;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Validator; # module
-    our $VERSION = '0.015000';
+    our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
     use namespace::autoclean 0.09;
@@ -194,7 +194,7 @@ A common comprehensive test suite to run against all Engines
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Validator version 0.15.0 for Perl
+This document describes Muldis::Rosetta::Validator version 0.16.0 for Perl
 5.
 
 =head1 SYNOPSIS
@@ -289,7 +289,7 @@ L<Test::Moose-ver(0.98..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
-L<Muldis::Rosetta::Interface-ver(0.15.0..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.16.0..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 

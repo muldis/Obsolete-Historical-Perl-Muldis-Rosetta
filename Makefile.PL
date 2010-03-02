@@ -13,7 +13,7 @@ sub OPTIONAL {
 
 WriteMakefile(
    NAME => 'Muldis::Rosetta',
-   VERSION => '0.15.0',
+   VERSION => '0.16.0',
    ABSTRACT => 'Full-featured truly relational DBMS in Perl',
    AUTHOR => 'Darren Duncan <darren@DarrenDuncan.net>',
    PREREQ_PM => {

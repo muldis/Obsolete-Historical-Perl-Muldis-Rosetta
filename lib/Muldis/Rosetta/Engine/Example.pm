@@ -3,21 +3,21 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Muldis::Rosetta::Interface 0.015000;
+use Muldis::Rosetta::Interface 0.016000;
 
-#use Muldis::Rosetta::Engine::Example::Value 0.015000;
-#use Muldis::Rosetta::Engine::Example::Routines 0.015000;
-#use Muldis::Rosetta::Engine::Example::Storage 0.015000;
-#use Muldis::Rosetta::Engine::Example::Runtime 0.015000;
-#use Muldis::Rosetta::Engine::Example::Util 0.015000;
-#use Muldis::Rosetta::Engine::Example::PlainText 0.015000;
-#use Muldis::Rosetta::Engine::Example::HostedData 0.015000;
+#use Muldis::Rosetta::Engine::Example::Value 0.016000;
+#use Muldis::Rosetta::Engine::Example::Routines 0.016000;
+#use Muldis::Rosetta::Engine::Example::Storage 0.016000;
+#use Muldis::Rosetta::Engine::Example::Runtime 0.016000;
+#use Muldis::Rosetta::Engine::Example::Util 0.016000;
+#use Muldis::Rosetta::Engine::Example::PlainText 0.016000;
+#use Muldis::Rosetta::Engine::Example::HostedData 0.016000;
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Engine::Example; # module
-    our $VERSION = '0.015000';
+    our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
     # Note: This given version applies to all of this file's packages.
 
@@ -350,7 +350,7 @@ Self-contained reference implementation of a Muldis Rosetta Engine
 
 =head1 VERSION
 
-This document describes Muldis::Rosetta::Engine::Example version 0.15.0 for
+This document describes Muldis::Rosetta::Engine::Example version 0.16.0 for
 Perl 5.
 
 It also describes the same-number versions for Perl 5 of
@@ -516,7 +516,7 @@ L<MooseX::Singleton-ver(0.22..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
-L<Muldis::Rosetta::Interface-ver(0.15.0..*)|Muldis::Rosetta::Interface>.
+L<Muldis::Rosetta::Interface-ver(0.16.0..*)|Muldis::Rosetta::Interface>.
 
 =head1 INCOMPATIBILITIES
 
