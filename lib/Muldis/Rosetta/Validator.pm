@@ -73,8 +73,9 @@ sub main {
     pass( 'no death from instantiating new VM process' );
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.109.0', 'HDMD_Perl5_STD',
-        { catalog_abstraction_level => 'rtn_inv_alt_syn' } ] });
+        'http://muldis.com', '0.110.0', 'HDMD_Perl5_STD',
+        { catalog_abstraction_level => 'rtn_inv_alt_syn',
+        op_char_repertoire => 'extended' } ] });
 
     _scenario_foods_suppliers_shipments_v1( $process );
 

@@ -477,7 +477,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":0.109.0:PTMD_STD:{...}>.  No other version
+C<Muldis_D:"http://muldis.com":0.110.0:PTMD_STD:{...}>.  No other version
 numbers are currently supported.  All options defined by B<PTMD_STD> for
 its C<ln_extensions> 5th name element are supported.
 
@@ -486,7 +486,7 @@ its C<ln_extensions> 5th name element are supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.109.0', 'HDMD_Perl5_STD', {...} ]>.  No
+'Muldis_D', 'http://muldis.com', '0.110.0', 'HDMD_Perl5_STD', {...} ]>.  No
 other version numbers are currently supported.  All options defined by
 B<HDMD_Perl5_STD> for its C<ln_extensions> 5th name element are supported.
 

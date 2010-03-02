@@ -1,7 +1,7 @@
                               Muldis::Rosetta
 ---------------------------------------------------------------------------
 
-2010-02-xx   Darren Duncan <darren@DarrenDuncan.net>
+2010-03-xx   Darren Duncan <darren@DarrenDuncan.net>
 
     * Muldis Rosetta version 0.16.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.16.0.tar.gz.  Muldis Rosetta version 0.16.0 for Perl 6
@@ -50,6 +50,11 @@
     transaction start or end in Muldis D code is to for that transaction to
     be attached to the lexical scope of a Muldis D routine, so all
     invocations of that routine are main/nested transactions.
+
+    * (Interface.pm, Validator.pm)  Corresponding to changes introduced in
+    Muldis D spec v0.110.0:  Updated all Muldis D language names having a
+    ln_extensions element so it specifies the new mandatory
+    "op_char_repertoire" pragma with "extended".
 
     * (SeeAlso.pod)  Other minor updates.
 

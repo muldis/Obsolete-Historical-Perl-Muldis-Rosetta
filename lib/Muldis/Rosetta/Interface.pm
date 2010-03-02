@@ -102,8 +102,9 @@ producing a third Perl variable holding the relation data of the result.
 
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.109.0', 'HDMD_Perl5_STD',
-        { catalog_abstraction_level => 'rtn_inv_alt_syn' } ] });
+        'http://muldis.com', '0.110.0', 'HDMD_Perl5_STD',
+        { catalog_abstraction_level => 'rtn_inv_alt_syn',
+        op_char_repertoire => 'extended' } ] });
 
     my $r1 = $process->new_value({
         'source_code' => [ 'Relation', [ [ 'x', 'y' ] => [
