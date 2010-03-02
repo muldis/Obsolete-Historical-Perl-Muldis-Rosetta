@@ -472,7 +472,7 @@ Example written in any of the following:
 
 =over
 
-=item B<Tiny Plain Text Muldis D>
+=item B<Standard Plain Text Muldis D>
 
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
@@ -481,7 +481,7 @@ C<Muldis_D:"http://muldis.com":0.110.0:PTMD_STD:{...}>.  No other version
 numbers are currently supported.  All options defined by B<PTMD_STD> for
 its C<ln_extensions> 5th name element are supported.
 
-=item B<Tiny Perl Hosted Data Muldis D>
+=item B<Standard Perl 5 Hosted Data Muldis D>
 
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
