@@ -115,8 +115,8 @@ Muldis D.
 
 =item C<Muldis::Rosetta::PHMD::Translate::Tutorial_D> etc
 
-Utility module that parses the B<Tutorial D> language into Perl Hosted
-Muldis D code, and also that generates the former from the latter.  Mainly
+Utility module that parses the B<Tutorial D> language into Perl Hosted Data
+Muldis D, and also that generates the former from the latter.  Mainly
 this is just by-the-book using the grammar published by Darwen and Date,
 but it could also handle compatible extensions by other B<D> language
 implementations.  In addition, separate utility modules can be made which
@@ -147,6 +147,16 @@ Utility modules that parse other variants of SQL (or subsets thereof) into
 Perl Hosted Data Muldis D, and also that generate the former from the
 latter.  Examples of these variants are the actual SQL:2003 standard, and
 the native dialects of each actual SQL DBMS.
+
+=item C<Muldis::Rosetta::PHDMD::Translate::QUEL>
+
+Utility module that parses the QUEL relational database access language
+into Perl Hosted Data Muldis D, and also that generates the former from the
+latter.  QUEL is an older language than SQL, and QUEL was historically
+supported by any Ingres-derived DBMSs, such as the original Postgres DBMS,
+and it is still supported by the Ingres DBMS today, though without recent
+language enhancements.  QUEL is said to be more expressive and "normalized"
+than SQL.
 
 =item C<Muldis::Rosetta::PHDMD::Translate::\w+>
 
@@ -183,6 +193,15 @@ alternative API for them.
 A Muldis Rosetta Engine built around the Perl DBI module in a more generic
 fashion, that would work with multiple DBD modules rather than being
 specific to one SQL DBMS, could be named this.
+
+=item C<Muldis::Rosetta::Engine::[NoSQL|KeyValue|\w+]>
+
+A Muldis Rosetta Engine built around a distributed key-value store DBMS
+backend such as have become popular for some kinds of applications.  This
+Engine would implement most features on the application/Perl side,
+similarly to how it would work with a bottom-drawer SQL DBMS.  So you get
+portability to key-value store DBMSs while still getting the powerful query
+syntax of relational DBMSs.
 
 =item C<DBIx::Class::Storage::Muldis_Rosetta> etc
 
@@ -239,7 +258,7 @@ L<SPOPS>, L<Set::Object>, L<Set::Scalar>, L<Oryx>, L<DBM::Deep>, L<PLUTO>,
 L<DBIx::SearchBuilder>, L<DBIx::Recordset>, L<DBIx::Abstract>, L<DBIx::IO>,
 L<DBIx::AnyDBD>, L<DBIx::Browse>, L<DBIx::DBH>, L<MKDoc::SQL>, L<ObjectDB>,
 L<Data::Transactional>, L<DBIx::ModelUpdate>, L<DBIx::ProcedureCall>,
-L<DB::Ent>, L<DBIx::Romani>, L<DBIx::DBSchema>, L<TripleStore>,
+L<DB::Ent>, L<DBIx::Romani>, L<DBIx::DBSchema>, L<TripleStore>, L<FusqlFS>,
 L<Data::Table>, L<ORM>, L<OOPS>, L<Object::Transaction>, L<Relations>,
 L<DBIx::SimplePerl>, L<DBIx::YAWM>, L<Class::Entity>, L<SQL::Statement>,
 L<SQL::Parser>, L<SQL::Translator>, L<SQL::Generator>, L<SQL::Schema>,
@@ -248,9 +267,10 @@ L<DBIx::StORM>, L<Tao::DBI>, L<NTuples>, L<DBIx::CopyRecord>, L<DBIx::DBO>,
 L<DBIx::DataModel>, L<Data::Domain>, L<Fey>, L<SQL::Tokenizer>, L<SQL::DB>,
 L<MooseX::Storage>, L<LARC::DB>, L<Migraine>, L<DBIx::Declare>, L<EZDBI>,
 L<Test::Database>, L<UR>, L<OP>, L<Data::Schema>, L<SQL::Filter>, L<DBR>,
-L<Data::Visitor>, L<DBIx::Simple::Procedure>, L<DBIx::Skinny>,
-L<Data::Couplet>, L<SQL::Preproc>, L<DBIx::QueryByName>, L<Data::Schema>,
-L<Devel::Ladybug>, L<Class::AutoDB>.
+L<Data::Visitor>, L<DBIx::Simple::Procedure>, L<DBIx::Skinny>, L<MMapDB>,
+L<Data::Couplet>, L<SQL::Preproc>, L<DBIx::QueryByName>, L<DBIx::Cookbook>,
+L<Devel::Ladybug>, L<Class::AutoDB>, L<Data::Predicate>, L<DBIx::MultiDB>,
+L<Directory::Transactional>.
 
 These Perl 5 packages in that problem domain used to exist on CPAN, but no
 longer do except on backpan:

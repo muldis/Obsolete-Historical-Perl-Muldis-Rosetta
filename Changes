@@ -4,8 +4,8 @@
 
 2010-07-xx
 
-    * Muldis Rosetta version 0.16.1 for Perl 5 is released on CPAN as
-    Muldis-Rosetta-0.16.1.tar.gz.  Muldis Rosetta version 0.16.1 for Perl 6
+    * Muldis Rosetta version 0.17.0 for Perl 5 is released on CPAN as
+    Muldis-Rosetta-0.17.0.tar.gz.  Muldis Rosetta version 0.17.0 for Perl 6
     is not released at all.  The rest of this Changes entry refers only to
     the Perl 5 version, and it should not be assumed that the Perl 6
     version incorporates all of said updates, though it may have some of
@@ -28,6 +28,11 @@
     * (Example.pm)  In the "INTERFACE" main pod section, fixed old fossil
     where the Muldis D dialects were referred to as "Tiny ..." rather than
     "Standard ...", and also specified one as "Perl 5" rather than "Perl".
+
+    * (SeeAlso.pod)  A few additions to Prospective Extensions, etc.
+
+    TODO: SEE TOP TODO FILE ITEMS AS THINGS THAT NEED ADDRESSING BEFORE A
+    0.17.0 RELEASE, MAINLY DEALING WITH AN INTERFACE REFACTORING.
 
 2010-03-01
 

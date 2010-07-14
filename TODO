@@ -16,6 +16,34 @@ table for these items; they are simply to be done "as soon as possible".
 the progress is non-trivial, so there are regular public snapshots with
 nicely rendered documentation.
 
+* Split up all applicable Interface routines into versions that are
+exclusive to either the Plain Text category of language inputs or the
+Hosted Data category of language inputs, rather than there being any
+routines that accept both; but all post-split variants will still take
+Value objects.  The variants will have the same names but for having either
+"pt" or "hd" added to their names.  The primary reason for this split is
+security; if applications stick to using just the Hosted Data variants,
+then they can have a much stronger guarantee that code generated with
+untrusted user input will be properly encoded or be passed using bind
+parameters, and they won't have to remember to do this themselves, as would
+be the case with the Plain Text variants.  When they are just using HD
+variants, applications are saved from some kinds of mistakes, such as
+passing the wrong variable or value that accidentally contains a string
+rather than a structure.  Similarly, a wrapper over Muldis Rosetta can more
+easily exclude Plain Text from even being available as an API option; or
+Perhaps Muldis Rosetta itself can do this, by having
+language-category-specific roles, which just include one of the 2 variants
+so the other can't be invoked from it.  The secondary reason for this split
+is to make it easier to accept Hosted Data inputs denoting simple scalar
+values; the old method of distinguishing whether to dispatch an input to
+the PT parser vs the HD parser, by examining whether it is a Perl scalar or
+a Perl ref, can be avoided; the Hosted Data variants can now take simple
+scalar value inputs as themselves.
+
+* Update the Interface routine list and decide between having 4 separate
+routines to invoke each of func/upd/rcp/proc versus having just the 2
+separate routines func/imp.  The current func/upd/proc triple can't stay.
+
 * Consider using Carp::Clan module, if it would be useful.
 
 * Update Interface.pm and Engine.pm concerning that Muldis D no longer has
@@ -75,6 +103,14 @@ types: temporal, spatial.
 * Optimize the Example Engine as can be done without making it too
 complicated for its primary use as an Engine reference implementation /
 learning tool.
+
+* Add option to Example where Muldis D code can be pre-compiled into equiv
+Perl code and then just the latter is loaded at runtime.  This would be an
+analogy to how a Parrot HLL can be pre-compiled to PBC (name?) files.  This
+in particular is meant to apply to the system-defined types, routines that
+are defined in Muldis D.  It would be a caching mechanism.  For that
+matter, perhaps multiple Perl classes can be pre-generated from Muldis D
+types/etc as appropriate?
 
 * Judiciously add external dependencies (besides Perl itself) to this core
 framework, at such times that a reasonable case can be made for it.
