@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Class::MOP 0.98;
+use Class::MOP 1.03;
 use Muldis::Rosetta::Interface 0.016000;
 
 ###########################################################################
@@ -13,12 +13,12 @@ use Muldis::Rosetta::Interface 0.016000;
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.09;
+    use namespace::autoclean 0.11;
 
-    use Try::Tiny 0.04;
+    use Try::Tiny 0.06;
 
-    use Test::More 0.92;
-    use Test::Moose 0.98;
+    use Test::More 0.94;
+    use Test::Moose 1.08;
 
 ###########################################################################
 
@@ -73,7 +73,7 @@ sub main {
     pass( 'no death from instantiating new VM process' );
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.110.0', 'HDMD_Perl5_STD',
+        'http://muldis.com', '0.134.0', 'HDMD_Perl5_STD',
         { catalog_abstraction_level => 'rtn_inv_alt_syn',
         op_char_repertoire => 'extended' } ] });
 
@@ -275,17 +275,17 @@ I<This documentation is pending.>
 =head1 DEPENDENCIES
 
 This file requires any version of Perl 5.x.y that is at least 5.8.1, and
-recommends one that is at least 5.10.1.
+recommends one that is at least 5.12.1.
 
 It also requires these Perl 5 packages that are bundled with any version of
-Perl 5.x.y that is at least 5.10.1, and are also on CPAN for separate
+Perl 5.x.y that is at least 5.12.0, and are also on CPAN for separate
 installation by users of earlier Perl versions:
-L<Test::More-ver(0.92..*)|Test::More>.
+L<Test::More-ver(0.94..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
-L<namespace::autoclean-ver(0.09..*)|namespace::autoclean>,
-L<Try::Tiny-ver(0.04..*)|Try::Tiny>, L<Class::MOP-ver(0.98..*)|Class::MOP>,
-L<Test::Moose-ver(0.98..*)|Test::Moose>.
+L<namespace::autoclean-ver(0.11..*)|namespace::autoclean>,
+L<Try::Tiny-ver(0.06..*)|Try::Tiny>, L<Class::MOP-ver(1.03..*)|Class::MOP>,
+L<Test::Moose-ver(1.08..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

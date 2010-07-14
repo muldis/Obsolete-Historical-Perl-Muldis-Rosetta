@@ -22,15 +22,15 @@ WriteMakefile(
       # itself, which in general wouldn't see the info in the other lists,
       # as the other lists are primarily used when generating the META.yml.
       'Carp::Always' => '0.09',
-      'Class::MOP' => '0.98',
+      'Class::MOP' => '1.03',
       'ExtUtils::MakeMaker' => '6.48',
-      'Moose' => '0.98',
-      'Moose::Role' => '0.98',
+      'Moose' => '1.08',
+      'Moose::Role' => '1.08',
       'MooseX::Singleton' => '0.22',
-      'namespace::autoclean' => '0.09',
-      'Test::Moose' => '0.98',
-      'Test::More' => '0.92',
-      'Try::Tiny' => '0.04',
+      'namespace::autoclean' => '0.11',
+      'Test::Moose' => '1.08',
+      'Test::More' => '0.94',
+      'Try::Tiny' => '0.06',
    },
    OPTIONAL( '6.48',
       MIN_PERL_VERSION => '5.008001',
@@ -48,8 +48,8 @@ WriteMakefile(
          },
          build_requires => {
             'ExtUtils::MakeMaker' => '6.48',
-            # These are bundled with Perls 5.10.1+ but not earlier Perls.
-            'Test::More' => '0.92',
+            # These are bundled with Perls 5.12.0+ but not earlier Perls.
+            'Test::More' => '0.94',
             # These are not bundled with any version of Perl.
             'Carp::Always' => '0.09',
          },
@@ -58,19 +58,19 @@ WriteMakefile(
 
             'perl' => '5.008001', # as MIN_PERL_VERSION no affect META.yml
             # These are not bundled with any version of Perl.
-            'Class::MOP' => '0.98', # req latest indep of Moose
-            'Moose' => '0.98',
-            'Moose::Role' => '0.98',
+            'Class::MOP' => '1.03', # req latest indep of Moose
+            'Moose' => '1.08',
+            'Moose::Role' => '1.08',
             'MooseX::Singleton' => '0.22',
-            'namespace::autoclean' => '0.09',
-            'Try::Tiny' => '0.04',
+            'namespace::autoclean' => '0.11',
+            'Try::Tiny' => '0.06',
 
             # VALIDATOR MODULE REQUIRES:
 
-            # These are bundled with Perls 5.10.1+ but not earlier Perls.
-            'Test::More' => '0.92',
+            # These are bundled with Perls 5.12.0+ but not earlier Perls.
+            'Test::More' => '0.94',
             # These are not bundled with any version of Perl.
-            'Test::Moose' => '0.98',
+            'Test::Moose' => '1.08',
          },
          resources => {
             homepage => 'http://www.muldis.com/',

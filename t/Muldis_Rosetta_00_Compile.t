@@ -4,7 +4,7 @@ use strict;
 use warnings FATAL => 'all';
 use Carp::Always 0.09;
 
-use Test::More 0.92;
+use Test::More 0.94;
 
 use_ok( 'Muldis::Rosetta' );
 is( $Muldis::Rosetta::VERSION, 0.016000,
