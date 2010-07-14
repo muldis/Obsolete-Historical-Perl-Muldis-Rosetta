@@ -1,4 +1,5 @@
                               Muldis::Rosetta
+                                  Changes
 ---------------------------------------------------------------------------
 
 2010-07-xx
@@ -13,6 +14,16 @@
     * Updated external dependencies: Test::More to version 0.94,
     namespace::autoclean to version 0.11, Try::Tiny to version 0.06,
     Moose/etc to version 1.08, Class::MOP to version 1.03.
+
+    * (Rosetta.pm, README)  Updated the list of email forums focusing on
+    Muldis D and its implementations, first to add a 4th list
+    muldis-d-language, and second to update all 4 lists' descriptions.
+
+    * (Rosetta.pm, README, Makefile.PL)  Updated any instances of
+    "http://mm.DarrenDuncan.net/mailman/listinfo" so that they are fully
+    lower-cased, because the mixed case version doesn't work with some web
+    browsers; browsers that don't automatically convert it to lowercase get
+    a "There currently are no publically-advertised mailman lists" message.
 
     * (Example.pm)  In the "INTERFACE" main pod section, fixed old fossil
     where the Muldis D dialects were referred to as "Tiny ..." rather than
