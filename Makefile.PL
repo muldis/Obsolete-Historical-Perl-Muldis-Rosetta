@@ -1,4 +1,4 @@
-use 5.008001;
+use 5.008003;
 use utf8;
 use strict;
 use warnings;
@@ -22,21 +22,21 @@ WriteMakefile(
       # itself, which in general wouldn't see the info in the other lists,
       # as the other lists are primarily used when generating the META.yml.
       'Carp::Always' => '0.09',
-      'Class::MOP' => '1.03',
+      'Class::MOP' => '1.04',
       'ExtUtils::MakeMaker' => '6.48',
-      'Moose' => '1.08',
-      'Moose::Role' => '1.08',
-      'MooseX::Singleton' => '0.22',
+      'Moose' => '1.09',
+      'Moose::Role' => '1.09',
+      'MooseX::Singleton' => '0.24',
       'namespace::autoclean' => '0.11',
-      'Test::Moose' => '1.08',
+      'Test::Moose' => '1.09',
       'Test::More' => '0.94',
       'Try::Tiny' => '0.06',
    },
    OPTIONAL( '6.48',
-      MIN_PERL_VERSION => '5.008001',
+      MIN_PERL_VERSION => '5.008003',
    ),
    OPTIONAL( '6.31',
-      LICENSE => 'lgpl3',
+      LICENSE => 'lgpl_3',
    ),
    OPTIONAL( '6.46',
       # Use META_ADD instead of META_MERGE so that we can remove
@@ -56,12 +56,12 @@ WriteMakefile(
          requires => {
             # ALWAYS REQUIRES:
 
-            'perl' => '5.008001', # as MIN_PERL_VERSION no affect META.yml
+            'perl' => '5.008003', # as MIN_PERL_VERSION no affect META.yml
             # These are not bundled with any version of Perl.
-            'Class::MOP' => '1.03', # req latest indep of Moose
-            'Moose' => '1.08',
-            'Moose::Role' => '1.08',
-            'MooseX::Singleton' => '0.22',
+            'Class::MOP' => '1.04', # req latest indep of Moose
+            'Moose' => '1.09',
+            'Moose::Role' => '1.09',
+            'MooseX::Singleton' => '0.24',
             'namespace::autoclean' => '0.11',
             'Try::Tiny' => '0.06',
 
@@ -70,7 +70,7 @@ WriteMakefile(
             # These are bundled with Perls 5.12.0+ but not earlier Perls.
             'Test::More' => '0.94',
             # These are not bundled with any version of Perl.
-            'Test::Moose' => '1.08',
+            'Test::Moose' => '1.09',
          },
          resources => {
             homepage => 'http://www.muldis.com/',

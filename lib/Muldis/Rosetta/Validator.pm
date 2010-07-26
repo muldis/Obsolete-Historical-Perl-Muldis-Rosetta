@@ -1,9 +1,9 @@
-use 5.008001;
+use 5.008003;
 use utf8;
 use strict;
 use warnings FATAL => 'all';
 
-use Class::MOP 1.03;
+use Class::MOP 1.04;
 use Muldis::Rosetta::Interface 0.016000;
 
 ###########################################################################
@@ -18,7 +18,7 @@ use Muldis::Rosetta::Interface 0.016000;
     use Try::Tiny 0.06;
 
     use Test::More 0.94;
-    use Test::Moose 1.08;
+    use Test::Moose 1.09;
 
 ###########################################################################
 
@@ -73,7 +73,7 @@ sub main {
     pass( 'no death from instantiating new VM process' );
     does_ok( $process, 'Muldis::Rosetta::Interface::Process' );
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.134.0', 'HDMD_Perl5_STD',
+        'http://muldis.com', '0.137.0', 'HDMD_Perl5_STD',
         { catalog_abstraction_level => 'rtn_inv_alt_syn',
         op_char_repertoire => 'extended' } ] });
 
@@ -202,7 +202,7 @@ This document describes Muldis::Rosetta::Validator version 0.16.0 for Perl
 This can be the complete content of the main C<t/*.t> file for an example
 Muldis Rosetta Engine distribution:
 
-    use 5.008001;
+    use 5.008003;
     use utf8;
     use strict;
     use warnings FATAL => 'all';
@@ -274,7 +274,7 @@ I<This documentation is pending.>
 
 =head1 DEPENDENCIES
 
-This file requires any version of Perl 5.x.y that is at least 5.8.1, and
+This file requires any version of Perl 5.x.y that is at least 5.8.3, and
 recommends one that is at least 5.12.1.
 
 It also requires these Perl 5 packages that are bundled with any version of
@@ -284,8 +284,8 @@ L<Test::More-ver(0.94..*)|Test::More>.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.11..*)|namespace::autoclean>,
-L<Try::Tiny-ver(0.06..*)|Try::Tiny>, L<Class::MOP-ver(1.03..*)|Class::MOP>,
-L<Test::Moose-ver(1.08..*)|Test::Moose>.
+L<Try::Tiny-ver(0.06..*)|Try::Tiny>, L<Class::MOP-ver(1.04..*)|Class::MOP>,
+L<Test::Moose-ver(1.09..*)|Test::Moose>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:

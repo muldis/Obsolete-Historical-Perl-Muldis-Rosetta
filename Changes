@@ -13,7 +13,12 @@
 
     * Updated external dependencies: Test::More to version 0.94,
     namespace::autoclean to version 0.11, Try::Tiny to version 0.06,
-    Moose/etc to version 1.08, Class::MOP to version 1.03.
+    Moose/etc to version 1.09, MooseX::Singleton to version 0.24,
+    Class::MOP to version 1.04.
+
+    * Updated the minimum required Perl version to 5.8.3 from 5.8.1; this
+    is because Moose 1.09 made the same change, due to its tests failing on
+    5.8.1-2 and those versions not being easily installable for testing.
 
     * (Rosetta.pm, README)  Updated the list of email forums focusing on
     Muldis D and its implementations, first to add a 4th list
