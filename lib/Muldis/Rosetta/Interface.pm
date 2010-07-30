@@ -9,13 +9,14 @@ use warnings FATAL => 'all';
 { package Muldis::Rosetta::Interface; # package
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
-    # Note: This given version applies to all of this file's packages.
 } # package Muldis::Rosetta::Interface
 
 ###########################################################################
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Machine; # role
+    our $VERSION = '0.016000';
+    $VERSION = eval $VERSION;
 
     use namespace::autoclean 0.11;
 
@@ -29,6 +30,8 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Process; # role
+    our $VERSION = '0.016000';
+    $VERSION = eval $VERSION;
 
     use namespace::autoclean 0.11;
 
@@ -55,6 +58,8 @@ use warnings FATAL => 'all';
 ###########################################################################
 
 { package Muldis::Rosetta::Interface::Value; # role
+    our $VERSION = '0.016000';
+    $VERSION = eval $VERSION;
 
     use namespace::autoclean 0.11;
 

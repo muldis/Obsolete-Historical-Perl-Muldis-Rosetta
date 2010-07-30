@@ -7,9 +7,9 @@
     * Muldis Rosetta version 0.17.0 for Perl 5 is released on CPAN as
     Muldis-Rosetta-0.17.0.tar.gz.  Muldis Rosetta version 0.17.0 for Perl 6
     is not released at all.  The rest of this Changes entry refers only to
-    the Perl 5 version, and it should not be assumed that the Perl 6
-    version incorporates all of said updates, though it may have some of
-    them.
+    the Perl 5 version, but it also happens that the Perl 6 version was
+    also brought fully up to date along with it.
+TODO: RESYNC PERL 6 VERSION USING RAKUDO STAR!  SEE TOP TODO FILE ITEM!
 
     * Updated external dependencies: Test::More to version 0.94,
     namespace::autoclean to version 0.11, Try::Tiny to version 0.06,
@@ -19,6 +19,15 @@
     * Updated the minimum required Perl version to 5.8.3 from 5.8.1; this
     is because Moose 1.09 made the same change, due to its tests failing on
     5.8.1-2 and those versions not being easily installable for testing.
+
+    * (Interface.pm, Example.pm)  Updated all *.pm files that declare
+    multiple Perl packages, so that now every single package separately
+    declares its (identical) package $VERSION, rather than just the first
+    package in each file declaring said, implicitly applied to the others.
+
+    * (Example.pm)  Updated all 3 classes that compose roles so that they
+    now specify what version numbers of said roles they require.  Moose had
+    added support for declaring/enforcing this in its v1.03 (2010 May 6).
 
     * (Rosetta.pm, README)  Updated the list of email forums focusing on
     Muldis D and its implementations, first to add a 4th list
@@ -35,9 +44,6 @@
     "Standard ...", and also specified one as "Perl 5" rather than "Perl".
 
     * (SeeAlso.pod)  A few additions to Prospective Extensions, etc.
-
-    TODO: SEE TOP TODO FILE ITEMS AS THINGS THAT NEED ADDRESSING BEFORE A
-    0.17.0 RELEASE, MAINLY DEALING WITH AN INTERFACE REFACTORING.
 
 2010-03-01
 

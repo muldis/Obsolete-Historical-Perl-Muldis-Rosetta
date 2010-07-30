@@ -16,6 +16,50 @@ table for these items; they are simply to be done "as soon as possible".
 the progress is non-trivial, so there are regular public snapshots with
 nicely rendered documentation.
 
+* Create a new Git repo, both locally and remotely on Github/etc, and
+import the history of the Perl 6 Muldis::Rosetta.  For simplicity, just
+import manually as subsequent commits just the states of P6MR that
+corresponded to numbered CPAN releases of the Perl 5 version.  These would
+have been tarballed but not distributed at the time, and included every
+version 0.0.0 thru 0.6.0 plus 0.7.0 (skipping 0.6.1 and 0.6.2). For those
+tarballed versions, the commits would be identical in every way. Then,
+subsequent commits can be made corresponding to each Perl 5 release after
+0.7.0, in a retcon manner as if the Perl 6 version had been kept in sync
+all along.  However, any files which traditionally were identical will
+remain so, including: Changes, README, TODO, SeeAlso.pod.  This will be
+done through and including the last existing CPAN release 0.16.0.  So for
+those releases, the pristine Changes that said the Perl 6 version probably
+didn't have any corresponding changes, is left as is.  Then a version
+0.17.0 of the Perl 5 would be cut with minimal changes beyond what is
+already in version control, those changes from 0.16.0 amounting to nothing
+but documentation and dependencies-version updates.  The new retro commits
+for 0.7.0^..0.16.0 would have the minimal changes to the Perl-6-unique
+portions and would continue to be written against the same Perl syntax or
+feature set as it was around release 0.6.0 or something but the main point
+is that none of these releases would be run through Rakudo-Star and it
+would be assumed that they wouldn't compile.  And then the Perl 6 code
+would be updated such that Rakudo-Star *does* compile it and run its test
+suite, as such that there is, and then corresponding versions 0.17.0 of the
+Perl 5 and 6 versions would be released.  The 0.17.0 would maintain
+identical Changes/README/TODO/SeeAlso.pod, though these would be updated so
+say co-developing status is back on, and in particular the Changes file
+would have its historical releases annotated for the Perl 6 versions being
+made in 2010/etc; the Changes file will not lie about when the Perl 6
+versions of 0.8.0+ were made.  All of the distro files would have the
+minimal changes possible aside from synchronization, through the 0.17.0
+release.  Also, the 0.17.0 would gain the files MANIFEST, GPL/LGPL, etc
+to complete that aspect of synchronization, as it is now standalone rather
+than embedded in a large distro having a superceding those 3 files/etc.
+Then, after the 0.17.0, each can be free to diverge if it wishes,
+including each Changes file then only including details about the same
+language version, or something, though stating just the release dates of
+the other version.  After 0.17.0 and for 0.18.0, the substantial overhauls
+such as defined in the next TODO item can be done, and/or at that time any
+"re-writes" can occur.  Or maybe a 0.17.1 could go out first that
+truncates/summarizes the Changes file as per MD 0.129.1?
+Don't forget to update refs in Muldis D - Implementations to reflect the
+new status of Muldis Rosetta for Perl 6.
+
 * Split up all applicable Interface routines into versions that are
 exclusive to either the Plain Text category of language inputs or the
 Hosted Data category of language inputs, rather than there being any
