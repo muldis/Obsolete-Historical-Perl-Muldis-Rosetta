@@ -83,9 +83,9 @@ and doesn't scale well.
 
 Muldis Rosetta, by way of using the Muldis D language, incorporates a
 complete and uncompromising implementation of "I<The Third Manifesto>"
-(I<TTM>), a formal proposal by Christopher J. Date and Hugh Darwen for a
+(I<TTM>), a formal proposal by Chris Date (C.J. Date) and Hugh Darwen for a
 solid foundation for data and database management systems (DBMSs); like
-Edgar F. Codd's original papers, I<TTM> can be seen as an abstract
+Edgar Codd (E.F. Codd)'s original papers, I<TTM> can be seen as an abstract
 blueprint for the design of a DBMS and the language interface to such a
 DBMS.  Muldis D is a high-level programming language which is
 computationally complete (and industrial strength) and has fully integrated
@@ -251,7 +251,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2011, Muldis Data Systems, Inc.
 
 L<http://www.muldis.com/>
 

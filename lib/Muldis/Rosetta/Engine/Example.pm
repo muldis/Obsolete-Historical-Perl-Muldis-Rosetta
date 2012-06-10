@@ -20,8 +20,6 @@ use Muldis::Rosetta::Interface 0.016000;
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.11;
-
 ###########################################################################
 
 sub select_machine {
@@ -39,10 +37,10 @@ sub select_machine {
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.11;
+    use namespace::autoclean 0.12;
 
-    use Moose 1.09;
-    use MooseX::Singleton 0.24;
+    use Moose 2.0000;
+    use MooseX::Singleton 0.27;
 
     with 'Muldis::Rosetta::Interface::Machine' => { -version => 0.016000 };
 
@@ -76,14 +74,17 @@ sub new_process {
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.11;
+    use namespace::autoclean 0.12;
 
-    use Moose 1.09;
+    use Moose 2.0000;
 
     has 'assoc_machine' => (
         is       => 'ro',
         isa      => 'Muldis::Rosetta::Engine::Example::Public::Machine',
         required => 1,
+        default  => sub {
+            Muldis::Rosetta::Engine::Example::Public::Machine->instance();
+        },
     );
 
     has '_inner' => (
@@ -249,9 +250,9 @@ sub proc_invo {
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.11;
+    use namespace::autoclean 0.12;
 
-    use Moose 1.09;
+    use Moose 2.0000;
 
     has 'assoc_process' => (
         is       => 'ro',
@@ -482,7 +483,7 @@ Example written in any of the following:
 See L<Muldis::D::Dialect::PTMD_STD> for details.
 
 The language name is specified as a Perl character string whose value is
-C<Muldis_D:"http://muldis.com":0.137.0:PTMD_STD:{...}>.  No other version
+C<Muldis_D:"http://muldis.com":0.148.0:PTMD_STD:{...}>.  No other version
 numbers are currently supported.  All options defined by B<PTMD_STD> for
 its C<ln_extensions> 5th name element are supported.
 
@@ -491,7 +492,7 @@ its C<ln_extensions> 5th name element are supported.
 See L<Muldis::D::Dialect::HDMD_Perl5_STD> for details.
 
 The language name is specified as a Perl array whose value is C<[
-'Muldis_D', 'http://muldis.com', '0.137.0', 'HDMD_Perl5_STD', {...} ]>.  No
+'Muldis_D', 'http://muldis.com', '0.148.0', 'HDMD_Perl5_STD', {...} ]>.  No
 other version numbers are currently supported.  All options defined by
 B<HDMD_Perl5_STD> for its C<ln_extensions> 5th name element are supported.
 
@@ -512,12 +513,12 @@ I<This documentation is pending.>
 The Muldis Rosetta Example Engine, meaning the collection of files that
 includes this file and all other C<Muldis::Rosetta::Engine::Example::\w+>
 files, requires any version of Perl 5.x.y that is at least 5.8.3, and
-recommends one that is at least 5.12.1.
+recommends one that is at least 5.12.3.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.11..*)|namespace::autoclean>,
-L<Moose-ver(1.09..*)|Moose>, L<Moose::Role-ver(1.09..*)|Moose::Role>,
-L<MooseX::Singleton-ver(0.24..*)|MooseX::Singleton>.
+L<Moose-ver(2.0000..*)|Moose>, L<Moose::Role-ver(2.0000..*)|Moose::Role>,
+L<MooseX::Singleton-ver(0.27..*)|MooseX::Singleton>.
 
 It also requires these Perl 5 packages that are in the current
 distribution:
@@ -567,7 +568,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2011, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

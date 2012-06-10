@@ -180,7 +180,7 @@ or server-extending plugin that sits on top of the Muldis Rosetta API.  Or
 whatever implementers want to do.  This is analogous to proxying modules
 for DBI or other DBMSs.
 
-=item C<Muldis::Rosetta::Engine::[SQLite|Postgres|Oracle|\w+]>
+=item C<Muldis::Rosetta::Engine::[Postgres|SQLite|Sybase|DB2|Oracle|\w+]>
 
 A default (but not mandatory) namespace for Muldis Rosetta Engines to go,
 that provide the C<select_machine> function and do the
@@ -236,7 +236,7 @@ I<This documentation is pending.>
 
 These Perl 5 applications and frameworks are, perhaps, at the front of the
 line to get Muldis Rosetta bindings: L<Jifty>, L<Catalyst>,
-L<Bricolage|http://www.bricolage.cc/>, L<RT|http://bestpractical.com/rt/>.
+L<Bricolage|http://bricolagecms.org/>, L<RT|http://bestpractical.com/rt/>.
 Generally speaking, the more active the development or the more popular the
 project, the higher the priority to support it.
 
@@ -270,7 +270,11 @@ L<Test::Database>, L<UR>, L<OP>, L<Data::Schema>, L<SQL::Filter>, L<DBR>,
 L<Data::Visitor>, L<DBIx::Simple::Procedure>, L<DBIx::Skinny>, L<MMapDB>,
 L<Data::Couplet>, L<SQL::Preproc>, L<DBIx::QueryByName>, L<DBIx::Cookbook>,
 L<Devel::Ladybug>, L<Class::AutoDB>, L<Data::Predicate>, L<DBIx::MultiDB>,
-L<Directory::Transactional>.
+L<Directory::Transactional>, L<Set::Array>, L<Frost>, L<Data::Float>,
+L<Data::Range::Compare>, L<DBIx::NoSQL>, L<OOB>, L<FastDB>, L<Giddy>,
+L<Protocol::PostgreSQL>, L<EntityModel>, L<types>, L<SQL::OOP>, L<Set::FA>,
+L<ElasticSearch::SearchBuilder>, L<DBIx::Connector>, L<Data::Reuse>,
+L<SQL::NamedPlaceholder>.
 
 These Perl 5 packages in that problem domain used to exist on CPAN, but no
 longer do except on backpan:
@@ -285,7 +289,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2011, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

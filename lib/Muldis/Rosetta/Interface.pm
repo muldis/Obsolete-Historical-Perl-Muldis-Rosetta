@@ -18,9 +18,9 @@ use warnings FATAL => 'all';
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.11;
+    use namespace::autoclean 0.12;
 
-    use Moose::Role 1.09;
+    use Moose::Role 2.0000;
 
     requires 'new_process';
 
@@ -33,9 +33,9 @@ use warnings FATAL => 'all';
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.11;
+    use namespace::autoclean 0.12;
 
-    use Moose::Role 1.09;
+    use Moose::Role 2.0000;
 
     requires 'assoc_machine';
     requires 'pt_command_lang';
@@ -61,9 +61,9 @@ use warnings FATAL => 'all';
     our $VERSION = '0.016000';
     $VERSION = eval $VERSION;
 
-    use namespace::autoclean 0.11;
+    use namespace::autoclean 0.12;
 
-    use Moose::Role 1.09;
+    use Moose::Role 2.0000;
 
     requires 'assoc_process';
     requires 'pt_source_code';
@@ -107,7 +107,7 @@ producing a third Perl variable holding the relation data of the result.
 
     my $process = $machine->new_process();
     $process->update_hd_command_lang({ 'lang' => [ 'Muldis_D',
-        'http://muldis.com', '0.137.0', 'HDMD_Perl5_STD',
+        'http://muldis.com', '0.148.0', 'HDMD_Perl5_STD',
         { catalog_abstraction_level => 'rtn_inv_alt_syn',
         op_char_repertoire => 'extended' } ] });
 
@@ -475,11 +475,11 @@ I<This documentation is pending.>
 =head1 DEPENDENCIES
 
 This file requires any version of Perl 5.x.y that is at least 5.8.3, and
-recommends one that is at least 5.12.1.
+recommends one that is at least 5.12.3.
 
 It also requires these Perl 5 packages that are on CPAN:
 L<namespace::autoclean-ver(0.11..*)|namespace::autoclean>,
-L<Moose::Role-ver(1.09..*)|Moose::Role>.
+L<Moose::Role-ver(2.0000..*)|Moose::Role>.
 
 =head1 INCOMPATIBILITIES
 
@@ -510,7 +510,7 @@ Darren Duncan (C<darren@DarrenDuncan.net>)
 
 This file is part of the Muldis Rosetta framework.
 
-Muldis Rosetta is Copyright © 2002-2010, Muldis Data Systems, Inc.
+Muldis Rosetta is Copyright © 2002-2011, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of L<Muldis::Rosetta> for details.
 

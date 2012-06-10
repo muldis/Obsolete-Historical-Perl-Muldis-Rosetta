@@ -22,15 +22,15 @@ WriteMakefile(
       # itself, which in general wouldn't see the info in the other lists,
       # as the other lists are primarily used when generating the META.yml.
       'Carp::Always' => '0.09',
-      'Class::MOP' => '1.04',
+      'Class::MOP' => '2.0000',
       'ExtUtils::MakeMaker' => '6.48',
-      'Moose' => '1.09',
-      'Moose::Role' => '1.09',
-      'MooseX::Singleton' => '0.24',
-      'namespace::autoclean' => '0.11',
-      'Test::Moose' => '1.09',
+      'Moose' => '2.0000',
+      'Moose::Role' => '2.0000',
+      'MooseX::Singleton' => '0.27',
+      'namespace::autoclean' => '0.12',
+      'Test::Moose' => '2.0000',
       'Test::More' => '0.94',
-      'Try::Tiny' => '0.06',
+      'Try::Tiny' => '0.09',
    },
    OPTIONAL( '6.48',
       MIN_PERL_VERSION => '5.008003',
@@ -58,19 +58,19 @@ WriteMakefile(
 
             'perl' => '5.008003', # as MIN_PERL_VERSION no affect META.yml
             # These are not bundled with any version of Perl.
-            'Class::MOP' => '1.04', # req latest indep of Moose
-            'Moose' => '1.09',
-            'Moose::Role' => '1.09',
-            'MooseX::Singleton' => '0.24',
-            'namespace::autoclean' => '0.11',
-            'Try::Tiny' => '0.06',
+            'Class::MOP' => '2.0000',
+            'Moose' => '2.0000',
+            'Moose::Role' => '2.0000',
+            'MooseX::Singleton' => '0.27',
+            'namespace::autoclean' => '0.12',
+            'Try::Tiny' => '0.09',
 
             # VALIDATOR MODULE REQUIRES:
 
             # These are bundled with Perls 5.12.0+ but not earlier Perls.
             'Test::More' => '0.94',
             # These are not bundled with any version of Perl.
-            'Test::Moose' => '1.09',
+            'Test::Moose' => '2.0000',
          },
          resources => {
             homepage => 'http://www.muldis.com/',

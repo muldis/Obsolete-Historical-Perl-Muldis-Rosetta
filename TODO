@@ -16,6 +16,33 @@ table for these items; they are simply to be done "as soon as possible".
 the progress is non-trivial, so there are regular public snapshots with
 nicely rendered documentation.
 
+* FIRST PRIORITY ...
+Take a page from PSGI and just get rid of the ::Interface roles/classes
+entirely; instead just *document* the API that an Engine is supposed to
+have, which is what Validator will test.  Have this API documentation in
+one distro, and Validator in another, and the Example engine in a third.
+This approach will allow us to decouple dependencies, for example, so every
+Engine/etc won't have to pull in Moose just because ::Interface does, esp
+since ::Interface is just declarational, doesn't really leverage Moose.
+MAYBE also split off the Perl STDs from Muldis::D so they're no longer core
+but they're still official, and distribute the HDMD_Perl5_STD in the same
+distro as the Perl 5 Rosetta Engine API documentation.
+Lets call that documentation distro Muldis::D::Perl5.
+Create it like how we created Muldis::D::Manual ... empty then transfer.
+Leave initial meat module as lib/Muldis/D/Dialect/HDMD_Perl5_STD.pod in the
+new distro for starters, and its package name alone, so existing L<> etc
+still work.  Add new directory mod lib/Muldis/D/Perl5.pod like Manual.pod.
+All of this likewise for the Perl 6 versions.
+
+* The Example engine replacement would only accept Muldis D as input, for
+simplicity among other reasons.  But another engine could be created which
+subclasses this one and adds support for SQL as input, and so on, since
+this greatly increases complexity, especially if it adds dependencies too.
+Then a subclass of that one could add the API of a DBI driver module.
+
+* Stop using Moose since we don't get much value from it, for its size.
+Then we can revert the Perl dep to 5.8.1 probably.
+
 * Create a new Git repo, both locally and remotely on Github/etc, and
 import the history of the Perl 6 Muldis::Rosetta.  For simplicity, just
 import manually as subsequent commits just the states of P6MR that
@@ -141,6 +168,12 @@ Example Engine is not intended to be scalable, just provide the correct
 semantics in the simplest way possible.  Other Engines will presumably do
 persistence in an intelligent and scalable (and more complicated) manner.
 
+* To be specific, the above serialization would be as Muldis D code,
+PTMD_STD by default so it is easily portable.  Also, this could optionally
+be kept in a gzip or zip file automatically using a filestream filter, for
+vast reduction in filesize and significant performance improvement on
+modern systems, where disk is the main bottleneck.
+
 * Update the Example Engine to implement the optional system-defined data
 types: temporal, spatial.
 
@@ -167,7 +200,7 @@ we won't have to manually check our arguments as much as we do, or at all.
 
 * Applicable to the Perl 5 version only:  Consider adding dependencies on
 Module::Build and/or some better exception handling module.  Consider
-raising the Perl version dependency to 5.12.1 from 5.8.3, to simplify
+raising the Perl version dependency to 5.12.3 from 5.8.3, to simplify
 further dependencies.
 
 * Whatever else needs doing, such as, fixing bugs.
